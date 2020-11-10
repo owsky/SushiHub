@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">Veneto_Valley</string>
-<<<<<<< Updated upstream
+
     <string name="titolopaginiz">Page Iniziale</string>
     <string name="CreaTavolo">Crea Tavolo</string>
     <string name="JoinTavolo">Join Tavolo</string>
     <string name="StoricoOrdini">Storico Ordini</string>
-=======
     <string name="title_activity_extra">ExtraActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="Bevande"> Bevande</string>
@@ -21,5 +19,4 @@
     <string name="pr"> prezzo MENÙ a PERSONA</string>
     <string name="pr1"> prezzo MENÙ totale </string>
     <string name="BUTT"> AVANTI </string>
->>>>>>> Stashed changes
 </resources>
