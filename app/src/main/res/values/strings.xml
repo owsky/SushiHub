@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Veneto_Valley</string>
+    <string name="titolopaginiz">Page Iniziale</string>
+    <string name="CreaTavolo">Crea Tavolo</string>
+    <string name="JoinTavolo">Join Tavolo</string>
+    <string name="StoricoOrdini">Storico Ordini</string>
 </resources>
