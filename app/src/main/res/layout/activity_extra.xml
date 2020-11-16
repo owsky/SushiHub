@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".extra">
+    tools:context=".Extra">
 
     <TextView
         android:id="@+id/textView3"
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/dolce_img"
         android:layout_width="105dp"
         android:layout_height="144dp"
         android:layout_marginStart="52dp"
