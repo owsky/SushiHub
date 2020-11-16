@@ -5,6 +5,7 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+    android.defaultConfig.vectorDrawables.useSupportLibrary = true
 
     defaultConfig {
         applicationId "com.veneto_valley.veneto_valley"
