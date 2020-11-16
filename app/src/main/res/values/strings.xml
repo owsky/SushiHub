@@ -19,4 +19,8 @@
     <string name="pr"> prezzo MENÙ a PERSONA</string>
     <string name="pr1"> prezzo MENÙ totale </string>
     <string name="BUTT"> AVANTI </string>
+    <string name="qr_code">QR Code</string>
+    <string name="scan_me">Scan me</string>
+    <string name="todo">TODO</string>
+    <string name="done">Done</string>
 </resources>
