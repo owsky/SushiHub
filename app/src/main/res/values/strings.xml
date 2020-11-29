@@ -23,4 +23,6 @@
     <string name="scan_me">Scan me</string>
     <string name="todo">TODO</string>
     <string name="done">Done</string>
+    <string name="title_activity_scan_qr">ScanQR</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

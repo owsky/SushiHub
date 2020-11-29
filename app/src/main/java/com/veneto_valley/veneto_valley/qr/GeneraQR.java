@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley;
+package com.veneto_valley.veneto_valley.qr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.veneto_valley.veneto_valley.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

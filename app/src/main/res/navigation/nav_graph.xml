@@ -2,18 +2,4 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/homepage">
-    <activity
-        android:id="@+id/homepage"
-        android:name="com.veneto_valley.veneto_valley.MainActivity"
-        android:label="activity_page_iniziale"
-        tools:layout="@layout/activity_homepage">
-    </activity>
-
-    <activity
-        android:id="@+id/generaQR"
-        android:name="com.veneto_valley.veneto_valley.GeneraQR"
-        android:label="activity_genera_qr"
-        tools:layout="@layout/activity_genera_qr" />
-</navigation>
+    android:id="@+id/nav_graph" />
