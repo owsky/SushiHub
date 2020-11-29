@@ -44,12 +44,14 @@ public class Extra extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(getApplicationContext(), "Ciao sono il bottone 1", Toast.LENGTH_LONG).show();//display the text of button1
+                cdd.titolo= "INSERISCI BEVANDE";
                 cdd.show();
             }
         });
         addDolci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cdd.titolo= "INSERISCI DOLCI";
                 //Toast.makeText(getApplicationContext(), "Ciao sono il bottone 2", Toast.LENGTH_LONG).show();//display the text of button1
                 cdd.show();
             }
