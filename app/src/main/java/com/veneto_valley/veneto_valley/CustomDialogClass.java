@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CustomDialogClass extends Dialog implements
         android.view.View.OnClickListener {
@@ -13,6 +14,8 @@ public class CustomDialogClass extends Dialog implements
     public Activity c;
     public Dialog d;
     public Button yes, no;
+    public TextView label;
+    public String titolo;
 
     public CustomDialogClass(Activity a) {
         super(a);
@@ -29,6 +32,8 @@ public class CustomDialogClass extends Dialog implements
         no = (Button) findViewById(R.id.conferma);
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+        label= (TextView) findViewById(R.id.txt_dia);
+        label.setText(titolo);
 
     }
 

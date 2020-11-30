@@ -14,20 +14,54 @@
         android:layout_margin="10dp"
         android:text="Inserire xxx"
         android:textColor="@android:color/black"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/conferma"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/annulla"
-        android:layout_width="match_parent"
+        <Button
+            android:id="@+id/annulla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/annulla" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="150" />
+
+        <Button
+            android:id="@+id/conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/conferma" />
+
+    </LinearLayout>
+
+    <!--
+
+    <LinearLayout android:layout-width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:orientation="horizontal"
+        android:layout_width="fill_parent">
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter"
+            android:id="@+id/enter"
+            android:layout_gravity="center"/>
 
-
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/clear"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+-->
 </LinearLayout>
