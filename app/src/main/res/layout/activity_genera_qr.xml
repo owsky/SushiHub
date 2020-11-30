@@ -14,12 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="178dp"
         android:layout_marginLeft="178dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="178dp"
         android:layout_marginRight="178dp"
         android:text="@string/scan_me"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,12 +30,12 @@
         android:layout_height="200dp"
         android:layout_marginStart="178dp"
         android:layout_marginLeft="178dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="184dp"
         android:layout_marginEnd="178dp"
         android:layout_marginRight="178dp"
-        android:contentDescription="@string/todo"
+        android:contentDescription="@string/qr_code"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:srcCompat="?attr/actionBarDivider" />
@@ -43,12 +44,14 @@
         android:id="@+id/doneqr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="304dp"
-        android:layout_marginLeft="304dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="176dp"
         android:onClick="onClickBtn"
         android:text="@string/done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qr_code" />
+        app:layout_constraintTop_toBottomOf="@+id/qr_code"
+        app:layout_constraintVertical_bias="0.627" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
