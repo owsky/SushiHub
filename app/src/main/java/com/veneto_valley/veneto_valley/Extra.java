@@ -2,6 +2,7 @@ package com.veneto_valley.veneto_valley;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,26 +37,36 @@ public class Extra extends AppCompatActivity {
         addBevande = (Button) findViewById(R.id.button2); //prendo button2
         addDolci = (Button)findViewById(R.id.button3); //prendo button3
 
-        CustomDialogClass cdd=new CustomDialogClass(this);
+        final Activity[] questa = {this};
+        Extra questo = this;
+        final CustomDialogClass[] cdd = new CustomDialogClass[1];
 
 
         //imposto i listener dei bottoni
         addBevande.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), "Ciao sono il bottone 1", Toast.LENGTH_LONG).show();//display the text of button1
-                cdd.titolo= "INSERISCI BEVANDE";
-                cdd.show();
+                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI BEVANDE", questo);
+                cdd[0].show();
             }
         });
         addDolci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cdd.titolo= "INSERISCI DOLCI";
-                //Toast.makeText(getApplicationContext(), "Ciao sono il bottone 2", Toast.LENGTH_LONG).show();//display the text of button1
-                cdd.show();
+                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI DOLCI", questo);
+                cdd[0].show();
             }
         });
+    }
+
+    public void aggiungiRiga(boolean tipo){
+        if(tipo){
+            //TODO:aggiungi riga sotto dolce
+            Toast.makeText(getApplicationContext(), "INSERISCITI UN DOLCE STRONZO!", Toast.LENGTH_LONG).show();//display the text of button1
+        }else{
+            //TODO:aggiungi riga sotto bevande
+            Toast.makeText(getApplicationContext(), "INSERISCITI UNA BEVANDA STRONZO!", Toast.LENGTH_LONG).show();//display the text of button1
+        }
     }
 
 }

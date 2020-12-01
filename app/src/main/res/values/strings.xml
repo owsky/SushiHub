@@ -21,6 +21,9 @@
     <string name="BUTT"> AVANTI </string>
     <string name="conferma"> CONFERMA </string>
     <string name="annulla"> ANNULLA </string>
+    <string name="inserisciN"> Inserisci Nome </string>
+    <string name="quantita"> Inserisci Quantità </string>
+    <string name="Prezzo"> Inserisci Prezzo </string>
     <string name="qr_code">QR Code</string>
     <string name="scan_me">Scan me</string>
     <string name="todo">TODO</string>
