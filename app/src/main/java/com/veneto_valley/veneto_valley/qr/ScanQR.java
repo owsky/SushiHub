@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureActivity;
+import com.veneto_valley.veneto_valley.MainActivity;
 import com.veneto_valley.veneto_valley.R;
 
 
@@ -44,7 +45,8 @@ public class ScanQR extends AppCompatActivity {
 				AlertDialog dialog = builder.create();
 				dialog.show();
 			} else {
-				Toast.makeText(this, "Scan error", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(this, MainActivity.class);
+				startActivity(intent);
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
