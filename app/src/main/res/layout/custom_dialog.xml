@@ -29,8 +29,9 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/quantita"
+            android:hint="@string/quantita"
             android:textAlignment="center"
+            android:inputType="numberDecimal"
             android:textSize="10sp" />
 
         <View
@@ -43,7 +44,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/Prezzo"
+            android:hint="@string/Prezzo"
             android:textAlignment="center"
             android:inputType="numberDecimal"
             android:textSize="10sp" />
@@ -57,12 +58,12 @@
         android:layout_gravity="center_horizontal">
 
 
-
-        <TextView
+        <EditText
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="@string/inserisciN" />
+            android:layout_height="match_parent"
+            android:textSize="10sp"
+            android:hint="@string/inserisciN" />
 
     </LinearLayout>
 
