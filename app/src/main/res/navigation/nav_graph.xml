@@ -2,4 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"/>
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homepageFragment">
+
+    <fragment
+        android:id="@+id/homepageFragment"
+        android:name="com.veneto_valley.veneto_valley.HomepageFragment"
+        android:label="fragment_homepage"
+        tools:layout="@layout/fragment_homepage" >
+        <action
+            android:id="@+id/action_homepageFragment_to_generaQR"
+            app:destination="@id/generaQR" />
+        <action
+            android:id="@+id/action_homepageFragment_to_scanQR"
+            app:destination="@id/scanQR" />
+    </fragment>
+    <fragment
+        android:id="@+id/generaQR"
+        android:name="com.veneto_valley.veneto_valley.GeneraQRFragment"
+        android:label="fragment_genera_qr"
+        tools:layout="@layout/fragment_genera_qr" />
+    <fragment
+        android:id="@+id/scanQR"
+        android:name="com.veneto_valley.veneto_valley.ScanQRFragment"
+        android:label="fragment_scan_qr"
+        tools:layout="@layout/fragment_scan_qr" >
+        <action
+            android:id="@+id/action_scanQR_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
+</navigation>

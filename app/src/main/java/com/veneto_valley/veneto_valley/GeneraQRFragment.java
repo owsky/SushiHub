@@ -1,6 +1,4 @@
-package com.veneto_valley.veneto_valley.qr;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.veneto_valley.veneto_valley;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -8,24 +6,35 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.veneto_valley.veneto_valley.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-public class GeneraQR extends AppCompatActivity {
+public class GeneraQRFragment extends Fragment {
 	private final UUID uuid = UUID.randomUUID();
 	
+	public GeneraQRFragment() {
+		super(R.layout.fragment_genera_qr);
+	}
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_genera_qr);
+	}
+	
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		try {
 			generaQR();
 		} catch (IOException e) {
@@ -37,7 +46,7 @@ public class GeneraQR extends AppCompatActivity {
 	
 	private void generaQR() throws IOException, WriterException {
 //		Genero il QR
-		ImageView imageView = findViewById(R.id.qr_code);
+		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(uuid.toString(), BarcodeFormat.QR_CODE, 200, 200);
 		Bitmap bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
@@ -48,19 +57,15 @@ public class GeneraQR extends AppCompatActivity {
 			}
 		}
 		imageView.setImageBitmap(bitmap);
-		
+
 //		Salvo il QR su memoria interna
-		File path = new File(getBaseContext().getFilesDir(), "Sushi" + File.separator + "Images");
+		File path = new File(requireActivity().getFilesDir(), "Sushi" + File.separator + "Images");
 		if (!path.exists())
 			path.mkdirs();
 		File outFile = new File(path, uuid + ".jpeg");
-
+		
 		FileOutputStream outputStream = new FileOutputStream(outFile);
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 		outputStream.close();
-	}
-	
-	public void onClickBtn(View v) {
-//		TODO Transizione
 	}
 }
