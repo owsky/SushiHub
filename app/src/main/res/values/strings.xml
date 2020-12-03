@@ -1,18 +1,7 @@
 <resources>
     <string name="app_name">Veneto_Valley</string>
 
-    <string name="titolopaginiz">Page Iniziale</string>
-    <string name="CreaTavolo">Crea Tavolo</string>
-    <string name="JoinTavolo">Join Tavolo</string>
-    <string name="StoricoOrdini">Storico Ordini</string>
     <string name="title_activity_extra">ExtraActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="Bevande"> Bevande</string>
     <string name="Dolci"> Dolci</string>
     <string name="tit"> menù extra</string>
@@ -24,12 +13,11 @@
     <string name="inserisciN"> Inserisci Nome </string>
     <string name="quantita"> Inserisci Quantità </string>
     <string name="Prezzo"> Inserisci Prezzo </string>
+    <string name="drawer_close">Drawer close</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="tavolo">Tavolo</string>
+    <string name="scannerizzami">Scannerizzami</string>
     <string name="qr_code">QR Code</string>
-    <string name="scan_me">Scan me</string>
-    <string name="todo">TODO</string>
-    <string name="done">Done</string>
-    <string name="title_activity_scan_qr">ScanQR</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_main2">MainActivity</string>
-    <string name="plus_sign">Plus sign</string>
+    <string name="prosegui">Prosegui</string>
+    <string name="inquadra_il_qr">Inquadra il QR</string>
 </resources>
