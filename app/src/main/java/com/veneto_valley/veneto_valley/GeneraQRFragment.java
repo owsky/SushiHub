@@ -36,6 +36,7 @@ public class GeneraQRFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		((MainActivity) getActivity()).getSupportActionBar().setTitle("Crea tavolo");
 		try {
 			generaQR();
 		} catch (IOException e) {

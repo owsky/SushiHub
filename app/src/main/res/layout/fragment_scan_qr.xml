@@ -13,7 +13,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginLeft="128dp"
         android:layout_marginTop="80dp"
-        android:text="Inquadra il QR"
+        android:text="@string/inquadra_il_qr"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -15,6 +15,7 @@ public class HomepageFragment extends Fragment {
 	
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		((MainActivity) getActivity()).getSupportActionBar().setTitle("Homepage");
 		
 		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> {
 			NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR);

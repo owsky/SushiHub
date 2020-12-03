@@ -9,7 +9,7 @@
         android:id="@+id/homepageFragment"
         android:name="com.veneto_valley.veneto_valley.HomepageFragment"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" >
+        tools:layout="@layout/fragment_homepage">
         <action
             android:id="@+id/action_homepageFragment_to_generaQR"
             app:destination="@id/generaQR" />
@@ -21,12 +21,16 @@
         android:id="@+id/generaQR"
         android:name="com.veneto_valley.veneto_valley.GeneraQRFragment"
         android:label="fragment_genera_qr"
-        tools:layout="@layout/fragment_genera_qr" />
+        tools:layout="@layout/fragment_genera_qr" >
+        <action
+            android:id="@+id/action_generaQR_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/scanQR"
         android:name="com.veneto_valley.veneto_valley.ScanQRFragment"
         android:label="fragment_scan_qr"
-        tools:layout="@layout/fragment_scan_qr" >
+        tools:layout="@layout/fragment_scan_qr">
         <action
             android:id="@+id/action_scanQR_to_homepageFragment"
             app:destination="@id/homepageFragment" />
