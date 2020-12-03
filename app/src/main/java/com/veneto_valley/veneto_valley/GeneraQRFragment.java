@@ -22,6 +22,7 @@ import java.util.UUID;
 
 public class GeneraQRFragment extends Fragment {
 	private final UUID uuid = UUID.randomUUID();
+	private final int qr_size = 250;
 	
 	public GeneraQRFragment() {
 		super(R.layout.fragment_genera_qr);
@@ -48,11 +49,11 @@ public class GeneraQRFragment extends Fragment {
 //		Genero il QR
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(uuid.toString(), BarcodeFormat.QR_CODE, 200, 200);
-		Bitmap bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
+		BitMatrix bitMatrix = qrCodeWriter.encode(uuid.toString(), BarcodeFormat.QR_CODE, qr_size, qr_size);
+		Bitmap bitmap = Bitmap.createBitmap(qr_size, qr_size, Bitmap.Config.RGB_565);
 		
-		for (int x = 0; x < 200; ++x) {
-			for (int y = 0; y < 200; ++y) {
+		for (int x = 0; x < qr_size; ++x) {
+			for (int y = 0; y < qr_size; ++y) {
 				bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
 			}
 		}
