@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homepageFragment">
+    app:startDestination="@id/listPiattiFragment">
 
     <fragment
         android:id="@+id/homepageFragment"
@@ -35,4 +35,9 @@
             android:id="@+id/action_scanQR_to_homepageFragment"
             app:destination="@id/homepageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/listPiattiFragment"
+        android:name="com.veneto_valley.veneto_valley.ListPiattiFragment"
+        android:label="fragment_list_piatti"
+        tools:layout="@layout/fragment_list_piatti" />
 </navigation>
