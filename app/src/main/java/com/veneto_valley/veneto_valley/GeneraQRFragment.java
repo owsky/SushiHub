@@ -15,17 +15,19 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 public class GeneraQRFragment extends Fragment {
-	private final UUID uuid = UUID.randomUUID();
-	private final int qr_size = 250;
+	private final UUID uuid;
 	
 	public GeneraQRFragment() {
 		super(R.layout.fragment_genera_qr);
+		this.uuid = UUID.randomUUID();
+	}
+	
+	public GeneraQRFragment(UUID uuid) {
+		super(R.layout.fragment_genera_qr);
+		this.uuid = uuid;
 	}
 	
 	@Override
@@ -39,17 +41,16 @@ public class GeneraQRFragment extends Fragment {
 		((MainActivity) getActivity()).getSupportActionBar().setTitle("Crea tavolo");
 		try {
 			generaQR();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void generaQR() throws IOException, WriterException {
-//		Genero il QR
+	private void generaQR() throws WriterException {
+		int qr_size = 250;
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		
 		BitMatrix bitMatrix = qrCodeWriter.encode(uuid.toString(), BarcodeFormat.QR_CODE, qr_size, qr_size);
 		Bitmap bitmap = Bitmap.createBitmap(qr_size, qr_size, Bitmap.Config.RGB_565);
 		
@@ -59,15 +60,5 @@ public class GeneraQRFragment extends Fragment {
 			}
 		}
 		imageView.setImageBitmap(bitmap);
-
-//		Salvo il QR su memoria interna
-		File path = new File(requireActivity().getFilesDir(), "Sushi" + File.separator + "Images");
-		if (!path.exists())
-			path.mkdirs();
-		File outFile = new File(path, uuid + ".jpeg");
-		
-		FileOutputStream outputStream = new FileOutputStream(outFile);
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-		outputStream.close();
 	}
 }
