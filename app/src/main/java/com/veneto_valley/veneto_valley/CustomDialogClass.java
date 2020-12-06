@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class CustomDialogClass extends Dialog{
@@ -22,7 +23,6 @@ public class CustomDialogClass extends Dialog{
         super(a);
         this.titolo = titolo;
         this.istanza=istanza;
-        // TODO Auto-generated constructor stub
         this.c = a;
     }
 
@@ -36,7 +36,7 @@ public class CustomDialogClass extends Dialog{
         label.setText(titolo);
         yes = (Button) findViewById(R.id.annulla);
         no = (Button) findViewById(R.id.conferma);
-
+        //
         yes.setOnClickListener(new View.OnClickListener(){
         @Override
         public void onClick(View view) {
@@ -46,35 +46,17 @@ public class CustomDialogClass extends Dialog{
         no.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                istanza.aggiungiRiga(label.getText().equals("INSERISCI DOLCI"));
+                int numero = Integer.parseInt(((EditText)findViewById(R.id.textView9)).getText().toString());
+                double prezzo = Double.parseDouble(((EditText)findViewById(R.id.textView10)).getText().toString());
+                String nome = ((EditText)findViewById(R.id.textView6)).getText().toString();
+                if(titolo.equals("INSERISCI BEVANDE")){
+                    istanza.bevande.add(new Extra.MenuExtra(numero,prezzo,nome));
+                }else{
+                    istanza.dolci.add(new Extra.MenuExtra(numero,prezzo,nome));
+                }
+                istanza.aggiungiRiga();
                 dismiss();
             }
         });
-
-
-
-
     }
-
-
-
-    /*
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.annulla:
-                titolo="";
-                dismiss();
-                break;
-            case R.id.conferma:
-                istanza.aggiungiRiga(titolo.equals("INSERISCI DOLCE"));
-                titolo="";
-                dismiss();
-                break;
-            default:
-                break;
-        }
-        dismiss();
-    }
-    */
 }
