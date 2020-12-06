@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -49,9 +48,8 @@ public class ScanQRFragment extends Fragment {
 		if (result != null) {
 			String contents = result.getContents();
 			if (contents != null) {
-				FragmentManager fm = requireActivity().getSupportFragmentManager();
-				HomepageDialogFragment alertDialog = HomepageDialogFragment.newInstance("QR Scan");
-				alertDialog.show(fm, "fragment_alert");
+				//TODO crea sessione con codice ottenuto
+				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_listPiattiFragment);
 			} else {
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_homepageFragment);
 			}
