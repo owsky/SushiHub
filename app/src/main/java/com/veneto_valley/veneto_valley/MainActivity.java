@@ -16,6 +16,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 	DrawerLayout drawerLayout;
 	AppBarConfiguration appBarConfiguration;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 		drawerLayout.addDrawerListener(actionBarDrawerToggle);
 		actionBarDrawerToggle.syncState();
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

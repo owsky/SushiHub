@@ -1,8 +1,12 @@
-package com.veneto_valley.veneto_valley;
+package com.veneto_valley.veneto_valley.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.veneto_valley.veneto_valley.ConfirmedOrdersFragment;
+import com.veneto_valley.veneto_valley.DeliveredOrdersFragment;
+import com.veneto_valley.veneto_valley.PendingOrdersFragment;
 
 public class OrdersPagerAdapter extends FragmentStateAdapter {
 	

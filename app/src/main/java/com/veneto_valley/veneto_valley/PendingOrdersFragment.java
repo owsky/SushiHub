@@ -1,63 +1,58 @@
 package com.veneto_valley.veneto_valley;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PendingOrdersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PendingOrdersFragment extends Fragment {
-	
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
-	
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
+import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnOrderClickListener {
+	OrdiniAdapter ordiniAdapter;
+	List<Ordine> listaOrdini = new ArrayList<>();
 	
 	public PendingOrdersFragment() {
-		// Required empty public constructor
-	}
-	
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment PendingOrdersFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static PendingOrdersFragment newInstance(String param1, String param2) {
-		PendingOrdersFragment fragment = new PendingOrdersFragment();
-		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
-		fragment.setArguments(args);
-		return fragment;
+		super(R.layout.fragment_pending_orders);
 	}
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
+		
+		listaOrdini.add(new Ordine("1", "Ravioli"));
+		listaOrdini.add(new Ordine("7", "Cinghiale"));
+		listaOrdini.add(new Ordine("55", "Yaki Udon"));
+		listaOrdini.add(new Ordine("101", "Sake Nigiri"));
+		
+		ordiniAdapter = new OrdiniAdapter(requireContext(), listaOrdini, this);
+		recyclerView.setAdapter(ordiniAdapter);
+		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+		recyclerView.addItemDecoration(new MyDividerItemDecoration(requireContext()));
 	}
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_pending_orders, container, false);
+	public void onOrderClick(int position) {
+		openDialog(position);
+	}
+	
+	public void openDialog(int position) {
+		FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+		ModificaPiattoDialog modificaPiattoDialog = new ModificaPiattoDialog(listaOrdini, ordiniAdapter, position);
+		modificaPiattoDialog.show(fragmentManager, null);
+	}
+	
+	public void applica(int position, String codice, String descrizione) {
+		listaOrdini.get(position).codice = codice;
+		listaOrdini.get(position).descrizione = descrizione;
+		ordiniAdapter.notifyItemChanged(position);
 	}
 }

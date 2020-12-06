@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.veneto_valley.veneto_valley.adapters.OrdersPagerAdapter;
 
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ public class ListPiattiFragment extends Fragment {
 		
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
 		viewPager2.setAdapter(new OrdersPagerAdapter(this));
-		
+		viewPager2.setUserInputEnabled(false);
 		TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 		TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
 				tabLayout, viewPager2, (tab, position) -> {

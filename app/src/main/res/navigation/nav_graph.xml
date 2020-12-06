@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listPiattiFragment">
+    app:startDestination="@id/homepageFragment">
 
     <fragment
         android:id="@+id/homepageFragment"
@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_generaQR_to_homepageFragment"
             app:destination="@id/homepageFragment" />
+        <action
+            android:id="@+id/action_generaQR_to_listPiattiFragment"
+            app:destination="@id/listPiattiFragment" />
     </fragment>
     <fragment
         android:id="@+id/scanQR"
@@ -34,6 +37,9 @@
         <action
             android:id="@+id/action_scanQR_to_homepageFragment"
             app:destination="@id/homepageFragment" />
+        <action
+            android:id="@+id/action_scanQR_to_listPiattiFragment"
+            app:destination="@id/listPiattiFragment" />
     </fragment>
     <fragment
         android:id="@+id/listPiattiFragment"
