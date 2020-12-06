@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,10 +34,12 @@ public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnO
 		listaOrdini.add(new Ordine("55", "Yaki Udon"));
 		listaOrdini.add(new Ordine("101", "Sake Nigiri"));
 		
-		ordiniAdapter = new OrdiniAdapter(requireContext(), listaOrdini, this);
+		ordiniAdapter = new OrdiniAdapter(requireActivity(), listaOrdini, this);
 		recyclerView.setAdapter(ordiniAdapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		recyclerView.addItemDecoration(new MyDividerItemDecoration(requireContext()));
+		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeCallback(ordiniAdapter, getContext()));
+		itemTouchHelper.attachToRecyclerView(recyclerView);
 	}
 	
 	@Override
