@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,6 +65,37 @@ public class Extra extends AppCompatActivity {
             }
         });
     }
+    @SuppressLint("SetTextI18n")
+    private LinearLayout faiCasellina(int numero, Double prezzo, String nome){
+        LinearLayout layoutCasellina = new LinearLayout(this);
+        layoutCasellina.setOrientation(LinearLayout.HORIZONTAL);
+        //abbiamo fatto linear layout orizzontale
+        //ora facciamo le tre caselline
+        TextView casellina1 = new TextView(this);
+        TextView casellina2 = new TextView(this);
+        TextView casellina3 = new TextView(this);
+        casellina1.setWidth(500);
+        casellina2.setWidth(200);
+        casellina3.setWidth(250);
+        casellina1.setHeight(70);
+        casellina2.setHeight(70);
+        casellina3.setHeight(70);
+        casellina1.setTextSize(20);
+        casellina2.setTextSize(20);
+        casellina3.setTextSize(20);
+        casellina1.setText(nome);
+        casellina2.setText(numero + " qt");
+        casellina3.setText(prezzo + "€");
+        casellina1.setBackgroundColor(Color.LTGRAY);
+        casellina2.setBackgroundColor(Color.LTGRAY);
+        casellina3.setBackgroundColor(Color.LTGRAY);
+        layoutCasellina.addView(casellina1, 0);
+        layoutCasellina.addView(casellina2, 1);
+        layoutCasellina.addView(casellina3, 2);
+        return layoutCasellina;
+
+    }
+
 
     @SuppressLint("SetTextI18n")
     public void aggiungiRiga(){
@@ -75,26 +107,14 @@ public class Extra extends AppCompatActivity {
         int i=0,j=0;
         for(MenuExtra m : dolci){
             if(!m.inserito){
-                //devo inserirlo e cambiare il flag
-                //TODO: TOGLIERE LA CASELLINA E FARE UNA GRID VIEW
-                TextView casellina = new TextView(this);
-                casellina.setWidth(301);
-                casellina.setHeight(70);
-                casellina.setTextSize(20);
-                casellina.setText(m.nome + "\t\t\t\t\t" + m.numero + "qta\t\t" + m.prezzo+"€");
-                dolciLayout.addView(casellina,i);
+                dolciLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), i);
                 m.inserito=true;
                 i++;
             }
         }
         for(MenuExtra m : bevande){
             if(!m.inserito){
-                //devo inserirlo e cambiare il flag
-                TextView casellina = new TextView(this);
-                casellina.setWidth(301);
-                casellina.setHeight(60);
-                casellina.setText(m.nome + " " + m.numero + " " + m.prezzo);
-                bevandeLayout.addView(casellina,j);
+                bevandeLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), j);
                 m.inserito=true;
                 j++;
             }
