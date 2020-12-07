@@ -9,12 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnD
 		
 		adapter = new OrdiniAdapter(requireActivity(), listaOrdini, this, this);
 		
-		RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPending);
+		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

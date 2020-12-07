@@ -30,7 +30,6 @@ public class ScanQRFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle("Unisciti a un tavolo");
 	}
 	
 	private void scanCode() {

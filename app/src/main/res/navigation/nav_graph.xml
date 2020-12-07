@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homepageFragment"
         android:name="com.veneto_valley.veneto_valley.HomepageFragment"
-        android:label="fragment_homepage"
+        android:label="Home"
         tools:layout="@layout/fragment_homepage">
         <action
             android:id="@+id/action_homepageFragment_to_generaQR"
@@ -20,32 +20,33 @@
     <fragment
         android:id="@+id/generaQR"
         android:name="com.veneto_valley.veneto_valley.GeneraQRFragment"
-        android:label="fragment_genera_qr"
-        tools:layout="@layout/fragment_genera_qr" >
+        android:label="Crea tavolo"
+        tools:layout="@layout/fragment_genera_qr">
         <action
             android:id="@+id/action_generaQR_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:popUpTo="@id/homepageFragment" />
         <action
             android:id="@+id/action_generaQR_to_listPiattiFragment"
-            app:destination="@id/listPiattiFragment" />
+            app:destination="@id/listaPiattiFragment" />
     </fragment>
     <fragment
         android:id="@+id/scanQR"
         android:name="com.veneto_valley.veneto_valley.ScanQRFragment"
-        android:label="fragment_scan_qr"
+        android:label="Unisciti a un tavolo"
         tools:layout="@layout/fragment_scan_qr">
         <action
             android:id="@+id/action_scanQR_to_homepageFragment"
             app:destination="@id/homepageFragment" />
         <action
             android:id="@+id/action_scanQR_to_listPiattiFragment"
-            app:destination="@id/listPiattiFragment" />
+            app:destination="@id/listaPiattiFragment" />
     </fragment>
     <fragment
-        android:id="@+id/listPiattiFragment"
+        android:id="@+id/listaPiattiFragment"
         android:name="com.veneto_valley.veneto_valley.ListPiattiFragment"
-        android:label="fragment_list_piatti"
-        tools:layout="@layout/fragment_list_piatti" >
+        android:label="Tavolo"
+        tools:layout="@layout/fragment_list_piatti">
         <action
             android:id="@+id/action_listPiattiFragment_to_aggiungiOrdiniFragment"
             app:destination="@id/aggiungiOrdiniFragment" />
@@ -53,10 +54,10 @@
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
         android:name="com.veneto_valley.veneto_valley.AggiungiOrdiniFragment"
-        android:label="AggiungiOrdiniFragment"
+        android:label="Aggiungi un ordine"
         tools:layout="@layout/fragment_aggiungi_ordini">
         <action
             android:id="@+id/action_aggiungiOrdiniFragment_to_listPiattiFragment"
-            app:destination="@id/listPiattiFragment" />
+            app:destination="@id/listaPiattiFragment" />
     </fragment>
 </navigation>

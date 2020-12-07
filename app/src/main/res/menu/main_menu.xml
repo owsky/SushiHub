@@ -7,15 +7,15 @@
         <item
             android:id="@+id/homepageFragment"
             android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home" />
+        <item
+            android:id="@+id/listaPiattiFragment"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="Tavolo" />
         <item
-            android:id="@+id/generaQR"
+            android:id="@+id/storicoFragment"
             android:icon="@drawable/ic_baseline_home_24"
-            android:title="Genera QR" />
-        <item
-            android:id="@+id/scanQR"
-            android:icon="@drawable/ic_baseline_home_24"
-            android:title="Scan QR" />
+            android:title="Storico ordini" />
     </group>
 
     <item android:title="Social">

@@ -41,20 +41,15 @@ public class GeneraQRFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle("Crea tavolo");
+		
 		try {
 			generaQR();
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
 		
-		Button btn = (Button) view.findViewById(R.id.doneqr);
-		btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NavHostFragment.findNavController(GeneraQRFragment.this).navigate(R.id.action_generaQR_to_listPiattiFragment);
-			}
-		});
+		Button btn = view.findViewById(R.id.doneqr);
+		btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRFragment.this).navigate(R.id.action_generaQR_to_listPiattiFragment));
 		
 	}
 	
@@ -73,5 +68,4 @@ public class GeneraQRFragment extends Fragment {
 		}
 		imageView.setImageBitmap(bitmap);
 	}
-	
 }
