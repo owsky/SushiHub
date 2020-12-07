@@ -8,9 +8,9 @@ import com.veneto_valley.veneto_valley.ConfirmedOrdersFragment;
 import com.veneto_valley.veneto_valley.DeliveredOrdersFragment;
 import com.veneto_valley.veneto_valley.PendingOrdersFragment;
 
-public class OrdersPagerAdapter extends FragmentStateAdapter {
+public class ListeOrdiniAdapter extends FragmentStateAdapter {
 	
-	public OrdersPagerAdapter(@NonNull Fragment fragment) {
+	public ListeOrdiniAdapter(@NonNull Fragment fragment) {
 		super(fragment);
 	}
 	

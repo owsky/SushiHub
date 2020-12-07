@@ -45,5 +45,18 @@
         android:id="@+id/listPiattiFragment"
         android:name="com.veneto_valley.veneto_valley.ListPiattiFragment"
         android:label="fragment_list_piatti"
-        tools:layout="@layout/fragment_list_piatti" />
+        tools:layout="@layout/fragment_list_piatti" >
+        <action
+            android:id="@+id/action_listPiattiFragment_to_aggiungiOrdiniFragment"
+            app:destination="@id/aggiungiOrdiniFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aggiungiOrdiniFragment"
+        android:name="com.veneto_valley.veneto_valley.AggiungiOrdiniFragment"
+        android:label="AggiungiOrdiniFragment"
+        tools:layout="@layout/fragment_aggiungi_ordini">
+        <action
+            android:id="@+id/action_aggiungiOrdiniFragment_to_listPiattiFragment"
+            app:destination="@id/listPiattiFragment" />
+    </fragment>
 </navigation>
