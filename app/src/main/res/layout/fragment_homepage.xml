@@ -46,7 +46,8 @@
         android:layout_marginBottom="56dp"
         android:text="Unisciti"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCrea" />
 
     <Button
         android:id="@+id/btnCrea"
