@@ -17,6 +17,7 @@
         android:layout_marginRight="20dp"
         android:text="Benvenuto in Veneto Valley"
         android:textSize="30sp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +33,7 @@
         android:layout_marginBottom="36dp"
         android:text="Vuoi creare un tavolo o unirti ad uno già esistente?"
         android:textSize="16sp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnCrea"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
