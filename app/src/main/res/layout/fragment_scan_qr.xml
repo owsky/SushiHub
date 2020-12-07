@@ -13,8 +13,11 @@
         android:layout_marginStart="128dp"
         android:layout_marginLeft="128dp"
         android:layout_marginTop="80dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginRight="128dp"
         android:text="@string/inquadra_il_qr"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
