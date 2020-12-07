@@ -3,10 +3,10 @@ package com.veneto_valley.veneto_valley;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -16,11 +16,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
-	DrawerLayout drawerLayout;
-	AppBarConfiguration appBarConfiguration;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+	private DrawerLayout drawer;
+	private NavController navController;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,42 +29,49 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		
-		drawerLayout = findViewById(R.id.drawer_layout);
+
+		navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+		drawer = findViewById(R.id.drawer_layout);
 		NavigationView navigationView = findViewById(R.id.navigation_view);
-		NavController navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment));
-		appBarConfiguration = new AppBarConfiguration.Builder(R.id.homepageFragment, R.id.generaQR, R.id.scanQR).setDrawerLayout(drawerLayout).build();
 
-		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-		NavigationUI.setupWithNavController(navigationView, navController);
+		Set<Integer> topLevelDestinations = new HashSet<>();
+		topLevelDestinations.add(R.id.homepageFragment);
+		topLevelDestinations.add(R.id.listaPiattiFragment);
+		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
+		NavigationUI.setupActionBarWithNavController(this, navController, drawer);
+		NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 		
-		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-		drawerLayout.addDrawerListener(actionBarDrawerToggle);
-		actionBarDrawerToggle.syncState();
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		navigationView.setNavigationItemSelectedListener(this);
 	}
-
+	
 	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.homepageFragment:
-				Navigation.findNavController(this, R.id.homepageFragment);
-				return true;
-			case R.id.generaQR:
-				Navigation.findNavController(this, R.id.generaQR);
-			default:
-				super.onOptionsItemSelected(item);
-		}
-
-		return super.onOptionsItemSelected(item);
+	public boolean onSupportNavigateUp() {
+		return NavigationUI.navigateUp(navController, drawer) || super.onSupportNavigateUp();
 	}
 
 	@Override
 	public void onBackPressed() {
-		if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-			drawerLayout.closeDrawer(GravityCompat.START);
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
 		} else {
 			super.onBackPressed();
 		}
+	}
+	
+	@Override
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.homepageFragment:
+				navController.navigate(R.id.homepageFragment);
+				break;
+			case R.id.listaPiattiFragment:
+				navController.navigate(R.id.listaPiattiFragment);
+				break;
+			default:
+				NavigationUI.onNavDestinationSelected(item, navController);
+		}
+		
+		drawer.closeDrawer(GravityCompat.START);
+		return true;
 	}
 }

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 public class AggiungiOrdiniFragment extends Fragment {
 	
 	public AggiungiOrdiniFragment() {
@@ -22,6 +24,5 @@ public class AggiungiOrdiniFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
 	}
 }

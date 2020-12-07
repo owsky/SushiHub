@@ -6,11 +6,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -36,9 +33,6 @@ public class ListPiattiFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		ActionBar supportToolbar = Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar());
-		supportToolbar.setTitle("Tavolo");
-		supportToolbar.setDisplayHomeAsUpEnabled(true);
 		
 		FloatingActionButton fab = view.findViewById(R.id.fab);
 		fab.setOnClickListener(v -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
