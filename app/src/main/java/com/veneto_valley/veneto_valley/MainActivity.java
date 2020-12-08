@@ -37,17 +37,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		topLevelDestinations.add(R.id.homepageFragment);
 		topLevelDestinations.add(R.id.listaPiattiFragment);
 		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
-		NavigationUI.setupActionBarWithNavController(this, navController, drawer);
 		NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 		
 		navigationView.setNavigationItemSelectedListener(this);
 	}
 	
-	@Override
-	public boolean onSupportNavigateUp() {
-		return NavigationUI.navigateUp(navController, drawer) || super.onSupportNavigateUp();
-	}
-
 	@Override
 	public void onBackPressed() {
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -59,10 +53,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		if (item.getItemId() == R.id.homepageFragment)
-				navController.navigate(R.id.homepageFragment);
-		else if (item.getItemId() == R.id.listaPiattiFragment)
-				navController.navigate(R.id.listaPiattiFragment);
+		if (item.getItemId() == R.id.listaPiattiFragment) {
+			// TODO se non c'è una sessione attiva naviga verso homepageFragment
+//			navController.navigate(R.id.homepageFragment);
+			navController.navigate(R.id.listaPiattiFragment);
+		} else if (item.getItemId() == R.id.listaPiattiFragment)
+			navController.navigate(R.id.listaPiattiFragment);
 		else
 			NavigationUI.onNavDestinationSelected(item, navController);
 		drawer.closeDrawer(GravityCompat.START);

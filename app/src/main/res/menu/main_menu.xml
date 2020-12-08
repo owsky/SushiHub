@@ -5,10 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/homepageFragment"
-            android:icon="@drawable/ic_baseline_home_24"
-            android:title="Home" />
-        <item
             android:id="@+id/listaPiattiFragment"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Tavolo" />
