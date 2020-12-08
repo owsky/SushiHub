@@ -3,10 +3,9 @@ package com.veneto_valley.veneto_valley;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.appcompat.widget.Toolbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;

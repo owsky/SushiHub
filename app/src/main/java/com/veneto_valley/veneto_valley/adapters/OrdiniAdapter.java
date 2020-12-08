@@ -1,7 +1,6 @@
 package com.veneto_valley.veneto_valley.adapters;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;

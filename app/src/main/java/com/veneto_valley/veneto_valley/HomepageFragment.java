@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Objects;
-
 public class HomepageFragment extends Fragment {
 	
 	public HomepageFragment() {

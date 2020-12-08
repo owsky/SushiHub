@@ -13,8 +13,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
-import java.util.Objects;
-
 public class ScanQRFragment extends Fragment {
 	
 	public ScanQRFragment() {
