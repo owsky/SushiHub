@@ -6,11 +6,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
+import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,6 +25,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.veneto_valley.veneto_valley.adapters.ListeOrdiniAdapter;
+import com.veneto_valley.veneto_valley.dialogs.ExitDialog;
+import com.veneto_valley.veneto_valley.dialogs.ModificaPiattoDialog;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -34,6 +40,13 @@ public class ListPiattiFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+			@Override
+			public void handleOnBackPressed() {
+				ExitDialog dialog = new ExitDialog();
+				dialog.show(getParentFragmentManager(), null);
+			}
+		});
 	}
 	
 	@Override

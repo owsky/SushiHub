@@ -48,7 +48,7 @@ public class ScanQRFragment extends Fragment {
 				//TODO crea sessione con codice ottenuto
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_listPiattiFragment);
 			} else {
-				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_homepageFragment);
+				NavHostFragment.findNavController(this).navigateUp();
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);

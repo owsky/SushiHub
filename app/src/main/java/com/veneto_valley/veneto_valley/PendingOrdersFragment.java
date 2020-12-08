@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
+import com.veneto_valley.veneto_valley.dialogs.ModificaPiattoDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,6 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnDragStartListener, OrdiniAdapter.OnOrderClickListener {
 	private final List<Ordine> listaOrdini;
 	private OrdiniAdapter adapter;
-	
 	private ItemTouchHelper itemTouchHelper;
 	
 	public PendingOrdersFragment() {
