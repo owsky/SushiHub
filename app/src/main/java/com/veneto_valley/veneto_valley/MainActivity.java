@@ -60,17 +60,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.homepageFragment:
+		if (item.getItemId() == R.id.homepageFragment)
 				navController.navigate(R.id.homepageFragment);
-				break;
-			case R.id.listaPiattiFragment:
+		else if (item.getItemId() == R.id.listaPiattiFragment)
 				navController.navigate(R.id.listaPiattiFragment);
-				break;
-			default:
-				NavigationUI.onNavDestinationSelected(item, navController);
-		}
-		
+		else
+			NavigationUI.onNavDestinationSelected(item, navController);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
