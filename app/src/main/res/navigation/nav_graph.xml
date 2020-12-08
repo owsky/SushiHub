@@ -22,26 +22,20 @@
         android:name="com.veneto_valley.veneto_valley.GeneraQRFragment"
         android:label="Crea tavolo"
         tools:layout="@layout/fragment_genera_qr">
-        <action
-            android:id="@+id/action_generaQR_to_homepageFragment"
-            app:destination="@id/homepageFragment"
-            app:popUpTo="@id/homepageFragment" />
-        <action
-            android:id="@+id/action_generaQR_to_listPiattiFragment"
-            app:destination="@id/listaPiattiFragment" />
-        <argument android:name="codice_tavolo"
+        <argument
+            android:name="codice_tavolo"
+            android:defaultValue="@null"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_generaQR_to_impostaTavolo"
+            app:destination="@id/impostaTavolo" />
     </fragment>
     <fragment
         android:id="@+id/scanQR"
         android:name="com.veneto_valley.veneto_valley.ScanQRFragment"
         android:label="Unisciti a un tavolo"
         tools:layout="@layout/fragment_scan_qr">
-        <action
-            android:id="@+id/action_scanQR_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
         <action
             android:id="@+id/action_scanQR_to_listPiattiFragment"
             app:destination="@id/listaPiattiFragment" />
@@ -56,15 +50,22 @@
             app:destination="@id/aggiungiOrdiniFragment" />
         <action
             android:id="@+id/action_listaPiattiFragment_to_generaQR"
-            app:destination="@id/generaQR" />
+            app:destination="@id/generaQR"
+            app:popUpTo="@id/generaQR"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
         android:name="com.veneto_valley.veneto_valley.AggiungiOrdiniFragment"
         android:label="Aggiungi un ordine"
-        tools:layout="@layout/fragment_aggiungi_ordini">
+        tools:layout="@layout/fragment_aggiungi_ordini" />
+    <fragment
+        android:id="@+id/impostaTavolo"
+        android:name="com.veneto_valley.veneto_valley.ImpostaTavolo"
+        android:label="Informazioni aggiuntive"
+        tools:layout="@layout/fragment_imposta_tavolo">
         <action
-            android:id="@+id/action_aggiungiOrdiniFragment_to_listPiattiFragment"
+            android:id="@+id/action_impostaTavolo_to_listaPiattiFragment"
             app:destination="@id/listaPiattiFragment" />
     </fragment>
 </navigation>
