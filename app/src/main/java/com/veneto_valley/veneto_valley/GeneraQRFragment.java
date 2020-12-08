@@ -20,16 +20,10 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.UUID;
 
 public class GeneraQRFragment extends Fragment {
-	private final UUID uuid;
+	private String codice;
 	
 	public GeneraQRFragment() {
 		super(R.layout.fragment_genera_qr);
-		this.uuid = UUID.randomUUID();
-	}
-	
-	public GeneraQRFragment(UUID uuid) {
-		super(R.layout.fragment_genera_qr);
-		this.uuid = uuid;
 	}
 	
 	@Override
@@ -40,6 +34,16 @@ public class GeneraQRFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		
+		if (getArguments() != null) {
+			GeneraQRFragmentArgs args = GeneraQRFragmentArgs.fromBundle(getArguments());
+			if (args.getCodiceTavolo() != null)
+				codice = args.getCodiceTavolo();
+			else
+				codice = UUID.randomUUID().toString();
+		} else {
+			codice = UUID.randomUUID().toString();
+		}
 		
 		try {
 			generaQR();
@@ -57,7 +61,7 @@ public class GeneraQRFragment extends Fragment {
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		
-		BitMatrix bitMatrix = qrCodeWriter.encode(uuid.toString(), BarcodeFormat.QR_CODE, qr_size, qr_size);
+		BitMatrix bitMatrix = qrCodeWriter.encode(codice, BarcodeFormat.QR_CODE, qr_size, qr_size);
 		Bitmap bitmap = Bitmap.createBitmap(qr_size, qr_size, Bitmap.Config.RGB_565);
 		
 		for (int x = 0; x < qr_size; ++x) {

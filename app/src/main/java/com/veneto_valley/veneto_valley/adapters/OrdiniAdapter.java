@@ -88,7 +88,7 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
-			handleView = (ImageView) itemView.findViewById(R.id.dragHandle);
+			handleView = itemView.findViewById(R.id.dragHandle);
 
 			itemView.setOnClickListener(this);
 		}
