@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley;
+package com.veneto_valley.veneto_valley.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.veneto_valley.veneto_valley.Ordine;
+import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 
 import java.util.List;
