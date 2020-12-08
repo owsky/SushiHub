@@ -3,9 +3,12 @@ package com.veneto_valley.veneto_valley;
 public class Ordine {
 	public String codice, descrizione;
 	public int quantita;
+	public Status status = Status.PENDING;
 	
-	public Ordine() {
-	
+	private enum Status {
+		PENDING,
+		CONFiRMED,
+		DELIVERED
 	}
 	
 	public Ordine(String codice) {

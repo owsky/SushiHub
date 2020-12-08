@@ -28,6 +28,13 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 	private int indiceCancellato;
 	private Snackbar snackbar;
 	
+	public OrdiniAdapter(Activity activity, List<Ordine> listaOrdini) {
+		this.activity = activity;
+		this.listaOrdini = listaOrdini;
+		this.onOrderClickListener = null;
+		this.dragStartListener = null;
+	}
+	
 	public OrdiniAdapter(Activity activity, List<Ordine> listaOrdini, OnOrderClickListener onOrderClickListener, OnDragStartListener dragStartListener) {
 		this.activity = activity;
 		this.listaOrdini = listaOrdini;
@@ -50,26 +57,19 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
 		holder.quantita.setText(String.format(Locale.ITALY, "%d", listaOrdini.get(position).quantita));
-		holder.handleView.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-					dragStartListener.onDragStarted(holder);
+		if (dragStartListener != null) {
+			holder.handleView.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+						dragStartListener.onDragStarted(holder);
+					}
+					return false;
 				}
-				return false;
-			}
-		});
-	}
-	
-	public void deleteItem(int position) {
-		cancellato = listaOrdini.get(position);
-		indiceCancellato = position;
-		listaOrdini.remove(position);
-		notifyItemRemoved(position);
-		View view = activity.findViewById(R.id.pendingOrders);
-		snackbar = Snackbar.make(view, "Snackbar text", Snackbar.LENGTH_SHORT);
-		snackbar.setAction("Undo delete?", v -> undoDelete());
-		snackbar.show();
+			});
+		} else {
+			holder.handleView.setVisibility(View.GONE);
+		}
 	}
 	
 	@Override
@@ -78,24 +78,25 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 	}
 	
 	public static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-		private final OnOrderClickListener onOrderClickListener;
+		private OnOrderClickListener onOrderClickListener;
 		private final TextView codice, descrizione, quantita;
 		public final ImageView handleView;
 		
 		public ItemViewHolder(View itemView, OnOrderClickListener onOrderClickListener) {
 			super(itemView);
-			this.onOrderClickListener = onOrderClickListener;
+			if (onOrderClickListener != null)
+				this.onOrderClickListener = onOrderClickListener;
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
 			handleView = itemView.findViewById(R.id.dragHandle);
-
 			itemView.setOnClickListener(this);
 		}
 		
 		@Override
 		public void onClick(View v) {
-			onOrderClickListener.onOrderClick(getAdapterPosition());
+			if (onOrderClickListener != null)
+				onOrderClickListener.onOrderClick(getAdapterPosition());
 		}
 	}
 	
@@ -111,13 +112,24 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 		snackbar.show();
 	}
 	
-	private void undoDelete() {
-		listaOrdini.add(indiceCancellato, cancellato);
-		notifyItemInserted(indiceCancellato);
+	public void deleteItem(int position) {
+		cancellato = listaOrdini.get(position);
+		indiceCancellato = position;
+		listaOrdini.remove(position);
+		notifyItemRemoved(position);
+		View view = activity.findViewById(R.id.listaPiattiFragment);
+		snackbar = Snackbar.make(view, "Snackbar text", Snackbar.LENGTH_SHORT);
+		snackbar.setAction("Undo delete?", v -> undoDelete());
+		snackbar.show();
 	}
 	
 	private void undoSend() {
 		// TODO undo master
+		listaOrdini.add(indiceCancellato, cancellato);
+		notifyItemInserted(indiceCancellato);
+	}
+	
+	private void undoDelete() {
 		listaOrdini.add(indiceCancellato, cancellato);
 		notifyItemInserted(indiceCancellato);
 	}
