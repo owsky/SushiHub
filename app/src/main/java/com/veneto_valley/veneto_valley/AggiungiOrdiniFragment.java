@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,24 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.veneto_valley.veneto_valley.dialogs.ExitDialog;
+import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 
 public class AggiungiOrdiniFragment extends Fragment {
 	
 	public AggiungiOrdiniFragment() {
 		super(R.layout.fragment_aggiungi_ordini);
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requireActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
-			@Override
-			public void handleOnBackPressed() {
-				ExitDialog dialog = new ExitDialog();
-				dialog.show(getParentFragmentManager(), null);
-			}
-		});
 	}
 	
 	@Override
@@ -59,5 +48,18 @@ public class AggiungiOrdiniFragment extends Fragment {
 		});
 	}
 	
-	
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		
+		setHasOptionsMenu(true);
+		
+		requireActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+			@Override
+			public void handleOnBackPressed() {
+				CancelDialog dialog = new CancelDialog();
+				dialog.show(getParentFragmentManager(), null);
+			}
+		});
+	}
 }

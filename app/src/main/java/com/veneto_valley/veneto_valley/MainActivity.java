@@ -1,9 +1,7 @@
 package com.veneto_valley.veneto_valley;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -14,13 +12,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 	private DrawerLayout drawer;
 	private NavController navController;
+	private AppBarConfiguration appBarConfiguration;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +28,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-
+		
 		navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 		drawer = findViewById(R.id.drawer_layout);
 		NavigationView navigationView = findViewById(R.id.navigation_view);
-
+		
 		Set<Integer> topLevelDestinations = new HashSet<>();
 		topLevelDestinations.add(R.id.homepageFragment);
 		topLevelDestinations.add(R.id.listaPiattiFragment);
-		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
-		NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-		
-		navigationView.setNavigationItemSelectedListener(this);
+		appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
+		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+		NavigationUI.setupWithNavController(navigationView, navController);
+	}
+	
+	@Override
+	public boolean onSupportNavigateUp() {
+		if (navController.getCurrentDestination().getId() == R.id.aggiungiOrdiniFragment) {
+			CancelDialog dialog = new CancelDialog();
+			dialog.show(getSupportFragmentManager(), null);
+			return true;
+		}
+		return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
 	}
 	
 	@Override
@@ -49,19 +58,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		} else {
 			super.onBackPressed();
 		}
-	}
-	
-	@Override
-	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		if (item.getItemId() == R.id.listaPiattiFragment) {
-			// TODO se non c'è una sessione attiva naviga verso homepageFragment
-//			navController.navigate(R.id.homepageFragment);
-			navController.navigate(R.id.listaPiattiFragment);
-		} else if (item.getItemId() == R.id.listaPiattiFragment)
-			navController.navigate(R.id.listaPiattiFragment);
-		else
-			NavigationUI.onNavDestinationSelected(item, navController);
-		drawer.closeDrawer(GravityCompat.START);
-		return true;
 	}
 }
