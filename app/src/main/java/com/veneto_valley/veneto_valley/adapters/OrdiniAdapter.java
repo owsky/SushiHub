@@ -123,6 +123,16 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 		snackbar.show();
 	}
 	
+	public void retrieveFromConfirmed(int position) {
+	
+	
+	}
+	
+	public void retrieveFromDelivered(int position) {
+	
+	
+	}
+	
 	private void undoSend() {
 		// TODO undo master
 		listaOrdini.add(indiceCancellato, cancellato);
@@ -132,6 +142,14 @@ public class OrdiniAdapter extends RecyclerView.Adapter<OrdiniAdapter.ItemViewHo
 	private void undoDelete() {
 		listaOrdini.add(indiceCancellato, cancellato);
 		notifyItemInserted(indiceCancellato);
+	}
+	
+	private void undoDelivered() {
+	
+	}
+	
+	private void undoConfirmed() {
+	
 	}
 	
 	public interface OnOrderClickListener {

@@ -62,7 +62,7 @@ public class ConfirmedOrdersFragment extends Fragment {
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.LEFT)
 					// TODO cambia status ordine nel DB
-					adapter.deleteItem(viewHolder.getAdapterPosition());
+					adapter.retrieveFromConfirmed(viewHolder.getAdapterPosition());
 			}
 			
 			@Override
