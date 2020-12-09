@@ -19,12 +19,11 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import java.util.*;
 
 import static android.content.ContentValues.TAG;
 
 public class Connessione {
-    public static final Strategy STRATEGY = Strategy.P2P_POINT_TO_POINT;
+    public static final Strategy STRATEGY = Strategy.P2P_STAR;
     public static final String SERVICE_ID="120001";
     MainActivity base;
     String strendPointId;
