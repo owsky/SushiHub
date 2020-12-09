@@ -34,15 +34,13 @@ public class GeneraQRFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		if (getArguments() != null) {
-			GeneraQRFragmentArgs args = GeneraQRFragmentArgs.fromBundle(getArguments());
-			if (args.getCodiceTavolo() != null)
-				codice = args.getCodiceTavolo();
-			else
-				codice = UUID.randomUUID().toString();
+		GeneraQRFragmentArgs args;
+		if (getArguments() != null && (args = GeneraQRFragmentArgs.fromBundle(getArguments())).getCodiceTavolo() != null) {
+			codice = args.getCodiceTavolo();
+			view.findViewById(R.id.doneqr).setVisibility(View.INVISIBLE);
 		} else {
 			codice = UUID.randomUUID().toString();
+			view.findViewById(R.id.doneqr).setVisibility(View.VISIBLE);
 		}
 		
 		try {
