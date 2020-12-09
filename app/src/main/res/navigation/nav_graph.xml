@@ -38,7 +38,8 @@
         tools:layout="@layout/fragment_scan_qr">
         <action
             android:id="@+id/action_scanQR_to_listPiattiFragment"
-            app:destination="@id/listaPiattiFragment" />
+            app:destination="@id/listaPiattiFragment"
+            app:popUpTo="@id/listaPiattiFragment" />
     </fragment>
     <fragment
         android:id="@+id/listaPiattiFragment"
@@ -51,8 +52,7 @@
         <action
             android:id="@+id/action_listaPiattiFragment_to_generaQR"
             app:destination="@id/generaQR"
-            app:popUpTo="@id/generaQR"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
@@ -66,6 +66,7 @@
         tools:layout="@layout/fragment_imposta_tavolo">
         <action
             android:id="@+id/action_impostaTavolo_to_listaPiattiFragment"
-            app:destination="@id/listaPiattiFragment" />
+            app:destination="@id/listaPiattiFragment"
+            app:popUpTo="@id/listaPiattiFragment" />
     </fragment>
 </navigation>
