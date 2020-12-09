@@ -54,29 +54,29 @@ public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnD
 			public boolean isLongPressDragEnabled() {
 				return true;
 			}
-
+			
 			@Override
 			public boolean isItemViewSwipeEnabled() {
 				return true;
 			}
-
-
+			
+			
 			@Override
 			public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
 				super.clearView(recyclerView, viewHolder);
 				viewHolder.itemView.setAlpha(1.0f);
 			}
-
+			
 			@Override
 			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
 				int fromPosition = viewHolder.getAdapterPosition();
 				int toPosition = target.getAdapterPosition();
-
+				
 				Collections.swap(listaOrdini, fromPosition, toPosition);
 				Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(fromPosition, toPosition);
 				return false;
 			}
-
+			
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.RIGHT)
@@ -84,9 +84,9 @@ public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnD
 				else if (direction == ItemTouchHelper.LEFT)
 					adapter.deleteItem(viewHolder.getAdapterPosition());
 			}
-
+			
 			@Override
-			public void onChildDraw (@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 				if (dX < 0) {
 					new RecyclerViewSwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 							.addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))
@@ -100,7 +100,7 @@ public class PendingOrdersFragment extends Fragment implements OrdiniAdapter.OnD
 							.create()
 							.decorate();
 				}
-
+				
 				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 			}
 		};

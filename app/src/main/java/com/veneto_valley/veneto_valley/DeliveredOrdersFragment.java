@@ -56,7 +56,7 @@ public class DeliveredOrdersFragment extends Fragment {
 			}
 			
 			@Override
-			public void onChildDraw (@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 				if (dX < 0) {
 					new RecyclerViewSwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 							.addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))

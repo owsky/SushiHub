@@ -15,16 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ConfirmedOrdersFragment extends Fragment {
 	private final List<Ordine> listaOrdini;
 	private OrdiniAdapter adapter;
-	private ItemTouchHelper itemTouchHelper;
 	
 	public ConfirmedOrdersFragment() {
 		super(R.layout.fragment_confirmed_orders);
@@ -66,7 +63,7 @@ public class ConfirmedOrdersFragment extends Fragment {
 			}
 			
 			@Override
-			public void onChildDraw (@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 				if (dX < 0) {
 					new RecyclerViewSwipeDecorator.Builder(requireContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 							.addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))
@@ -84,7 +81,7 @@ public class ConfirmedOrdersFragment extends Fragment {
 				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 			}
 		};
-		itemTouchHelper = new ItemTouchHelper(callback);
+		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
 	}
 }
