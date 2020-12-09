@@ -54,8 +54,7 @@ public class ListPiattiFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
 		
-		FloatingActionButton fab = view.findViewById(R.id.fab);
-		fab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
+		view.findViewById(R.id.fab).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
 		
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
 		viewPager2.setAdapter(new ListeOrdiniAdapter(this));
