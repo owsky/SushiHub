@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homepageFragment_to_scanQR"
             app:destination="@id/scanQR" />
+        <action
+            android:id="@+id/action_homepageFragment_to_nearbyTest"
+            app:destination="@id/nearbyTest" />
     </fragment>
     <fragment
         android:id="@+id/generaQR"
@@ -69,4 +72,9 @@
             app:destination="@id/listaPiattiFragment"
             app:popUpTo="@id/listaPiattiFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nearbyTest"
+        android:name="com.veneto_valley.veneto_valley.NearbyTest"
+        android:label="fragment_nearby_test"
+        tools:layout="@layout/fragment_nearby_test" />
 </navigation>

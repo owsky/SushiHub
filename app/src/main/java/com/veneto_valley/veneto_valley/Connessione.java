@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley;
 
+import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -25,15 +27,30 @@ import static android.content.ContentValues.TAG;
 public class Connessione {
     public static final Strategy STRATEGY = Strategy.P2P_STAR;
     public static final String SERVICE_ID="120001";
-    MainActivity base;
+    Activity base;
     String strendPointId;
-    public Connessione(boolean client, boolean host, MainActivity actv){
-        base=actv;
+    String risposta;
+    NearbyTest cont;
+    public Connessione(boolean client, boolean host, MainActivity actv, NearbyTest cont){
+
+        this.cont=cont;
+        base=cont.getActivity();
+
         if(client){
             startDiscovery();
+            //vedo se ci sono dispositivi che fanno l`advertising in giro
+            //invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
+            //gli mando un messaggio all`end point
+            closeConnection();
+            //chiudo la connessione
         }else{
             startAdvertising();
+            //faccio partire l`advertising e mando a tutti il mio endpointid
+            //quando qualcuno mi invia qualcosa il contenuto si trova in un thread qui sotto
         }
+    }
+    public void invia(String testo){
+        sendPayLoad(strendPointId, testo);
     }
 
     private void startAdvertising () {
@@ -47,18 +64,23 @@ public class Connessione {
             public void onConnectionResult(@NonNull String endPointId, @NonNull ConnectionResolution connectionResolution) {
                 switch (connectionResolution.getStatus().getStatusCode()) {
                     case ConnectionsStatusCodes.STATUS_OK:
-                        // We're connected! Can now start sending and receiving data.
+                        //siamo connessi possiamo iniziare a prendere i dati
                         strendPointId = endPointId;
-                        sendPayLoad(strendPointId);
+                        sendPayLoad(strendPointId, "ciao");
+                        Toast.makeText(cont.getActivity(), "siamo connessi",
+                                Toast.LENGTH_LONG).show();
+                        invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
                         break;
                     case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                        // The connection was rejected by one or both sides.
+                        Toast.makeText(cont.getActivity(), "cn rif",
+                            Toast.LENGTH_LONG).show();
                         break;
                     case ConnectionsStatusCodes.STATUS_ERROR:
-                        // The connection broke before it was able to be accepted.
+                        Toast.makeText(cont.getActivity(), "cn err",
+                                Toast.LENGTH_LONG).show();
                         break;
                     default:
-                        // Unknown status code
+                        //non si sa non facciamo nulla
                 }
             }
             @Override
@@ -67,17 +89,19 @@ public class Connessione {
             }
         }, advertisingOptions);
     }
-    private void sendPayLoad(final String endPointId) {
-        Payload bytesPayload = Payload.fromBytes("ciao bro come va?".getBytes());
+    private void sendPayLoad(final String endPointId, String testo) {
+        Payload bytesPayload = Payload.fromBytes(testo.getBytes());
         Nearby.getConnectionsClient(base).sendPayload(endPointId, bytesPayload).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.println(Log.INFO,"payload_inviato", "fatto");
+                Toast.makeText(cont.getActivity(), "inviato",
+                        Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.println(Log.INFO,"payload_inviato", "tuto mae");
+                Toast.makeText(cont.getActivity(), "errore",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -92,21 +116,25 @@ public class Connessione {
                                     @Override
                                     public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
                                         Nearby.getConnectionsClient(base).acceptConnection(endpointId, mPayloadCallback);
+                                        strendPointId=endpointId;
                                     }
                                     @Override
                                     public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution connectionResolution) {
                                         switch (connectionResolution.getStatus().getStatusCode()) {
                                             case ConnectionsStatusCodes.STATUS_OK:
-                                                // We're connected! Can now start sending and receiving data.
+                                                Toast.makeText(cont.getActivity(), "connessi",
+                                                        Toast.LENGTH_LONG).show();
                                                 break;
                                             case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                                                // The connection was rejected by one or both sides.
+                                                Toast.makeText(cont.getActivity(), "cn rif",
+                                                        Toast.LENGTH_LONG).show();
                                                 break;
                                             case ConnectionsStatusCodes.STATUS_ERROR:
-                                                // The connection broke before it was able to be accepted.
+                                                Toast.makeText(cont.getActivity(), "cn err",
+                                                        Toast.LENGTH_LONG).show();
                                                 break;
                                             default:
-                                                // Unknown status code
+                                                //non si sa non facciamo nulla
                                         }
                                     }
                                     @Override
@@ -127,7 +155,10 @@ public class Connessione {
             base.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String risultato = new String(receivedBytes);
+                    risposta = new String(receivedBytes);
+                    //Log.println(Log.INFO, "risposta", risposta);
+                    Toast.makeText(cont.getActivity(), risposta,
+                            Toast.LENGTH_LONG).show();
                 }
             });
         }
