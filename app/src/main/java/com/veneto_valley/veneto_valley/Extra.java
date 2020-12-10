@@ -4,16 +4,27 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-public class Extra extends AppCompatActivity {
+public class Extra extends Fragment {
+
+    private static final String TAG = "MyActivity";
+
+    public Extra(){
+        super(R.layout.activity_extra);
+    }
+
 
     public static class MenuExtra{
         int numero;
@@ -31,19 +42,16 @@ public class Extra extends AppCompatActivity {
     ArrayList<MenuExtra> bevande;
     ArrayList<MenuExtra> dolci;
     Extra questo = this;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_extra);
 
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         bevande = new ArrayList<>();
         dolci = new ArrayList<>();
         //due strutture per memorizzare bevande e dolci rispettivamente
 
-        addBevande = (Button) findViewById(R.id.button2); //prendo button2
-        addDolci = (Button)findViewById(R.id.button3); //prendo button3
+        addBevande = (Button) getView().findViewById(R.id.button2); //prendo button2
+        addDolci = (Button) getView().findViewById(R.id.button3); //prendo button3
 
-        final Activity[] questa = {this};
+        final Activity[] questa = {this.getActivity()};
 
         final CustomDialogClass[] cdd = new CustomDialogClass[1];
 
@@ -64,15 +72,19 @@ public class Extra extends AppCompatActivity {
             }
         });
     }
+
+
+
+
     @SuppressLint("SetTextI18n")
     private LinearLayout faiCasellina(int numero, Double prezzo, String nome){
-        LinearLayout layoutCasellina = new LinearLayout(this);
+        LinearLayout layoutCasellina = new LinearLayout(this.getContext());
         layoutCasellina.setOrientation(LinearLayout.HORIZONTAL);
         //abbiamo fatto linear layout orizzontale
         //ora facciamo le tre caselline
-        TextView casellina1 = new TextView(this);
-        TextView casellina2 = new TextView(this);
-        TextView casellina3 = new TextView(this);
+        TextView casellina1 = new TextView(this.getContext());
+        TextView casellina2 = new TextView(this.getContext());
+        TextView casellina3 = new TextView(this.getContext());
         casellina1.setWidth(500);
         casellina2.setWidth(200);
         casellina3.setWidth(250);
@@ -99,8 +111,8 @@ public class Extra extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void aggiungiRiga(){
         //TODO: FUNZIONE CHE AGGIORNA LA VIEW PRENDENDO I DATI DAI DUE ARRAYLIST
-        LinearLayout bevandeLayout = (LinearLayout) findViewById(R.id.layout_bevande);
-        LinearLayout dolciLayout = (LinearLayout) findViewById(R.id.layout_dolci);
+        LinearLayout bevandeLayout = (LinearLayout) getView().findViewById(R.id.layout_bevande);
+        LinearLayout dolciLayout = (LinearLayout) getView().findViewById(R.id.layout_dolci);
         //a questi oggetti di tipo linear layout dovrò fare una add dei componenti
         //il metodo è addView
         int i=0,j=0;

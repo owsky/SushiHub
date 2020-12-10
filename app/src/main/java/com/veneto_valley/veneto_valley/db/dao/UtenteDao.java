@@ -33,3 +33,4 @@ public interface UtenteDao {
     @Query("SELECT * FROM utente WHERE idUtente IN (:idUtente)")
     List<OrdiniUtente> getOrdiniUtente(int idUtente);
 }
+
