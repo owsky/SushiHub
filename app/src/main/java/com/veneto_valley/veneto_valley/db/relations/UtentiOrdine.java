@@ -9,7 +9,7 @@ import com.veneto_valley.veneto_valley.db.entities.Utente;
 
 import java.util.List;
 
-public class OrdineUtenti {
+public class UtentiOrdine {
     @Embedded
     public Ordine ordine;
     @Relation(

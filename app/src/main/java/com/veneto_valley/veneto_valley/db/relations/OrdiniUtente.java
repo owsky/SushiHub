@@ -9,7 +9,7 @@ import com.veneto_valley.veneto_valley.db.entities.Utente;
 
 import java.util.List;
 
-public class UtenteOrdini {
+public class OrdiniUtente {
     @Embedded public Utente utente;
     @Relation(
             parentColumn = "idUtente",
