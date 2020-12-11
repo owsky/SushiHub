@@ -15,11 +15,11 @@ import java.util.List;
 
 @Dao
 public interface OrdineDao {
-    @Query("SELECT * FROM ordine")
+    @Query("SELECT * FROM Ordine")
     List<Ordine> getAll();
 
-    @Query("SELECT * FROM ordine WHERE idOrdine IN (:idOrdini)")
-    List<Utente> loadAllByIds(int[] idOrdini);
+    @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdini)")
+    List<Ordine> loadAllByIds(int[] idOrdini);
 
     @Insert
     void insertAll(Ordine... ristoranti);
@@ -29,12 +29,12 @@ public interface OrdineDao {
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione
-    @Query("SELECT * FROM ordine WHERE idOrdine IN (:idOrdine)")
+    @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdine)")
     List<UtentiOrdine> getUtentiOrdine(int idOrdine);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione
-    @Query("SELECT * FROM ordine WHERE idOrdine IN (:idOrdine)")
+    @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdine)")
     List<PiattiOrdine> getPiattiOrdine(int idOrdine);
 
 }

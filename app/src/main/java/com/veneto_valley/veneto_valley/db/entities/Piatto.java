@@ -10,4 +10,8 @@ public class Piatto {
     public int idPiatto;
 
     public String nomePiatto;
+
+    public Piatto(String nomePiatto) {
+        this.nomePiatto = nomePiatto;
+    }
 }

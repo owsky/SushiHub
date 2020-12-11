@@ -18,10 +18,10 @@ public interface RistoranteDao {
     List<Ristorante> getAll();
 
     @Query("SELECT * FROM ristorante WHERE idRistorante IN (:idRistoranti)")
-    List<Utente> loadAllByIds(int[] idRistoranti);
+    List<Ristorante> loadAllByIds(int[] idRistoranti);
 
     @Query("SELECT * FROM ristorante WHERE nome LIKE :nome LIMIT 1")
-    Utente findByName(String nome);
+    Ristorante findByName(String nome);
 
     @Insert
     void insertAll(Ristorante... ristoranti);

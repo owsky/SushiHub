@@ -18,7 +18,7 @@ public interface TavoloDao {
     List<Tavolo> getAll();
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
-    List<Utente> loadAllByIds(int[] idTavoli);
+    List<Tavolo> loadAllByIds(int[] idTavoli);
 
     @Insert
     void insertAll(Tavolo... tavoli);

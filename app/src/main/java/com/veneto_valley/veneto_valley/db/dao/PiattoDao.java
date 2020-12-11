@@ -19,7 +19,7 @@ public interface PiattoDao {
     List<Piatto> loadAllByIds(int[] idPiatti);
 
     @Query("SELECT * FROM piatto WHERE nomePiatto LIKE :nomePiatto  LIMIT 1")
-    Utente findByName(String nomePiatto);
+    Piatto findByName(String nomePiatto);
 
     @Insert
     void insertAll(Piatto... piatti);
