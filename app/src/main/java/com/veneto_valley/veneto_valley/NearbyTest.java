@@ -17,11 +17,10 @@ public class NearbyTest extends Fragment {
 
     Button host, client;
     EditText txt;
-    MainActivity base;
+
 
     public NearbyTest() {
         super(R.layout.fragment_nearby_test);
-        base = (MainActivity) this.getActivity();
 
     }
 
@@ -36,13 +35,13 @@ public class NearbyTest extends Fragment {
         host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c[0] = new Connessione(false,true,base,questo);
+                c[0] = new Connessione(false,true,questo);
             }
         });
         client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c[0] = new Connessione(true,false,base,questo);
+                c[0] = new Connessione(true,false,questo);
             }
         });
 

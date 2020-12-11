@@ -31,7 +31,7 @@ public class Connessione {
     String strendPointId;
     String risposta;
     NearbyTest cont;
-    public Connessione(boolean client, boolean host, MainActivity actv, NearbyTest cont){
+    public Connessione(boolean client, boolean host, NearbyTest cont){
 
         this.cont=cont;
         base=cont.getActivity();
@@ -41,8 +41,6 @@ public class Connessione {
             //vedo se ci sono dispositivi che fanno l`advertising in giro
             //invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
             //gli mando un messaggio all`end point
-            closeConnection();
-            //chiudo la connessione
         }else{
             startAdvertising();
             //faccio partire l`advertising e mando a tutti il mio endpointid
