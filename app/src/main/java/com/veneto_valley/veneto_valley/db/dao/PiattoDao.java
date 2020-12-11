@@ -26,4 +26,7 @@ public interface PiattoDao {
 
     @Delete
     void delete(Piatto piatto);
+
+    @Query("DELEtE FROM piatto WHERE nomePiatto LIKE :nomePiatto")
+    void deleteByName(String nomePiatto);
 }
