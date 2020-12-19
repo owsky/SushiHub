@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Entity
 public class Tavolo {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int idTavolo;
 
     public String nome;

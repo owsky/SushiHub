@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Ristorante {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int idRistorante;
 
     public String nome;
