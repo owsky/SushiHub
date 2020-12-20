@@ -14,17 +14,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Extra extends Fragment {
-
     private static final String TAG = "MyActivity";
-
+    Fragment questo = this;
+    private static Extra single_instance;
     public Extra(){
         super(R.layout.activity_extra);
+        single_instance = this;
     }
 
+    public static Extra getInstance(){
+        return single_instance;
+    }
 
     public static class MenuExtra{
         int numero;
@@ -38,38 +46,13 @@ public class Extra extends Fragment {
         }
     }
 
-    Button addBevande, addDolci;
-    ArrayList<MenuExtra> bevande;
-    ArrayList<MenuExtra> dolci;
-    Extra questo = this;
+    ArrayList<MenuExtra> listaExtra;
+
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        bevande = new ArrayList<>();
-        dolci = new ArrayList<>();
-        //due strutture per memorizzare bevande e dolci rispettivamente
-
-        addBevande = (Button) getView().findViewById(R.id.button2); //prendo button2
-        addDolci = (Button) getView().findViewById(R.id.button3); //prendo button3
-
-        final Activity[] questa = {this.getActivity()};
-
-        final CustomDialogClass[] cdd = new CustomDialogClass[1];
-
-
-        //imposto i listener dei bottoni
-        addBevande.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI BEVANDE", questo);
-                cdd[0].show();
-            }
-        });
-        addDolci.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI DOLCI", questo);
-                cdd[0].show();
-            }
+        listaExtra = new ArrayList<>();
+        view.findViewById(R.id.button2).setOnClickListener(view11 -> {
+            NavHostFragment.findNavController(questo).navigate(R.id.action_extra_to_aggiungiExtra);
         });
     }
 
@@ -110,20 +93,11 @@ public class Extra extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void aggiungiRiga(){
-        //TODO: FUNZIONE CHE AGGIORNA LA VIEW PRENDENDO I DATI DAI DUE ARRAYLIST
         LinearLayout bevandeLayout = (LinearLayout) getView().findViewById(R.id.layout_bevande);
-        LinearLayout dolciLayout = (LinearLayout) getView().findViewById(R.id.layout_dolci);
         //a questi oggetti di tipo linear layout dovrò fare una add dei componenti
         //il metodo è addView
-        int i=0,j=0;
-        for(MenuExtra m : dolci){
-            if(!m.inserito){
-                dolciLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), i);
-                m.inserito=true;
-                i++;
-            }
-        }
-        for(MenuExtra m : bevande){
+        int j=0;
+        for(MenuExtra m : listaExtra){
             if(!m.inserito){
                 bevandeLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), j);
                 m.inserito=true;

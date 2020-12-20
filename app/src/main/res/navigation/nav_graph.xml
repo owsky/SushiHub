@@ -84,5 +84,18 @@
         android:id="@+id/extra"
         android:name="com.veneto_valley.veneto_valley.Extra"
         android:label="Piatti extra"
-        tools:layout="@layout/activity_extra" />
+        tools:layout="@layout/activity_extra" >
+        <action
+            android:id="@+id/action_extra_to_aggiungiExtra"
+            app:destination="@id/aggiungiExtra" />
+    </fragment>
+    <fragment
+        android:id="@+id/aggiungiExtra"
+        android:name="com.veneto_valley.veneto_valley.AggiungiExtra"
+        android:label="aggiungi_extra_fragment"
+        tools:layout="@layout/aggiungi_extra_fragment" >
+        <action
+            android:id="@+id/action_aggiungiExtra_to_extra"
+            app:destination="@id/extra" />
+    </fragment>
 </navigation>
