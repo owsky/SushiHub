@@ -2,6 +2,8 @@ package com.veneto_valley.veneto_valley;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class AggiungiExtra extends Fragment {
     Button yes, no;
@@ -29,18 +35,15 @@ public class AggiungiExtra extends Fragment {
         no = (Button) getView().findViewById(R.id.conferma2);
         //
         view.findViewById(R.id.conferma2).setOnClickListener(view12 -> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_aggiungiExtra_to_extra);
+            NavHostFragment.findNavController(questo).navigateUp();
         });
         no.setOnClickListener(view12 -> {
             int numero = Integer.parseInt(((EditText)getView().findViewById(R.id.textView2)).getText().toString());
             double prezzo = Double.parseDouble(((EditText)getView().findViewById(R.id.textView3)).getText().toString());
             String nome = ((EditText)getView().findViewById(R.id.textView17)).getText().toString();
-            //TODO: FIXARE L'ISTANZA E' NULL E NON SO COME PRENDERLA
-            Extra istanza = Extra.getInstance();
-            istanza.listaExtra.add(new Extra.MenuExtra(numero,prezzo,nome));
-            istanza.aggiungiRiga();
-
-            NavHostFragment.findNavController(questo).navigate(R.id.action_aggiungiExtra_to_extra);
+            MenuExtra m = MenuExtra.getInstance();
+            m.listaExtra.add(new MenuExtra.ExtraDish(numero, prezzo, nome));
+            NavHostFragment.findNavController(questo).navigateUp();
         });
     }
 }

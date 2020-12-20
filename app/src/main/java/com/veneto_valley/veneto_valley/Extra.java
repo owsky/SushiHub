@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -24,40 +23,16 @@ import java.util.Objects;
 public class Extra extends Fragment {
     private static final String TAG = "MyActivity";
     Fragment questo = this;
-    private static Extra single_instance;
     public Extra(){
         super(R.layout.activity_extra);
-        single_instance = this;
     }
-
-    public static Extra getInstance(){
-        return single_instance;
-    }
-
-    public static class MenuExtra{
-        int numero;
-        double prezzo;
-        String nome;
-        public boolean inserito=false;
-        MenuExtra(int numero, double prezzo, String nome){
-            this.numero=numero;
-            this.prezzo=prezzo;
-            this.nome=nome;
-        }
-    }
-
-    ArrayList<MenuExtra> listaExtra;
-
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        listaExtra = new ArrayList<>();
+        super.onViewCreated(view, savedInstanceState);
+        aggiungiRiga();
         view.findViewById(R.id.button2).setOnClickListener(view11 -> {
             NavHostFragment.findNavController(questo).navigate(R.id.action_extra_to_aggiungiExtra);
         });
     }
-
-
-
 
     @SuppressLint("SetTextI18n")
     private LinearLayout faiCasellina(int numero, Double prezzo, String nome){
@@ -96,14 +71,23 @@ public class Extra extends Fragment {
         LinearLayout bevandeLayout = (LinearLayout) getView().findViewById(R.id.layout_bevande);
         //a questi oggetti di tipo linear layout dovrò fare una add dei componenti
         //il metodo è addView
+        MenuExtra m = MenuExtra.getInstance();
         int j=0;
-        for(MenuExtra m : listaExtra){
-            if(!m.inserito){
-                bevandeLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), j);
-                m.inserito=true;
-                j++;
+        if(!m.listaExtra.isEmpty()){
+            for(MenuExtra.ExtraDish me : m.listaExtra){
+                if(!me.inserito){
+                    bevandeLayout.addView(faiCasellina(me.numero, me.prezzo, me.nome), j);
+                    me.inserito=true;
+                    j++;
+                }
             }
         }
+
     }
+
+
+
+
+
 
 }
