@@ -12,10 +12,13 @@ public class Piatto {
 
     public String nomePiatto;
 
-    @Nullable
     public float prezzoPiatto;
 
     public Piatto(String nomePiatto) {
         this.nomePiatto = nomePiatto;
+    }
+
+    public Piatto(){
+
     }
 }

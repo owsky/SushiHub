@@ -7,10 +7,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.Database;
 
 import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
+import com.veneto_valley.veneto_valley.db.dao.OrdiniPiattiCrossRefDao;
 import com.veneto_valley.veneto_valley.db.dao.PiattoDao;
 import com.veneto_valley.veneto_valley.db.dao.RistoranteDao;
 import com.veneto_valley.veneto_valley.db.dao.TavoloDao;
 import com.veneto_valley.veneto_valley.db.dao.UtenteDao;
+import com.veneto_valley.veneto_valley.db.dao.UtentiOrdiniCrossRefDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
 import com.veneto_valley.veneto_valley.db.entities.Ristorante;
@@ -25,7 +27,10 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase dbInstance = null;
 
     public static AppDatabase getInstance(Context ctx){
-        if(dbInstance == null) dbInstance= Room.databaseBuilder(ctx,AppDatabase.class,"Veneto_Valley-Db").allowMainThreadQueries().build();
+        if(dbInstance == null){
+            dbInstance= Room.databaseBuilder(ctx,AppDatabase.class,"Veneto_Valley-Db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+            dbInstance.clearAllTables();
+        }
         return dbInstance;
     };
 
@@ -35,5 +40,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract RistoranteDao ristoranteDao();
     public abstract TavoloDao tavoloDao();
     public abstract UtenteDao utenteDao();
-
+    public abstract UtentiOrdiniCrossRefDao utentiOrdiniCrossRefDao();
+    public abstract OrdiniPiattiCrossRefDao ordiniPiattiCrossRefDao();
 }

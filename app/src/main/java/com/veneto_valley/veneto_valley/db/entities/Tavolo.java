@@ -11,7 +11,8 @@ public class Tavolo {
     public int idTavolo;
 
     public String nome;
-    //public Date data;
+
+    public int dataCreazione;
     public int maxPiatti;
     public float costoMenu;
 
