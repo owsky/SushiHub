@@ -2,12 +2,12 @@
     <string name="app_name">Veneto_Valley</string>
 
     <string name="title_activity_extra">ExtraActivity</string>
-    <string name="Bevande"> Bevande</string>
-    <string name="Dolci"> Dolci</string>
-    <string name="tit"> menù extra</string>
-    <string name="pr"> prezzo MENÙ a PERSONA</string>
+    <string name="Bevande"> Aggiungi Extra</string>
+    <string name="Quantita"> Quantità</string>
+    <string name="Prezzo1"> Prezzo</string>
+    <string name="Nome"> Nome</string>
     <string name="pr1"> prezzo MENÙ totale </string>
-    <string name="BUTT"> AVANTI </string>
+    <string name="BUTT"> SALVA </string>
     <string name="conferma"> CONFERMA </string>
     <string name="annulla"> ANNULLA </string>
     <string name="inserisciN"> Inserisci Nome </string>

@@ -119,6 +119,8 @@ public class ListPiattiFragment extends Fragment {
 			// TODO recupera il codice dal database
 			action.setCodiceTavolo("codice");
 			NavHostFragment.findNavController(this).navigate(action);
+		} else if (item.getItemId() == R.id.toExtra) {
+			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_extra);
 		}
 		return super.onOptionsItemSelected(item);
 	}
