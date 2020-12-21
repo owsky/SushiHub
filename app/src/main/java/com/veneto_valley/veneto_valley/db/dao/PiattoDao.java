@@ -4,9 +4,12 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
 import com.veneto_valley.veneto_valley.db.entities.Utente;
+import com.veneto_valley.veneto_valley.db.relations.OrdiniPiatto;
+import com.veneto_valley.veneto_valley.db.relations.OrdiniTavolo;
 
 import java.util.List;
 
@@ -24,12 +27,16 @@ public interface PiattoDao {
     @Insert
     void insertAll(Piatto... piatti);
 
+    //TODO: Solo se è pending
     @Delete
     void delete(Piatto piatto);
 
-    @Query("DELEtE FROM piatto WHERE nomePiatto LIKE :nomePiatto")
-    void deleteByName(String nomePiatto);
-
+    //TODO: Solo se è pending
     @Query("DELEtE FROM piatto WHERE idPiatto LIKE :idPiatto")
     void deleteById(int idPiatto);
+
+    //Relazioni
+    @Transaction //Necessario per garantire atomicità dell'operazione
+    @Query("SELECT * FROM piatto WHERE idPiatto IN (:idPiatto)")
+    List<OrdiniPiatto> getOrdiniPiatto(int idPiatto);
 }

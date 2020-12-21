@@ -1,6 +1,7 @@
 package com.veneto_valley.veneto_valley.db.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.sql.Date;
@@ -12,12 +13,13 @@ public class Tavolo {
 
     private String nome;
 
-    private int dataCreazione;
+    private Date dataCreazione;
     private int maxPiatti;
     private float costoMenu;
 
     private int ristorante;
 
+    @Ignore
     public Tavolo(int idTavolo, int maxPiatti, float costoMenu) {
         this.idTavolo = idTavolo;
         this.maxPiatti = maxPiatti;
@@ -46,11 +48,11 @@ public class Tavolo {
         this.nome = nome;
     }
 
-    public int getDataCreazione() {
+    public Date getDataCreazione() {
         return dataCreazione;
     }
 
-    public void setDataCreazione(int dataCreazione) {
+    public void setDataCreazione(Date dataCreazione) {
         this.dataCreazione = dataCreazione;
     }
 

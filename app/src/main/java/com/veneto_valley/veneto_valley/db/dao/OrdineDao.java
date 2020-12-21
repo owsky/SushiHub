@@ -7,8 +7,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
-import com.veneto_valley.veneto_valley.db.entities.Utente;
-import com.veneto_valley.veneto_valley.db.relations.PiattiOrdine;
+import com.veneto_valley.veneto_valley.db.relations.OrdiniPiatto;
 import com.veneto_valley.veneto_valley.db.relations.UtentiOrdine;
 
 import java.util.List;
@@ -31,10 +30,5 @@ public interface OrdineDao {
     @Transaction //Necessario per garantire atomicità dell'operazione
     @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdine)")
     List<UtentiOrdine> getUtentiOrdine(int idOrdine);
-
-    //Relazioni
-    @Transaction //Necessario per garantire atomicità dell'operazione
-    @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdine)")
-    List<PiattiOrdine> getPiattiOrdine(int idOrdine);
 
 }

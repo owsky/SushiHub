@@ -20,6 +20,7 @@ public interface TavoloDao {
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(int[] idTavoli);
 
+    //TODO: Ritorna bool stato aggiunta
     @Insert
     void insertAll(Tavolo... tavoli);
 
@@ -30,4 +31,7 @@ public interface TavoloDao {
     @Transaction //Necessario per garantire atomicità dell'operazione
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavolo)")
     List<OrdiniTavolo> getOrdiniTavolo(int idTavolo);
+
+    //TODO: Ritorna il tavolo più recente
+
 }

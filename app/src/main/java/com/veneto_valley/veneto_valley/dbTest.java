@@ -75,7 +75,7 @@ public class dbTest extends AppCompatActivity {
             tmpLL.addView(tmp);
 
             TextView tmp1 = new TextView(getApplicationContext());
-            tmp1.setText(String.valueOf(p.idPiatto));
+            tmp1.setText(String.valueOf(p.getIdPiatto()));
             tmp1.setTextColor(Color.LTGRAY);
             tmpLL.addView(tmp1);
 

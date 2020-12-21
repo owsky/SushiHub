@@ -5,9 +5,9 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.Database;
+import androidx.room.TypeConverters;
 
 import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
-import com.veneto_valley.veneto_valley.db.dao.OrdiniPiattiCrossRefDao;
 import com.veneto_valley.veneto_valley.db.dao.PiattoDao;
 import com.veneto_valley.veneto_valley.db.dao.RistoranteDao;
 import com.veneto_valley.veneto_valley.db.dao.TavoloDao;
@@ -18,11 +18,11 @@ import com.veneto_valley.veneto_valley.db.entities.Piatto;
 import com.veneto_valley.veneto_valley.db.entities.Ristorante;
 import com.veneto_valley.veneto_valley.db.entities.Tavolo;
 import com.veneto_valley.veneto_valley.db.entities.Utente;
-import com.veneto_valley.veneto_valley.db.relations.OrdiniPiattiCrossRef;
 import com.veneto_valley.veneto_valley.db.relations.UtentiOrdiniCrossRef;
 
 
-@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, UtentiOrdiniCrossRef.class, OrdiniPiattiCrossRef.class}, version = 1)
+@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, UtentiOrdiniCrossRef.class}, version = 2)
+@TypeConverters({TimestampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase dbInstance = null;
 
@@ -32,7 +32,7 @@ public abstract class AppDatabase extends RoomDatabase {
             dbInstance.clearAllTables();
         }
         return dbInstance;
-    };
+    }
 
     //Entità
     public abstract OrdineDao ordineDao();
@@ -41,5 +41,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TavoloDao tavoloDao();
     public abstract UtenteDao utenteDao();
     public abstract UtentiOrdiniCrossRefDao utentiOrdiniCrossRefDao();
-    public abstract OrdiniPiattiCrossRefDao ordiniPiattiCrossRefDao();
 }
