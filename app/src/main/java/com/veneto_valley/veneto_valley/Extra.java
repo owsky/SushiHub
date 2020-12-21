@@ -75,11 +75,9 @@ public class Extra extends Fragment {
         int j=0;
         if(!m.listaExtra.isEmpty()){
             for(MenuExtra.ExtraDish me : m.listaExtra){
-                if(!me.inserito){
-                    bevandeLayout.addView(faiCasellina(me.numero, me.prezzo, me.nome), j);
-                    me.inserito=true;
-                    j++;
-                }
+                bevandeLayout.addView(faiCasellina(me.numero, me.prezzo, me.nome), j);
+                j++;
+
             }
         }
 

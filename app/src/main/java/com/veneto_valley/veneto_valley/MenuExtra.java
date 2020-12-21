@@ -27,7 +27,6 @@ public class MenuExtra {
         int numero;
         double prezzo;
         String nome;
-        public boolean inserito=false;
         public ExtraDish(int numero, double prezzo, String nome) {
             this.numero = numero;
             this.prezzo = prezzo;
