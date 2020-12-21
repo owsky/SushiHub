@@ -6,11 +6,13 @@ import androidx.room.Relation;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
 
-public class OrdinePiatto {
-        @Embedded public Ordine ordine;
+import java.util.List;
+
+public class OrdiniPiatto {
+        @Embedded public Piatto piatto;
         @Relation(
-                parentColumn = "idOrdine",
-                entityColumn = "userOwnerId"
+                parentColumn = "idPiatto",
+                entityColumn = "piatto"
         )
-        public Piatto piatto;
+        public List<Ordine> ordine;
     }
