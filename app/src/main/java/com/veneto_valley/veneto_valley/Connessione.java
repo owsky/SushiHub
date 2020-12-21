@@ -38,13 +38,9 @@ public class Connessione {
 
         if(client){
             startDiscovery();
-            //vedo se ci sono dispositivi che fanno l`advertising in giro
-            //invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
-            //gli mando un messaggio all`end point
+
         }else{
             startAdvertising();
-            //faccio partire l`advertising e mando a tutti il mio endpointid
-            //quando qualcuno mi invia qualcosa il contenuto si trova in un thread qui sotto
         }
     }
     public void invia(String testo){
@@ -64,10 +60,9 @@ public class Connessione {
                     case ConnectionsStatusCodes.STATUS_OK:
                         //siamo connessi possiamo iniziare a prendere i dati
                         strendPointId = endPointId;
-                        sendPayLoad(strendPointId, "ciao");
                         Toast.makeText(cont.getActivity(), "siamo connessi",
                                 Toast.LENGTH_LONG).show();
-                        invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
+                        invia("mucche");
                         break;
                     case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                         Toast.makeText(cont.getActivity(), "cn rif",

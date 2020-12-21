@@ -3,7 +3,7 @@ plugins {
 }
 
 apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
