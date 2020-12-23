@@ -25,4 +25,6 @@ public interface OrdineDao extends baseDao<Ordine>{
     @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdine)")
     List<UtentiOrdine> getUtentiOrdine(int idOrdine);
 
+    @Query("DELETE FROM ordine WHERE idOrdine LIKE :idOrdine AND status LIKE \"daOrdinare\"")
+    int deleteById(int idOrdine);
 }
