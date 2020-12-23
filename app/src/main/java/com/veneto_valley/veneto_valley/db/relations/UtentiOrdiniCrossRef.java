@@ -4,6 +4,6 @@ import androidx.room.Entity;
 
 @Entity(primaryKeys = {"idUtente", "idOrdine"})
 public class UtentiOrdiniCrossRef {
-    public int idUtente;
-    public int idOrdine;
+    public long idUtente;
+    public long idOrdine;
 }
