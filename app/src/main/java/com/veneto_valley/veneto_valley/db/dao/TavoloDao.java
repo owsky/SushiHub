@@ -13,19 +13,19 @@ import com.veneto_valley.veneto_valley.db.relations.OrdiniTavolo;
 import java.util.List;
 
 @Dao
-public interface TavoloDao {
+public interface TavoloDao extends baseDao<Tavolo>{
     @Query("SELECT * FROM tavolo")
     List<Tavolo> getAll();
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(int[] idTavoli);
 
-    //TODO: Ritorna bool stato aggiunta
-    @Insert
-    void insertAll(Tavolo... tavoli);
 
-    @Delete
-    void delete(Tavolo tavolo);
+
+    //TODO: Ritorna bool stato aggiunta
+    @Override
+    @Insert
+    void insertAll(Tavolo... objs);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione

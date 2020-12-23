@@ -12,7 +12,7 @@ import com.veneto_valley.veneto_valley.db.relations.OrdiniUtente;
 import java.util.List;
 
 @Dao
-public interface UtenteDao {
+public interface UtenteDao extends baseDao<Utente>{
     @Query("SELECT * FROM Utente")
     List<Utente> getAll();
 
@@ -21,12 +21,6 @@ public interface UtenteDao {
 
     @Query("SELECT * FROM Utente WHERE username LIKE :username LIMIT 1")
     Utente findByName(String username);
-
-    @Insert
-    void insertAll(Utente... utenti);
-
-    @Delete
-    void delete(Utente utente);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione

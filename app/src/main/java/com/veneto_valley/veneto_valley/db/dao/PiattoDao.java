@@ -14,7 +14,7 @@ import com.veneto_valley.veneto_valley.db.relations.OrdiniTavolo;
 import java.util.List;
 
 @Dao
-public interface PiattoDao {
+public interface PiattoDao extends baseDao<Piatto>{
     @Query("SELECT * FROM piatto")
     List<Piatto> getAll();
 
@@ -23,13 +23,6 @@ public interface PiattoDao {
 
     @Query("SELECT * FROM piatto WHERE nomePiatto LIKE :nomePiatto  LIMIT 1")
     Piatto findByName(String nomePiatto);
-
-    @Insert
-    void insertAll(Piatto... piatti);
-
-    //TODO: Solo se è pending
-    @Delete
-    void delete(Piatto piatto);
 
     //TODO: Solo se è pending
     @Query("DELEtE FROM piatto WHERE idPiatto LIKE :idPiatto")
