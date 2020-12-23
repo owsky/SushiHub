@@ -10,9 +10,13 @@ import android.widget.TextView;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.dao.PiattoDao;
+import com.veneto_valley.veneto_valley.db.dao.TavoloDao;
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
+import com.veneto_valley.veneto_valley.db.entities.Tavolo;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class dbTest extends AppCompatActivity {
@@ -46,8 +50,8 @@ public class dbTest extends AppCompatActivity {
 
     private void addBtnPressed(){
         Log.i(TAG,"Add Button Pressed");
-        PiattoDao piattoDao = AppDatabase.getInstance(getApplicationContext()).piattoDao();
-        piattoDao.insertAll(new Piatto());
+        TavoloDao tavoloDao = AppDatabase.getInstance(getApplicationContext()).tavoloDao();
+        tavoloDao.insertAll(new Tavolo());
         syncBtnPressed();
     }
 
@@ -55,29 +59,39 @@ public class dbTest extends AppCompatActivity {
         Log.i(TAG,"Remove Button Pressed");
         LinearLayout tmpLL = (LinearLayout) ll.getChildAt(0);
         TextView tmpTv = (TextView) tmpLL.getChildAt(1);
-        PiattoDao piattoDao = AppDatabase.getInstance(getApplicationContext()).piattoDao();
-        piattoDao.deleteById(Integer.parseInt((String) tmpTv.getText()));
+        TavoloDao tavoloDao = AppDatabase.getInstance(getApplicationContext()).tavoloDao();
+        tavoloDao.deleteById(Integer.parseInt((String) tmpTv.getText()));
         syncBtnPressed();
     }
 
     private void syncBtnPressed(){
         Log.i(TAG,"Sync Button Pressed");
-        PiattoDao piattoDao = AppDatabase.getInstance(getApplicationContext()).piattoDao();
-        List<Piatto> piattoArrayList = piattoDao.getAll();
+        TavoloDao tavoloDao = AppDatabase.getInstance(getApplicationContext()).tavoloDao();
+        List<Tavolo> tavoloList = tavoloDao.getAll();
         ll.removeAllViews();
-        for (Piatto p : piattoArrayList){
+        for (Tavolo p : tavoloList){
             LinearLayout tmpLL = new LinearLayout(getApplicationContext());
             tmpLL.setOrientation(LinearLayout.HORIZONTAL);
 
             TextView tmp = new TextView(getApplicationContext());
-            tmp.setText("id piatto:\t");
+            tmp.setText("id tavolo:\t");
             tmp.setTextColor(Color.LTGRAY);
             tmpLL.addView(tmp);
 
             TextView tmp1 = new TextView(getApplicationContext());
-            tmp1.setText(String.valueOf(p.getIdPiatto()));
+            tmp1.setText(String.valueOf(p.getIdTavolo()));
             tmp1.setTextColor(Color.LTGRAY);
             tmpLL.addView(tmp1);
+
+            TextView tmp2 = new TextView(getApplicationContext());
+            tmp2.setText("Data Creazione:\t");
+            tmp2.setTextColor(Color.LTGRAY);
+            tmpLL.addView(tmp2);
+
+            TextView tmp3 = new TextView(getApplicationContext());
+            tmp3.setText(String.valueOf(p.getDataCreazione()));
+            tmp3.setTextColor(Color.LTGRAY);
+            tmpLL.addView(tmp3);
 
             ll.addView(tmpLL,0);
         }

@@ -1,13 +1,19 @@
 package com.veneto_valley.veneto_valley.db.entities;
 
+import android.util.Log;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.sql.Date;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 public class Tavolo {
+    final static String TAG = "ETavoloLog";
     @PrimaryKey(autoGenerate = false)
     private int idTavolo;
 
@@ -19,12 +25,30 @@ public class Tavolo {
 
     private int ristorante;
 
+    //TODO: Rimuovere costruttore, serve solo per test
+    private static int lastId = 0;
+    @Ignore
+    public Tavolo() {
+        this.idTavolo = lastId++;
+        this.maxPiatti = 0;
+        this.costoMenu = 0f;
+        this.dataCreazione = Calendar.getInstance().getTime();
+        Log.w(TAG,"Current time => " + this.dataCreazione);
+    }
+
+
     @Ignore
     public Tavolo(int idTavolo, int maxPiatti, float costoMenu) {
         this.idTavolo = idTavolo;
         this.maxPiatti = maxPiatti;
         this.costoMenu = costoMenu;
-        //TODO: dataCreazione auto generata
+        this.dataCreazione = Calendar.getInstance().getTime();
+        Log.d(TAG,"Current time => " + this.dataCreazione);
+    }
+
+    public Tavolo(int idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
+       this(idTavolo, maxPiatti, costoMenu);
+       this.nome = nomeTavolo;
     }
 
     public Tavolo(int idTavolo, int maxPiatti, float costoMenu, int ristorante) {

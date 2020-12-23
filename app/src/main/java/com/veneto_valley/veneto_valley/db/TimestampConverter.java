@@ -2,7 +2,7 @@ package com.veneto_valley.veneto_valley.db;
 
 import androidx.room.TypeConverter;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TimestampConverter {
     @TypeConverter
