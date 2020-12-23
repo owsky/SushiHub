@@ -16,7 +16,7 @@ public interface baseDao<T> {
         void update(T obj);
 
         @Delete
-        void delete(T obj);
+        int delete(T obj);
 
 
     }

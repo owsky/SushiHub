@@ -32,8 +32,8 @@ public interface TavoloDao extends baseDao<Tavolo>{
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavolo)")
     List<OrdiniTavolo> getOrdiniTavolo(int idTavolo);
 
-    @Query("DELEtE FROM tavolo WHERE idTavolo LIKE :idTavolo")
-    void deleteById(int idTavolo);
+    @Query("DELETE FROM tavolo WHERE idTavolo LIKE :idTavolo")
+    int deleteById(int idTavolo);
 
     //TODO: Ritorna il tavolo più recente
 

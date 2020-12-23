@@ -24,9 +24,8 @@ public interface PiattoDao extends baseDao<Piatto>{
     @Query("SELECT * FROM piatto WHERE nomePiatto LIKE :nomePiatto  LIMIT 1")
     Piatto findByName(String nomePiatto);
 
-    //TODO: Solo se è pending
-    @Query("DELEtE FROM piatto WHERE idPiatto LIKE :idPiatto")
-    void deleteById(int idPiatto);
+    @Query("DELETE FROM piatto WHERE idPiatto LIKE :idPiatto")
+    int deleteById(int idPiatto);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione
