@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Ordine {
     @PrimaryKey(autoGenerate = true)
-    private int idOrdine;
+    private long idOrdine;
 
     private String status;
 
@@ -19,11 +19,11 @@ public class Ordine {
         this.piatto = piatto;
     }
 
-    public int getIdOrdine() {
+    public long getIdOrdine() {
         return idOrdine;
     }
 
-    public void setIdOrdine(int idOrdine) {
+    public void setIdOrdine(long idOrdine) {
         this.idOrdine = idOrdine;
     }
 

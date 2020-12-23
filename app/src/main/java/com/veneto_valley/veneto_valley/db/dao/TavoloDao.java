@@ -25,7 +25,7 @@ public interface TavoloDao extends baseDao<Tavolo>{
     //TODO: Ritorna bool stato aggiunta
     @Override
     @Insert
-    void insertAll(Tavolo... objs);
+    List<Long> insertAll(Tavolo... objs);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione

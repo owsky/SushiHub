@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Piatto {
     @PrimaryKey(autoGenerate = true)
-    private int idPiatto;
+    private long idPiatto;
 
     private String nomePiatto;
 
@@ -33,11 +33,11 @@ public class Piatto {
         this.nomePiatto = nomePiatto;
     }
 
-    public int getIdPiatto() {
+    public long getIdPiatto() {
         return idPiatto;
     }
 
-    public void setIdPiatto(int idPiatto) {
+    public void setIdPiatto(long idPiatto) {
         this.idPiatto = idPiatto;
     }
 }

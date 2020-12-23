@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Ristorante {
     @PrimaryKey
-    private int idRistorante;
+    private long idRistorante;
 
     private String nome;
 
@@ -14,11 +14,11 @@ public class Ristorante {
         this.nome = nome;
     }
 
-    public int getIdRistorante() {
+    public long getIdRistorante() {
         return idRistorante;
     }
 
-    public void setIdRistorante(int idRistorante) {
+    public void setIdRistorante(long idRistorante) {
         this.idRistorante = idRistorante;
     }
 

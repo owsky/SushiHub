@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Utente {
     @PrimaryKey(autoGenerate = false)
-    private int idUtente;
+    private long idUtente;
 
     private String username;
 
@@ -14,11 +14,11 @@ public class Utente {
         this.username = username;
     }
 
-    public int getIdUtente() {
+    public long getIdUtente() {
         return idUtente;
     }
 
-    public void setIdUtente(int idUtente) {
+    public void setIdUtente(long idUtente) {
         this.idUtente = idUtente;
     }
 

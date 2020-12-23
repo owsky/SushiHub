@@ -6,10 +6,11 @@ import androidx.room.Update;
 
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
 
-public interface baseDao<T> {
+import java.util.List;
 
+public interface baseDao<T> {
         @Insert
-        void insertAll(T... objs);
+        List<Long> insertAll(T... objs);
 
         @Update
         void update(T obj);

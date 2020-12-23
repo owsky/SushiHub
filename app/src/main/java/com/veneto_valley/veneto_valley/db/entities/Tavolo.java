@@ -15,7 +15,7 @@ import java.util.Date;
 public class Tavolo {
     final static String TAG = "ETavoloLog";
     @PrimaryKey(autoGenerate = false)
-    private int idTavolo;
+    private long idTavolo;
 
     private String nome;
 
@@ -26,7 +26,7 @@ public class Tavolo {
     private int ristorante;
 
     //TODO: Rimuovere costruttore, serve solo per test
-    private static int lastId = 0;
+    private static long lastId = 0;
     @Ignore
     public Tavolo() {
         this.idTavolo = lastId++;
@@ -38,7 +38,7 @@ public class Tavolo {
 
 
     @Ignore
-    public Tavolo(int idTavolo, int maxPiatti, float costoMenu) {
+    public Tavolo(long idTavolo, int maxPiatti, float costoMenu) {
         this.idTavolo = idTavolo;
         this.maxPiatti = maxPiatti;
         this.costoMenu = costoMenu;
@@ -46,21 +46,21 @@ public class Tavolo {
         Log.d(TAG,"Current time => " + this.dataCreazione);
     }
 
-    public Tavolo(int idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
+    public Tavolo(long idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
        this(idTavolo, maxPiatti, costoMenu);
        this.nome = nomeTavolo;
     }
 
-    public Tavolo(int idTavolo, int maxPiatti, float costoMenu, int ristorante) {
+    public Tavolo(long idTavolo, int maxPiatti, float costoMenu, int ristorante) {
         this(idTavolo, maxPiatti, costoMenu);
         this.ristorante = ristorante;
     }
 
-    public int getIdTavolo() {
+    public long getIdTavolo() {
         return idTavolo;
     }
 
-    public void setIdTavolo(int idTavolo) {
+    public void setIdTavolo(long idTavolo) {
         this.idTavolo = idTavolo;
     }
 
