@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class MenuExtra {
     public ArrayList<ExtraDish> listaExtra;
-
     private static MenuExtra single_instance = null;
     private MenuExtra(){
         listaExtra = new ArrayList<>();
@@ -33,5 +32,4 @@ public class MenuExtra {
             this.nome = nome;
         }
     }
-
 }

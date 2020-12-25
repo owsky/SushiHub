@@ -72,13 +72,13 @@ public class NearbyTest extends Fragment {
         host.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c[0] = new Connessione(false,true,questo);
+                c[0] = new Connessione(false,questo, "120001");
             }
         });
         client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c[0] = new Connessione(true,false,questo);
+                c[0] = new Connessione(true,questo, "120001");
             }
         });
 
