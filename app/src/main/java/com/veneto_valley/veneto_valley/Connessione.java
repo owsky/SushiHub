@@ -33,7 +33,7 @@ public class Connessione {
     NearbyTest cont;
     boolean client = false;
     boolean connesso=false;
-    public boolean semaforo=false;
+    public long semaforo=0;
     public byte[] ricevuto=null;    //qui puoi prendere le richieste che ti arrivano
     public Connessione(boolean client, NearbyTest cont, String SERVICE_ID){
         this.cont=cont;
@@ -167,9 +167,11 @@ public class Connessione {
                             Toast.LENGTH_LONG).show();
 
                      */
-                    semaforo=true;
+                    semaforo=1;
                     ricevuto = receivedBytes;
-                    semaforo=false;
+                    semaforo=0;
+                    Toast.makeText(cont.getActivity(), new String(ricevuto),
+                            Toast.LENGTH_LONG).show();
                 }
             });
         }
