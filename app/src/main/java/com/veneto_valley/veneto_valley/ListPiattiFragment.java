@@ -121,10 +121,14 @@ public class ListPiattiFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
-			ListPiattiFragmentDirections.ActionListaPiattiFragmentToGeneraQR action = ListPiattiFragmentDirections.actionListaPiattiFragmentToGeneraQR();
-			// TODO recupera il codice dal database
-			action.setCodiceTavolo("codice");
-			NavHostFragment.findNavController(this).navigate(action);
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+			if (preferences.contains("codice_tavolo")) {
+				ListPiattiFragmentDirections.ActionListaPiattiFragmentToGeneraQR action = ListPiattiFragmentDirections.actionListaPiattiFragmentToGeneraQR();
+				action.setCodiceTavolo(preferences.getString("codice_tavolo", null));
+				NavHostFragment.findNavController(this).navigate(action);
+			} else {
+				NavHostFragment.findNavController(this).navigate(R.id.homepageFragment);
+			}
 		} else if (item.getItemId() == R.id.toExtra) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_extra);
 		} else if (item.getItemId() == R.id.toAllOrders) {
