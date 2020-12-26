@@ -1,7 +1,9 @@
 package com.veneto_valley.veneto_valley;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -45,7 +47,12 @@ public class ScanQRFragment extends Fragment {
 		if (result != null) {
 			String contents = result.getContents();
 			if (contents != null) {
-				//TODO crea sessione con codice ottenuto
+				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString("codice_tavolo", contents);
+				editor.putBoolean("is_master", false);
+				editor.apply();
+				
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_listPiattiFragment);
 			} else {
 				NavHostFragment.findNavController(this).navigateUp();
