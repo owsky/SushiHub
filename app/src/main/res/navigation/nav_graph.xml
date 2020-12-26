@@ -70,6 +70,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_listaPiattiFragment_to_modificaOrdineFragment"
+            app:destination="@id/modificaOrdineFragment" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
@@ -119,4 +122,12 @@
         android:name="com.veneto_valley.veneto_valley.AllOrdersFragment"
         android:label="Tutti gli ordini"
         tools:layout="@layout/fragment_all_orders" />
+    <fragment
+        android:id="@+id/modificaOrdineFragment"
+        android:name="com.veneto_valley.veneto_valley.ModificaOrdineFragment"
+        android:label="ModificaOrdineFragment" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
 </navigation>
