@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_listaPiattiFragment_to_extra"
             app:destination="@id/extra" />
+        <action
+            android:id="@+id/action_listaPiattiFragment_to_allOrders"
+            app:destination="@id/allOrders" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
@@ -85,4 +88,9 @@
         android:name="com.veneto_valley.veneto_valley.Extra"
         android:label="Piatti extra"
         tools:layout="@layout/activity_extra" />
+    <fragment
+        android:id="@+id/allOrders"
+        android:name="com.veneto_valley.veneto_valley.AllOrdersFragment"
+        android:label="Tutti gli ordini"
+        tools:layout="@layout/fragment_all_orders" />
 </navigation>
