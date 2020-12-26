@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
+import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,41 +21,50 @@ import java.util.List;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class DeliveredOrdersFragment extends Fragment {
+	protected List<Ordine> dataList = new ArrayList<>();
+	protected LinearLayoutManager linearLayoutManager;
+	protected AppDatabase database;
+	protected MainAdapter adapter;
+	private ItemTouchHelper itemTouchHelper;
 	
 	public DeliveredOrdersFragment() {
 		super(R.layout.fragment_delivered_orders);
 	}
 	
 	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		database = AppDatabase.getInstance(requireContext());
+		// TODO getAllDelivered
+		dataList = database.ordineDao().getAll();
+	}
+	
+	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewDelivered);
-		List<Ordine> listaOrdini = new ArrayList<>();
-		listaOrdini.add(new Ordine("1", "Ravioli"));
-		listaOrdini.add(new Ordine("7", "Cinghiale"));
-		listaOrdini.add(new Ordine("55", "Yaki Udon"));
-		listaOrdini.add(new Ordine("101", "Sake Nigiri"));
-		OrdiniAdapter adapter = new OrdiniAdapter(requireActivity(), listaOrdini);
 		recyclerView.setHasFixedSize(true);
-		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		adapter = new MainAdapter(requireActivity(), dataList);
+		recyclerView.setAdapter(adapter);
+		
 		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 			@Override
 			public boolean isItemViewSwipeEnabled() {
 				return true;
 			}
-			
+
 			@Override
 			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
 				return false;
 			}
-			
+
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.LEFT)
 					adapter.retrieveFromDelivered(viewHolder.getAdapterPosition());
 			}
-			
+
 			@Override
 			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 				if (dX < 0) {
@@ -70,7 +80,7 @@ public class DeliveredOrdersFragment extends Fragment {
 							.create()
 							.decorate();
 				}
-				
+
 				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 			}
 		};
