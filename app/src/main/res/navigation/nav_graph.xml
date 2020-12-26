@@ -101,4 +101,9 @@
             android:id="@+id/action_aggiungiExtra_to_extra"
             app:destination="@id/extra" />
     </fragment>
+    <fragment
+        android:id="@+id/allOrders"
+        android:name="com.veneto_valley.veneto_valley.AllOrdersFragment"
+        android:label="Tutti gli ordini"
+        tools:layout="@layout/fragment_all_orders" />
 </navigation>
