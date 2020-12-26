@@ -26,29 +26,36 @@ import static android.content.ContentValues.TAG;
 
 public class Connessione {
     public static final Strategy STRATEGY = Strategy.P2P_STAR;
-    public static final String SERVICE_ID="120001";
+    //public static final String SERVICE_ID="120001";
+    String SERVICE_ID;
     Activity base;
     String strendPointId;
-    String risposta;
     NearbyTest cont;
-    public Connessione(boolean client, boolean host, NearbyTest cont){
-
+    boolean client = false;
+    boolean connesso=false;
+    public long semaforo=0;
+    public byte[] ricevuto=null;    //qui puoi prendere le richieste che ti arrivano
+    public Connessione(boolean client, NearbyTest cont, String SERVICE_ID){
         this.cont=cont;
+        this.SERVICE_ID=SERVICE_ID; //service id deve essere il numero del qr code generato
+        this.client=client;
         base=cont.getActivity();
-
         if(client){
             startDiscovery();
-            //vedo se ci sono dispositivi che fanno l`advertising in giro
-            //invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
-            //gli mando un messaggio all`end point
         }else{
             startAdvertising();
-            //faccio partire l`advertising e mando a tutti il mio endpointid
-            //quando qualcuno mi invia qualcosa il contenuto si trova in un thread qui sotto
         }
     }
-    public void invia(String testo){
-        sendPayLoad(strendPointId, testo);
+    public void invia(byte[] oggetto){
+        if(connesso){
+            sendPayLoad(strendPointId, oggetto);
+        }else{
+            if(client){
+                startDiscovery();
+            }else{
+                startAdvertising();
+            }
+        }
     }
 
     private void startAdvertising () {
@@ -64,10 +71,9 @@ public class Connessione {
                     case ConnectionsStatusCodes.STATUS_OK:
                         //siamo connessi possiamo iniziare a prendere i dati
                         strendPointId = endPointId;
-                        sendPayLoad(strendPointId, "ciao");
                         Toast.makeText(cont.getActivity(), "siamo connessi",
                                 Toast.LENGTH_LONG).show();
-                        invia("LE MUCCHE FANNO MU MA UNA FA MUMU");
+                        connesso=true;
                         break;
                     case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                         Toast.makeText(cont.getActivity(), "cn rif",
@@ -83,12 +89,13 @@ public class Connessione {
             }
             @Override
             public void onDisconnected(@NonNull String s) {
+                connesso=false;
                 strendPointId = null;
             }
         }, advertisingOptions);
     }
-    private void sendPayLoad(final String endPointId, String testo) {
-        Payload bytesPayload = Payload.fromBytes(testo.getBytes());
+    private void sendPayLoad(final String endPointId, byte[] oggetto) {
+        Payload bytesPayload = Payload.fromBytes(oggetto);
         Nearby.getConnectionsClient(base).sendPayload(endPointId, bytesPayload).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -122,6 +129,7 @@ public class Connessione {
                                             case ConnectionsStatusCodes.STATUS_OK:
                                                 Toast.makeText(cont.getActivity(), "connessi",
                                                         Toast.LENGTH_LONG).show();
+                                                connesso=true;
                                                 break;
                                             case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                                                 Toast.makeText(cont.getActivity(), "cn rif",
@@ -153,9 +161,16 @@ public class Connessione {
             base.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    /*
                     risposta = new String(receivedBytes);
-                    //Log.println(Log.INFO, "risposta", risposta);
                     Toast.makeText(cont.getActivity(), risposta,
+                            Toast.LENGTH_LONG).show();
+
+                     */
+                    semaforo=1;
+                    ricevuto = receivedBytes;
+                    semaforo=0;
+                    Toast.makeText(cont.getActivity(), new String(ricevuto),
                             Toast.LENGTH_LONG).show();
                 }
             });
@@ -169,6 +184,7 @@ public class Connessione {
         }
     };
     public void closeConnection(){
+        connesso=false;
         Nearby.getConnectionsClient(base).stopAllEndpoints();
     }
 

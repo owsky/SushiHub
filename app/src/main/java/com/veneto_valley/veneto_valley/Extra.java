@@ -14,67 +14,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Extra extends Fragment {
-
     private static final String TAG = "MyActivity";
-
+    Fragment questo = this;
     public Extra(){
         super(R.layout.activity_extra);
     }
-
-
-    public static class MenuExtra{
-        int numero;
-        double prezzo;
-        String nome;
-        public boolean inserito=false;
-        MenuExtra(int numero, double prezzo, String nome){
-            this.numero=numero;
-            this.prezzo=prezzo;
-            this.nome=nome;
-        }
-    }
-
-    Button addBevande, addDolci;
-    ArrayList<MenuExtra> bevande;
-    ArrayList<MenuExtra> dolci;
-    Extra questo = this;
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        bevande = new ArrayList<>();
-        dolci = new ArrayList<>();
-        //due strutture per memorizzare bevande e dolci rispettivamente
-
-        addBevande = (Button) getView().findViewById(R.id.button2); //prendo button2
-        addDolci = (Button) getView().findViewById(R.id.button3); //prendo button3
-
-        final Activity[] questa = {this.getActivity()};
-
-        final CustomDialogClass[] cdd = new CustomDialogClass[1];
-
-
-        //imposto i listener dei bottoni
-        addBevande.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI BEVANDE", questo);
-                cdd[0].show();
-            }
-        });
-        addDolci.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cdd[0] =new CustomDialogClass(questa[0], "INSERISCI DOLCI", questo);
-                cdd[0].show();
-            }
+        super.onViewCreated(view, savedInstanceState);
+        aggiungiRiga();
+        view.findViewById(R.id.button2).setOnClickListener(view11 -> {
+            NavHostFragment.findNavController(questo).navigate(R.id.action_extra_to_aggiungiExtra);
         });
     }
-
-
-
 
     @SuppressLint("SetTextI18n")
     private LinearLayout faiCasellina(int numero, Double prezzo, String nome){
@@ -110,26 +68,24 @@ public class Extra extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void aggiungiRiga(){
-        //TODO: FUNZIONE CHE AGGIORNA LA VIEW PRENDENDO I DATI DAI DUE ARRAYLIST
         LinearLayout bevandeLayout = (LinearLayout) getView().findViewById(R.id.layout_bevande);
-        LinearLayout dolciLayout = (LinearLayout) getView().findViewById(R.id.layout_dolci);
         //a questi oggetti di tipo linear layout dovrò fare una add dei componenti
         //il metodo è addView
-        int i=0,j=0;
-        for(MenuExtra m : dolci){
-            if(!m.inserito){
-                dolciLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), i);
-                m.inserito=true;
-                i++;
-            }
-        }
-        for(MenuExtra m : bevande){
-            if(!m.inserito){
-                bevandeLayout.addView(faiCasellina(m.numero, m.prezzo, m.nome), j);
-                m.inserito=true;
+        MenuExtra m = MenuExtra.getInstance();
+        int j=0;
+        if(!m.listaExtra.isEmpty()){
+            for(MenuExtra.ExtraDish me : m.listaExtra){
+                bevandeLayout.addView(faiCasellina(me.numero, me.prezzo, me.nome), j);
                 j++;
+
             }
         }
+
     }
+
+
+
+
+
 
 }

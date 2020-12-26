@@ -4,14 +4,17 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.veneto_valley.veneto_valley.db.entities.Piatto;
 import com.veneto_valley.veneto_valley.db.entities.Utente;
+import com.veneto_valley.veneto_valley.db.relations.OrdiniPiatto;
+import com.veneto_valley.veneto_valley.db.relations.OrdiniTavolo;
 
 import java.util.List;
 
 @Dao
-public interface PiattoDao {
+public interface PiattoDao extends baseDao<Piatto>{
     @Query("SELECT * FROM piatto")
     List<Piatto> getAll();
 
@@ -21,12 +24,11 @@ public interface PiattoDao {
     @Query("SELECT * FROM piatto WHERE nomePiatto LIKE :nomePiatto  LIMIT 1")
     Piatto findByName(String nomePiatto);
 
-    @Insert
-    void insertAll(Piatto... piatti);
+    @Query("DELETE FROM piatto WHERE idPiatto LIKE :idPiatto")
+    int deleteById(int idPiatto);
 
-    @Delete
-    void delete(Piatto piatto);
-
-    @Query("DELEtE FROM piatto WHERE nomePiatto LIKE :nomePiatto")
-    void deleteByName(String nomePiatto);
+    //Relazioni
+    @Transaction //Necessario per garantire atomicità dell'operazione
+    @Query("SELECT * FROM piatto WHERE idPiatto IN (:idPiatto)")
+    List<OrdiniPiatto> getOrdiniPiatto(int idPiatto);
 }

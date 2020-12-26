@@ -13,7 +13,7 @@ import com.veneto_valley.veneto_valley.db.relations.TavoliRistorante;
 import java.util.List;
 
 @Dao
-public interface RistoranteDao {
+public interface RistoranteDao extends baseDao<Ristorante>{
     @Query("SELECT * FROM ristorante")
     List<Ristorante> getAll();
 
@@ -22,12 +22,6 @@ public interface RistoranteDao {
 
     @Query("SELECT * FROM ristorante WHERE nome LIKE :nome LIMIT 1")
     Ristorante findByName(String nome);
-
-    @Insert
-    void insertAll(Ristorante... ristoranti);
-
-    @Delete
-    void delete(Ristorante ristorante);
 
     //Relazioni
     @Transaction //Necessario per garantire atomicità dell'operazione

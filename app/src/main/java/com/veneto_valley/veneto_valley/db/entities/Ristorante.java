@@ -5,8 +5,28 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Ristorante {
-    @PrimaryKey(autoGenerate = true)
-    public int idRistorante;
+    @PrimaryKey
+    private long idRistorante;
 
-    public String nome;
+    private String nome;
+
+    public Ristorante(String nome) {
+        this.nome = nome;
+    }
+
+    public long getIdRistorante() {
+        return idRistorante;
+    }
+
+    public void setIdRistorante(long idRistorante) {
+        this.idRistorante = idRistorante;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
