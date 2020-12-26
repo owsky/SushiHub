@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homepageFragment_to_nearbyTest"
             app:destination="@id/nearbyTest" />
+        <action
+            android:id="@+id/action_homepageFragment_to_listaPiattiFragment"
+            app:destination="@id/listaPiattiFragment" />
     </fragment>
     <fragment
         android:id="@+id/generaQR"
@@ -62,6 +65,11 @@
         <action
             android:id="@+id/action_listaPiattiFragment_to_allOrders"
             app:destination="@id/allOrders" />
+        <argument
+            android:name="codice_tavolo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
@@ -77,6 +85,11 @@
             android:id="@+id/action_impostaTavolo_to_listaPiattiFragment"
             app:destination="@id/listaPiattiFragment"
             app:popUpTo="@id/listaPiattiFragment" />
+        <argument
+            android:name="codice_tavolo"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/nearbyTest"

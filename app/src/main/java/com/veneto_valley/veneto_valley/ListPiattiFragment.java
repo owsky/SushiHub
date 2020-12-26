@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -108,8 +110,11 @@ public class ListPiattiFragment extends Fragment {
 	
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		inflater.inflate(R.menu.lista_master_overflow, menu);
-		// TODO: se l'utente è master inflate menu master
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		if (sharedPreferences.getBoolean("is_master", false))
+			inflater.inflate(R.menu.lista_master_overflow, menu);
+		else
+			inflater.inflate(R.menu.lista_overflow, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	

@@ -50,7 +50,9 @@ public class GeneraQRFragment extends Fragment {
 		}
 		
 		Button btn = view.findViewById(R.id.doneqr);
-		btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRFragment.this).navigate(R.id.action_generaQR_to_impostaTavolo));
+		GeneraQRFragmentDirections.ActionGeneraQRToImpostaTavolo action = GeneraQRFragmentDirections.actionGeneraQRToImpostaTavolo();
+		action.setCodiceTavolo(codice);
+		btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRFragment.this).navigate(action));
 		
 	}
 	
