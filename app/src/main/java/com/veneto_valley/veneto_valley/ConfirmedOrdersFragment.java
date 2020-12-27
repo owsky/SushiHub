@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class ConfirmedOrdersFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		database = AppDatabase.getInstance(requireContext());
-		// TODO getAllConfirmed
+		// TODO Done getAllConfirmed
+		List<Ordine> confirmed = database.ordineDao().getAllbyStatus("confirmed");
 		dataList = database.ordineDao().getAll();
 	}
 	
@@ -62,7 +64,11 @@ public class ConfirmedOrdersFragment extends Fragment {
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.LEFT)
-					// TODO cambia status ordine nel DB
+					/* TODO Done cambia status ordine nel DB
+					Due opzioni:
+						public void updateOrdini(Ordine... ordini);
+						public void updateOrdineStatusByID(String idOrdine, String newStatus);
+					*/
 					adapter.retrieveFromConfirmed(viewHolder.getAdapterPosition());
 			}
 

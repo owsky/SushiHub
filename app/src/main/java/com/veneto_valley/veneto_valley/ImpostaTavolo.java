@@ -36,7 +36,7 @@ public class ImpostaTavolo extends Fragment {
 				editor.putBoolean("is_master", true);
 				editor.apply();
 			}
-			// TODO: scrivere info nel DB
+			// TODO: scrivere info nel DB ???? da vedere assieme
 			NavHostFragment.findNavController(ImpostaTavolo.this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
 		});
 	}

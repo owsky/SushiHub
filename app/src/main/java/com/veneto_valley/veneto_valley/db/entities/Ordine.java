@@ -9,14 +9,38 @@ public class Ordine {
     private long idOrdine;
 
     private String status;
+    private int quantita;
+    private String desc;
 
     //1-N Relations
-    private int tavolo;
-    private int piatto;
+    private String tavolo;
+    private String piatto;
 
-    public Ordine(int tavolo, int piatto) {
+    public Ordine(String tavolo, String piatto, int quantita) {
         this.tavolo = tavolo;
         this.piatto = piatto;
+        this.quantita = quantita;
+        this.desc = "";
+    }
+
+    public Ordine(String tavolo, String piatto) {
+        this(tavolo,piatto,1);
+    }
+
+    public int getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public long getIdOrdine() {
@@ -35,19 +59,19 @@ public class Ordine {
         this.status = status;
     }
 
-    public int getTavolo() {
+    public String getTavolo() {
         return tavolo;
     }
 
-    public void setTavolo(int tavolo) {
+    public void setTavolo(String tavolo) {
         this.tavolo = tavolo;
     }
 
-    public int getPiatto() {
+    public String getPiatto() {
         return piatto;
     }
 
-    public void setPiatto(int piatto) {
+    public void setPiatto(String piatto) {
         this.piatto = piatto;
     }
 }

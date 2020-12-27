@@ -15,7 +15,7 @@ import java.util.Date;
 public class Tavolo {
     final static String TAG = "ETavoloLog";
     @PrimaryKey(autoGenerate = false)
-    private long idTavolo;
+    private String idTavolo;
 
     private String nome;
 
@@ -25,20 +25,9 @@ public class Tavolo {
 
     private int ristorante;
 
-    //TODO: Rimuovere costruttore, serve solo per test
-    private static long lastId = 0;
-    @Ignore
-    public Tavolo() {
-        this.idTavolo = lastId++;
-        this.maxPiatti = 0;
-        this.costoMenu = 0f;
-        this.dataCreazione = Calendar.getInstance().getTime();
-        Log.w(TAG,"Current time => " + this.dataCreazione);
-    }
-
 
     @Ignore
-    public Tavolo(long idTavolo, int maxPiatti, float costoMenu) {
+    public Tavolo(String idTavolo, int maxPiatti, float costoMenu) {
         this.idTavolo = idTavolo;
         this.maxPiatti = maxPiatti;
         this.costoMenu = costoMenu;
@@ -46,21 +35,21 @@ public class Tavolo {
         Log.d(TAG,"Current time => " + this.dataCreazione);
     }
 
-    public Tavolo(long idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
+    public Tavolo(String idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
        this(idTavolo, maxPiatti, costoMenu);
        this.nome = nomeTavolo;
     }
 
-    public Tavolo(long idTavolo, int maxPiatti, float costoMenu, int ristorante) {
+    public Tavolo(String idTavolo, int maxPiatti, float costoMenu, int ristorante) {
         this(idTavolo, maxPiatti, costoMenu);
         this.ristorante = ristorante;
     }
 
-    public long getIdTavolo() {
+    public String getIdTavolo() {
         return idTavolo;
     }
 
-    public void setIdTavolo(long idTavolo) {
+    public void setIdTavolo(String idTavolo) {
         this.idTavolo = idTavolo;
     }
 

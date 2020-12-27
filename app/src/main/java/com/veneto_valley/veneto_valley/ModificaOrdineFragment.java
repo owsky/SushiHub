@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 
@@ -31,23 +32,24 @@ public class ModificaOrdineFragment extends Fragment {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		assert getArguments() != null;
 		int cod = ModificaOrdineFragmentArgs.fromBundle(getArguments()).getPosition();
-//		Ordine ordine = database.ordineDao().getUtentiOrdine(cod); TODO ritorna ordine
+		//Ordine ordine = database.ordineDao().getOrdineById(cod);// TODO ritorna ordine ???? Non mi trovo con il tipo dell'id
 		
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		
 		EditText codice = view.findViewById(R.id.addCodice);
 		codice.setText(cod);
 		EditText desc = view.findViewById(R.id.addDesc);
-//		desc.setText(database.ordineDao().get); TODO get descrizione
+	//	desc.setText(ordine.getDesc()); TODO Done get descrizione
 		EditText qta = view.findViewById(R.id.addQuantita);
-//		qta.setText(database.ordineDao().get); TODO get quantita
+	//	qta.setText(ordine.getQuantita); TODO Done get quantita
 		
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
 		salvaEsci.setOnClickListener(v -> {
 			// TODO scrive le informazioni sul DB
-			// TODO modifica tipo Ordine.codice, Ordine.tavolo
-			Ordine ordine = new Ordine(Integer.parseInt(codiceTavolo), Integer.parseInt(codice.getText().toString()));
-			// TODO descrizione
+			// TODO Done modifica tipo Ordine.codice, Ordine.tavolo
+			Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
+			// TODO Done descrizione
+			ordine.setDesc("...");
 			
 			database.ordineDao().insertAll(ordine);
 			NavHostFragment.findNavController(ModificaOrdineFragment.this).navigateUp();

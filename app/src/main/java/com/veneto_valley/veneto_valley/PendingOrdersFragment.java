@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.ArrayList;
@@ -37,7 +38,8 @@ public class PendingOrdersFragment extends Fragment implements MainAdapter.Custo
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		database = AppDatabase.getInstance(requireContext());
-		// TODO getAllPending
+		// TODO Done getAllPending
+		List<Ordine> pending = database.ordineDao().getAllbyStatus("pending");
 		dataList = database.ordineDao().getAll();
 	}
 	

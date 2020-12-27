@@ -33,19 +33,20 @@ public class AggiungiOrdiniFragment extends Fragment {
 		
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
 		salvaEsci.setOnClickListener(v -> {
-			// TODO scrive le informazioni sul DB
+			// TODO scrive le informazioni sul DB ???? Le scrivi alla riga 44
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 			String codiceTavolo = preferences.getString("codice_tavolo", null);
-			// TODO modifica tipo Ordine.codice, Ordine.tavolo
-			Ordine ordine = new Ordine(Integer.parseInt(codiceTavolo), Integer.parseInt(codice.getText().toString()));
-			// TODO descrizione
+			// TODO Done modifica tipo Ordine.codice, Ordine.tavolo
+			Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
+			// TODO Done descrizione
+			ordine.setDesc("...");
 			AppDatabase database = AppDatabase.getInstance(requireContext());
-			database.ordineDao().insertAll(ordine);
+			database.ordineDao().insertAll(ordine); // Le scrivi qui le informazioni sul DB
 			NavHostFragment.findNavController(AggiungiOrdiniFragment.this).navigateUp();
 		});
 		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
 		salvaNuovo.setOnClickListener(v -> {
-			// TODO scrive le informazioni sul DB
+			// TODO scrive le informazioni sul DB ????
 			codice.setText(null);
 			desc.setText(null);
 			qta.setText(null);

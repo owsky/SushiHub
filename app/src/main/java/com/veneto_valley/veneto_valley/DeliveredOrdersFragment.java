@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class DeliveredOrdersFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		database = AppDatabase.getInstance(requireContext());
-		// TODO getAllDelivered
+		// TODO Done getAllDelivered
+		List<Ordine> delivered = database.ordineDao().getAllbyStatus("delivered");
 		dataList = database.ordineDao().getAll();
 	}
 	

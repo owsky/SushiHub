@@ -21,7 +21,7 @@ import com.veneto_valley.veneto_valley.db.entities.Utente;
 import com.veneto_valley.veneto_valley.db.relations.UtentiOrdiniCrossRef;
 
 
-@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, UtentiOrdiniCrossRef.class}, version = 1)
+@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, UtentiOrdiniCrossRef.class}, version = 2)
 @TypeConverters({TimestampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase dbInstance = null;
