@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.veneto_valley.veneto_valley.db.AppDatabase;
-import com.veneto_valley.veneto_valley.db.entities.Ristorante;
 import com.veneto_valley.veneto_valley.db.entities.Tavolo;
 
 public class ImpostaTavolo extends Fragment {
@@ -31,19 +31,24 @@ public class ImpostaTavolo extends Fragment {
 		Button finito = view.findViewById(R.id.impostaFinito);
 		
 		finito.setOnClickListener(v -> {
-			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-			SharedPreferences.Editor editor = sharedPreferences.edit();
-			
-			ImpostaTavoloArgs args;
-			if (getArguments() != null && (args = ImpostaTavoloArgs.fromBundle(getArguments())).getCodiceTavolo() != null) {
-				editor.putString("codice_tavolo", args.getCodiceTavolo());
-				editor.putBoolean("is_master", true);
-				editor.apply();
-				// TODO Done scrivere info nel DB
-				Tavolo tavolo = new Tavolo(args.getCodiceTavolo(), Integer.parseInt(portate.getText().toString()),Float.parseFloat(costoMenu.getText().toString()));
-				AppDatabase.getInstance(requireContext()).tavoloDao().insertAll(tavolo);
+			if (TextUtils.isEmpty(costoMenu.getText()))
+				costoMenu.setError("Inserisci il costo del menu");
+			else if (TextUtils.isEmpty(portate.getText()))
+				portate.setError("Inserisci il numero massimo di portate");
+			else {
+				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				
+				ImpostaTavoloArgs args;
+				if (getArguments() != null && (args = ImpostaTavoloArgs.fromBundle(getArguments())).getCodiceTavolo() != null) {
+					editor.putString("codice_tavolo", args.getCodiceTavolo());
+					editor.putBoolean("is_master", true);
+					editor.apply();
+					Tavolo tavolo = new Tavolo(args.getCodiceTavolo(), Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
+					AppDatabase.getInstance(requireContext()).tavoloDao().insertAll(tavolo);
+				}
+				NavHostFragment.findNavController(ImpostaTavolo.this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
 			}
-			NavHostFragment.findNavController(ImpostaTavolo.this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
 		});
 	}
 }
