@@ -32,16 +32,16 @@ public class ModificaOrdineFragment extends Fragment {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		assert getArguments() != null;
 		int cod = ModificaOrdineFragmentArgs.fromBundle(getArguments()).getPosition();
-		//Ordine ordine = database.ordineDao().getOrdineById(cod);// TODO ritorna ordine ???? Non mi trovo con il tipo dell'id
+		//Ordine ordine = database.ordineDao().getOrdineById(cod);// TODO Done ritorna ordine
 		
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		
 		EditText codice = view.findViewById(R.id.addCodice);
 		codice.setText(cod);
 		EditText desc = view.findViewById(R.id.addDesc);
-	//	desc.setText(ordine.getDesc()); TODO Done get descrizione
+		//desc.setText(ordine.getDesc()); //TODO Done get descrizione
 		EditText qta = view.findViewById(R.id.addQuantita);
-	//	qta.setText(ordine.getQuantita); TODO Done get quantita
+		//qta.setText(ordine.getQuantita()); //TODO Done get quantita
 		
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
 		salvaEsci.setOnClickListener(v -> {
@@ -49,7 +49,7 @@ public class ModificaOrdineFragment extends Fragment {
 			// TODO Done modifica tipo Ordine.codice, Ordine.tavolo
 			Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
 			// TODO Done descrizione
-			ordine.setDesc("...");
+			ordine.desc = "...";
 			
 			database.ordineDao().insertAll(ordine);
 			NavHostFragment.findNavController(ModificaOrdineFragment.this).navigateUp();

@@ -54,10 +54,10 @@ public class dbTest extends AppCompatActivity {
     private void addBtnPressed(){
         Log.i(TAG,"Add Button Pressed");
         OrdineDao ordineDao = AppDatabase.getInstance(getApplicationContext()).ordineDao();
-        Ordine o = new Ordine(1,5);
-        o.setStatus("ordinati");
+        /*Ordine o = new Ordine(1,5);
+        o.setStatus("daOrdinare");
         ordineDao.insertAll(o);
-        syncBtnPressed();
+        syncBtnPressed();*/
     }
 
     private void rmBtnPressed(){
@@ -84,7 +84,7 @@ public class dbTest extends AppCompatActivity {
             tmpLL.addView(tmp);
 
             TextView tmp1 = new TextView(getApplicationContext());
-            tmp1.setText(String.valueOf(p.getIdOrdine()));
+            tmp1.setText(String.valueOf(p.idOrdine));
             tmp1.setTextColor(Color.LTGRAY);
             tmpLL.addView(tmp1);
 
@@ -94,7 +94,7 @@ public class dbTest extends AppCompatActivity {
             tmpLL.addView(tmp2);
 
             TextView tmp3 = new TextView(getApplicationContext());
-            tmp3.setText(String.valueOf(p.getStatus()));
+            tmp3.setText(String.valueOf(p.status));
             tmp3.setTextColor(Color.LTGRAY);
             tmpLL.addView(tmp3);
 

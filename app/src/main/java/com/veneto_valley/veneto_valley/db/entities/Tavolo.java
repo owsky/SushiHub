@@ -8,22 +8,25 @@ import androidx.room.PrimaryKey;
 
 import com.google.android.material.tabs.TabLayout;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 public class Tavolo {
     final static String TAG = "ETavoloLog";
+    @NotNull
     @PrimaryKey(autoGenerate = false)
-    private String idTavolo;
+    public String idTavolo;
 
-    private String nome;
+    public String nome;
 
-    private Date dataCreazione;
-    private int maxPiatti;
-    private float costoMenu;
+    public Date dataCreazione;
+    public int maxPiatti;
+    public float costoMenu;
 
-    private int ristorante;
+    public int ristorante;
 
 
     @Ignore
@@ -42,54 +45,6 @@ public class Tavolo {
 
     public Tavolo(String idTavolo, int maxPiatti, float costoMenu, int ristorante) {
         this(idTavolo, maxPiatti, costoMenu);
-        this.ristorante = ristorante;
-    }
-
-    public String getIdTavolo() {
-        return idTavolo;
-    }
-
-    public void setIdTavolo(String idTavolo) {
-        this.idTavolo = idTavolo;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Date getDataCreazione() {
-        return dataCreazione;
-    }
-
-    public void setDataCreazione(Date dataCreazione) {
-        this.dataCreazione = dataCreazione;
-    }
-
-    public int getMaxPiatti() {
-        return maxPiatti;
-    }
-
-    public void setMaxPiatti(int maxPiatti) {
-        this.maxPiatti = maxPiatti;
-    }
-
-    public float getCostoMenu() {
-        return costoMenu;
-    }
-
-    public void setCostoMenu(float costoMenu) {
-        this.costoMenu = costoMenu;
-    }
-
-    public int getRistorante() {
-        return ristorante;
-    }
-
-    public void setRistorante(int ristorante) {
         this.ristorante = ristorante;
     }
 }

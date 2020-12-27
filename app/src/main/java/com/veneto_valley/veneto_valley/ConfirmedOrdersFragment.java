@@ -67,7 +67,7 @@ public class ConfirmedOrdersFragment extends Fragment {
 					/* TODO Done cambia status ordine nel DB
 					Due opzioni:
 						public void updateOrdini(Ordine... ordini);
-						public void updateOrdineStatusByID(String idOrdine, String newStatus);
+						public void updateOrdineStatusByID(long idOrdine, String newStatus);
 					*/
 					adapter.retrieveFromConfirmed(viewHolder.getAdapterPosition());
 			}

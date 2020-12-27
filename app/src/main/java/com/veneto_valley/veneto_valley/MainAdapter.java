@@ -54,12 +54,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 		Ordine ordine = dataList.get(position);
 		database = AppDatabase.getInstance(context);
-		holder.codice.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.getIdOrdine()));
-		String desc = ordine.getDesc(); // TODO Done manca descrizione ordine
+		holder.codice.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.idOrdine));
+		String desc = ordine.desc; // TODO Done manca descrizione ordine
 		if (desc.length() >= 19) //TODO verificare se scala correttamente
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
-		holder.quantita.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.getQuantita())); //TODO Done MANCA QUANTITA
+		holder.quantita.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.quantita)); //TODO Done MANCA QUANTITA
 		if (customDragListener != null) {
 			holder.handleView.setOnTouchListener((v, event) -> {
 				if (event.getAction() == MotionEvent.ACTION_DOWN)

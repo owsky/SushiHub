@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.veneto_valley.veneto_valley.db.AppDatabase;
+import com.veneto_valley.veneto_valley.db.entities.Ristorante;
+import com.veneto_valley.veneto_valley.db.entities.Tavolo;
+
 public class ImpostaTavolo extends Fragment {
 	
 	public ImpostaTavolo() {
@@ -35,8 +39,10 @@ public class ImpostaTavolo extends Fragment {
 				editor.putString("codice_tavolo", args.getCodiceTavolo());
 				editor.putBoolean("is_master", true);
 				editor.apply();
+				// TODO Done scrivere info nel DB
+				Tavolo tavolo = new Tavolo(args.getCodiceTavolo(), Integer.parseInt(portate.getText().toString()),Float.parseFloat(costoMenu.getText().toString()));
+				AppDatabase.getInstance(requireContext()).tavoloDao().insertAll(tavolo);
 			}
-			// TODO: scrivere info nel DB ???? da vedere assieme
 			NavHostFragment.findNavController(ImpostaTavolo.this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
 		});
 	}

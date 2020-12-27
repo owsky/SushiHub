@@ -19,7 +19,7 @@ public interface OrdineDao extends baseDao<Ordine>{
     List<Ordine> getAll();
 
     @Query("SELECT * FROM Ordine WHERE idOrdine = :idOrdine")
-    List<Ordine> getOrdineById(long idOrdine);
+    public Ordine getOrdineById(long idOrdine);
 
     @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdini)")
     List<Ordine> loadAllByIds(long[] idOrdini);
