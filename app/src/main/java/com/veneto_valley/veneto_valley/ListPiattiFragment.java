@@ -47,7 +47,6 @@ public class ListPiattiFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
-		
 		view.findViewById(R.id.fab).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
 		
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);

@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley;
+package com.veneto_valley.veneto_valley.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,61 +14,55 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
+import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.List;
+import java.util.Locale;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-	private List<Ordine> dataList;
-	private Activity context;
-	private AppDatabase database;
-	private CustomDragListener customDragListener;
+public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingViewHolder> {
+	private final List<Ordine> dataList;
+	private final CustomDragListener customDragListener;
 	private Ordine cancellato;
 	private int indiceCancellato;
+	private final Activity activity;
 	private Snackbar snackbar;
+	private final Locale locale;
 	
-	public MainAdapter(Activity context, List<Ordine> dataList) {
-		this.context = context;
+	public PendingAdapter(Activity activity, List<Ordine> dataList, CustomDragListener listener) {
+		this.activity = activity;
 		this.dataList = dataList;
-		this.customDragListener = null;
-	}
-	
-	public MainAdapter(Activity context, List<Ordine> dataList, CustomDragListener customDragListener) {
-		this.context = context;
-		this.dataList = dataList;
+		this.customDragListener = listener;
+		this.locale = activity.getResources().getConfiguration().locale;
 		notifyDataSetChanged();
-		
-		this.customDragListener = customDragListener;
 	}
 	
 	@NonNull
 	@Override
-	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+	public PendingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_lista, parent, false);
-		return new ViewHolder(view);
+		return new PendingViewHolder(view);
 	}
 	
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
-	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+	public void onBindViewHolder(@NonNull PendingViewHolder holder, int position) {
 		Ordine ordine = dataList.get(position);
-		database = AppDatabase.getInstance(context);
-		holder.codice.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.idOrdine));
-		String desc = ordine.desc; // TODO Done manca descrizione ordine
-		if (desc.length() >= 19) //TODO verificare se scala correttamente
+		// TODO sostituire idordine con idpiatto
+		holder.codice.setText(String.format(locale, "%d", ordine.idOrdine));
+		String desc = ordine.desc;
+		if (desc.length() >= 19) // TODO verificare se scala correttamente
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
-		holder.quantita.setText(String.format(context.getResources().getConfiguration().locale, "%d", ordine.quantita)); //TODO Done MANCA QUANTITA
-		if (customDragListener != null) {
-			holder.handleView.setOnTouchListener((v, event) -> {
-				if (event.getAction() == MotionEvent.ACTION_DOWN)
-					customDragListener.onDragStarted(holder);
-				return true;
-			});
-		} else {
-			holder.handleView.setVisibility(View.GONE);
-		}
+		// TODO fixare quantità
+		holder.quantita.setText(String.format(locale, "%d", ordine.quantita));
+		holder.handle.setOnTouchListener((v, event) -> {
+			if (event.getAction() == MotionEvent.ACTION_DOWN)
+				customDragListener.onDragStarted(holder);
+			return true;
+		});
 		ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(Integer.parseInt(holder.codice.getText().toString()));
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
@@ -78,13 +72,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 		return dataList.size();
 	}
 	
+	public void aggiungiOrdine(Ordine ordine) {
+		AppDatabase database = AppDatabase.getInstance(activity);
+		database.ordineDao().insertAll(ordine);
+		// TODO ottimizzare, resetta l'ordine ad ogni modifica
+		dataList.clear();
+		// TODO sostituire getAll con getAllByStatus
+		dataList.addAll(database.ordineDao().getAll());
+		notifyDataSetChanged();
+	}
+	
 	public void sendItem(int position) {
 		//TODO comunicazione master
 		cancellato = dataList.get(position);
 		indiceCancellato = position;
 		dataList.remove(position);
 		notifyItemRemoved(position);
-		View view = context.findViewById(R.id.pendingOrders);
+		View view = activity.findViewById(R.id.pendingOrders);
 		snackbar = Snackbar.make(view, "Snackbar text", Snackbar.LENGTH_SHORT);
 		snackbar.setAction("Undo send?", v -> undoSend());
 		snackbar.show();
@@ -95,7 +99,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 		indiceCancellato = position;
 		dataList.remove(position);
 		notifyItemRemoved(position);
-		View view = context.findViewById(R.id.listaPiattiFragment);
+		View view = activity.findViewById(R.id.listaPiattiFragment);
 		snackbar = Snackbar.make(view, "Snackbar text", Snackbar.LENGTH_SHORT);
 		snackbar.setAction("Undo delete?", v -> undoDelete());
 		snackbar.show();
@@ -124,16 +128,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 	private void undoConfirmed() {
 	}
 	
-	public static class ViewHolder extends RecyclerView.ViewHolder {
+	public static class PendingViewHolder extends RecyclerView.ViewHolder {
 		private final TextView codice, descrizione, quantita;
-		public final ImageView handleView;
+		private final ImageView handle;
 		
-		public ViewHolder(@NonNull View itemView) {
+		public PendingViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
-			handleView = itemView.findViewById(R.id.dragHandle);
+			handle = itemView.findViewById(R.id.dragHandle);
 		}
 	}
 	

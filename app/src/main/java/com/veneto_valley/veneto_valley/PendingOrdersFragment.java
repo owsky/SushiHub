@@ -8,12 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
-import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.ArrayList;
@@ -23,11 +24,9 @@ import java.util.Objects;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class PendingOrdersFragment extends Fragment implements MainAdapter.CustomDragListener {
-	protected List<Ordine> dataList = new ArrayList<>();
-	protected LinearLayoutManager linearLayoutManager;
-	protected AppDatabase database;
-	protected MainAdapter adapter;
+public class PendingOrdersFragment extends Fragment implements PendingAdapter.CustomDragListener {
+	private List<Ordine> dataList = new ArrayList<>();
+	private PendingAdapter adapter;
 	private ItemTouchHelper itemTouchHelper;
 	
 	public PendingOrdersFragment() {
@@ -37,10 +36,8 @@ public class PendingOrdersFragment extends Fragment implements MainAdapter.Custo
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		database = AppDatabase.getInstance(requireContext());
-		// TODO Done getAllPending
-		List<Ordine> pending = database.ordineDao().getAllbyStatus("pending");
-		dataList = database.ordineDao().getAll();
+		AppDatabase database = AppDatabase.getInstance(requireContext());
+		dataList = database.ordineDao().getAllbyStatus("pending");
 	}
 	
 	@Override
@@ -49,9 +46,9 @@ public class PendingOrdersFragment extends Fragment implements MainAdapter.Custo
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-		adapter = new MainAdapter(requireActivity(), dataList);
+		adapter = new PendingAdapter(requireActivity(), dataList, this);
 		recyclerView.setAdapter(adapter);
-		
+
 		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 			@Override
 			public boolean isLongPressDragEnabled() {
@@ -108,6 +105,9 @@ public class PendingOrdersFragment extends Fragment implements MainAdapter.Custo
 		};
 		itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
+		
+		PendingViewModel viewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
+		viewModel.addAdapter(adapter);
 	}
 
 	@Override
