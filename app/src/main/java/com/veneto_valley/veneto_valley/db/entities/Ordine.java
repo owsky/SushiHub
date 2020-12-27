@@ -16,6 +16,7 @@ public class Ordine {
     //1-N Relations
     public String tavolo;
     public String piatto;
+    public long utente;
 
     public Ordine(String tavolo, String piatto, int quantita) {
         this.tavolo = tavolo;

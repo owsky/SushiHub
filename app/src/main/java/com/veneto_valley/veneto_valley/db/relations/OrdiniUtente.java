@@ -13,8 +13,7 @@ public class OrdiniUtente {
     @Embedded public Utente utente;
     @Relation(
             parentColumn = "idUtente",
-            entityColumn = "idOrdine",
-            associateBy = @Junction(UtentiOrdiniCrossRef.class)
+            entityColumn = "utente"
     )
     public List<Ordine> ordini;
 

@@ -20,9 +20,6 @@ public interface TavoloDao extends baseDao<Tavolo>{
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(int[] idTavoli);
 
-
-
-    //TODO: Ritorna bool stato aggiunta
     @Override
     @Insert
     List<Long> insertAll(Tavolo... objs);
@@ -34,7 +31,5 @@ public interface TavoloDao extends baseDao<Tavolo>{
 
     @Query("DELETE FROM tavolo WHERE idTavolo LIKE :idTavolo")
     int deleteById(int idTavolo);
-
-    //TODO: Ritorna il tavolo più recente
 
 }

@@ -54,10 +54,10 @@ public class dbTest extends AppCompatActivity {
     private void addBtnPressed(){
         Log.i(TAG,"Add Button Pressed");
         OrdineDao ordineDao = AppDatabase.getInstance(getApplicationContext()).ordineDao();
-        /*Ordine o = new Ordine(1,5);
-        o.setStatus("daOrdinare");
+        Ordine o = new Ordine("a","a12");
+        o.status = "daOrdinare";
         ordineDao.insertAll(o);
-        syncBtnPressed();*/
+        syncBtnPressed();
     }
 
     private void rmBtnPressed(){
