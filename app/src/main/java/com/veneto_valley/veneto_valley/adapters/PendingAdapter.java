@@ -82,7 +82,6 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 		database.ordineDao().insertAll(ordine);
 		// TODO ottimizzare, resetta l'ordine ad ogni modifica
 		dataList.clear();
-		// TODO sostituire getAll con getAllByStatus
 		dataList.addAll(database.ordineDao().getAllbyStatus("pending"));
 		notifyDataSetChanged();
 	}

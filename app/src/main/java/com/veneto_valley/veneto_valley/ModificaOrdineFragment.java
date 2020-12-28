@@ -24,7 +24,6 @@ import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 public class ModificaOrdineFragment extends Fragment {
 	private EditText codice, desc, qta;
 	private Ordine vecchioOrdine;
-	private AppDatabase database;
 	private String codiceTavolo;
 	
 	public ModificaOrdineFragment() {
@@ -34,7 +33,7 @@ public class ModificaOrdineFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		database = AppDatabase.getInstance(requireContext());
+		AppDatabase database = AppDatabase.getInstance(requireContext());
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		 codiceTavolo = preferences.getString("codice_tavolo", null);
 		

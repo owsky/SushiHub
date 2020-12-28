@@ -68,10 +68,8 @@ public class AggiungiOrdiniFragment extends Fragment {
 	private void salva() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
-		Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
+		Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString(), Integer.parseInt(qta.getText().toString()), "pending");
 		ordine.desc = desc.getText().toString();
-		ordine.quantita = Integer.parseInt(qta.getText().toString());
-		ordine.status = "pending";
 		adapter.aggiungiOrdine(ordine);
 	}
 }
