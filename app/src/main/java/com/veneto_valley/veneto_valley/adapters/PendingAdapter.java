@@ -2,6 +2,8 @@ package com.veneto_valley.veneto_valley.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,11 +16,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.veneto_valley.veneto_valley.Connessione;
 import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,8 +86,13 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 		notifyDataSetChanged();
 	}
 	
-	public void sendItem(int position) {
-		//TODO comunicazione master
+	public void sendItem(int position) throws IOException {
+		//TODO Done comunicazione master
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+		String codiceTavolo = preferences.getString("codice_tavolo", null);
+		Connessione c = new Connessione(false, activity, codiceTavolo);
+		c.invia(dataList.get(position).getBytes());
+
 		cancellato = dataList.get(position);
 		indiceCancellato = position;
 		dataList.remove(position);

@@ -27,9 +27,6 @@ public class HomepageFragment extends Fragment {
 		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> {
 			NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_generaQR);
 		});
-		view.findViewById(R.id.test_nearby).setOnClickListener(view1 -> {
-			NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_nearbyTest);
-		});
 		
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
