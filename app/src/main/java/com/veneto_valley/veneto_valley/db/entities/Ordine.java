@@ -25,6 +25,7 @@ public class Ordine {
     public String piatto;
     public long utente;
 
+    //TODO: Implementare test
     public Ordine(String tavolo, String piatto, int quantita, String status) {
         this.tavolo = tavolo;
         this.piatto = piatto;
@@ -32,6 +33,7 @@ public class Ordine {
         this.status = status;
     }
 
+    @Ignore
     public Ordine(String tavolo, String piatto, int quantita) {
         this(tavolo,piatto,quantita,"daOrdinare");
     }

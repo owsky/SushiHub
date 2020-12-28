@@ -14,7 +14,7 @@ public interface OrdineDao extends baseDao<Ordine>{
     List<Ordine> getAll();
 
     @Query("SELECT * FROM Ordine WHERE idOrdine = :idOrdine")
-    public Ordine getOrdineById(long idOrdine);
+    Ordine getOrdineById(long idOrdine);
 
     @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdini)")
     List<Ordine> loadAllByIds(long[] idOrdini);
@@ -23,7 +23,7 @@ public interface OrdineDao extends baseDao<Ordine>{
     List<Ordine> getAllbyStatus(String status);
 
     @Update
-    public void updateOrdini(Ordine... ordini);
+    void updateOrdini(Ordine... ordini);
 
     @Query("UPDATE Ordine SET status=:newStatus WHERE idOrdine = :idOrdine")
     void updateOrdineStatusByID(long idOrdine, String newStatus);
