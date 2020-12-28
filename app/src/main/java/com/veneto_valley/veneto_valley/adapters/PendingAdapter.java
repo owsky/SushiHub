@@ -62,7 +62,6 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 		if (desc.length() >= 19) // TODO verificare se scala correttamente
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
-		// TODO fixare quantità
 		holder.quantita.setText(String.format(locale, "%d", ordine.quantita));
 		holder.handle.setOnTouchListener((v, event) -> {
 			if (event.getAction() == MotionEvent.ACTION_DOWN)
@@ -87,6 +86,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 	}
 	
 	public void modificaOrdine(Ordine ordine) {
+		// TODO fix update ordini
 		database.ordineDao().updateOrdini(ordine);
 		dataList.clear();
 		dataList.addAll(database.ordineDao().getAllbyStatus("pending"));
