@@ -17,6 +17,7 @@ import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,8 +79,13 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-				if (direction == ItemTouchHelper.RIGHT)
-					adapter.sendItem(viewHolder.getAdapterPosition());
+				if (direction == ItemTouchHelper.RIGHT) {
+					try {
+						adapter.sendItem(viewHolder.getAdapterPosition());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				else if (direction == ItemTouchHelper.LEFT)
 					adapter.deleteItem(viewHolder.getAdapterPosition());
 			}
