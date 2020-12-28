@@ -1,7 +1,6 @@
 package com.veneto_valley.veneto_valley;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,8 +26,6 @@ import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.io.IOException;
-
-import static android.content.ContentValues.TAG;
 
 public class Connessione {
     public static final Strategy STRATEGY = Strategy.P2P_STAR;
@@ -170,8 +167,8 @@ public class Connessione {
                     semaforo=1;
                     ricevuto = receivedBytes;
                     semaforo=0;
-                    PendingViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) cont).get(PendingViewModel.class);
-                    adapter = viewModel.getAdapter().getValue();
+                    AdaptersViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) cont).get(AdaptersViewModel.class);
+                    adapter = viewModel.getPendingAdapter().getValue();
                     /*
                     Toast.makeText(cont, new String(ricevuto),
                             Toast.LENGTH_LONG).show();

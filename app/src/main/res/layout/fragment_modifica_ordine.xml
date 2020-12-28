@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textDesc" />
 
     <Button
-        android:id="@+id/salaModifica"
+        android:id="@+id/salvaModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

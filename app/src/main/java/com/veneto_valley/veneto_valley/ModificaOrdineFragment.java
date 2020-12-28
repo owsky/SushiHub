@@ -12,14 +12,20 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 
 public class ModificaOrdineFragment extends Fragment {
+	private EditText codice, desc, qta;
+	private Ordine vecchioOrdine;
+	private AppDatabase database;
+	private String codiceTavolo;
 	
 	public ModificaOrdineFragment() {
 		super(R.layout.fragment_modifica_ordine);
@@ -28,39 +34,30 @@ public class ModificaOrdineFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		AppDatabase database = AppDatabase.getInstance(requireContext());
+		database = AppDatabase.getInstance(requireContext());
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		assert getArguments() != null;
-		int cod = ModificaOrdineFragmentArgs.fromBundle(getArguments()).getPosition();
-		//Ordine ordine = database.ordineDao().getOrdineById(cod);// TODO Done ritorna ordine
+		 codiceTavolo = preferences.getString("codice_tavolo", null);
 		
-		String codiceTavolo = preferences.getString("codice_tavolo", null);
+		long codiceOrdine = ModificaOrdineFragmentArgs.fromBundle(getArguments()).getCodiceOrdine();
+		vecchioOrdine = database.ordineDao().getOrdineById(codiceOrdine);
 		
-		EditText codice = view.findViewById(R.id.addCodice);
-		codice.setText(cod);
-		EditText desc = view.findViewById(R.id.addDesc);
-		//desc.setText(ordine.getDesc()); //TODO Done get descrizione
-		EditText qta = view.findViewById(R.id.addQuantita);
-		//qta.setText(ordine.getQuantita()); //TODO Done get quantita
+		codice = view.findViewById(R.id.editCodice);
+		codice.setText(vecchioOrdine.piatto);
+		desc = view.findViewById(R.id.editDesc);
+		if (vecchioOrdine.desc != null)
+			desc.setText(vecchioOrdine.desc);
+		qta = view.findViewById(R.id.editQuantita);
+		qta.setText(String.format(getResources().getConfiguration().locale, "%d", vecchioOrdine.quantita));
 		
-		Button salvaEsci = view.findViewById(R.id.salvaEsci);
-		salvaEsci.setOnClickListener(v -> {
-			// TODO scrive le informazioni sul DB
-			// TODO Done modifica tipo Ordine.codice, Ordine.tavolo
-			Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
-			// TODO Done descrizione
-			ordine.desc = "...";
-			
-			database.ordineDao().insertAll(ordine);
+		Button salvaModifica = view.findViewById(R.id.salvaModifica);
+		salvaModifica.setOnClickListener(v -> {
+			Ordine nuovoOrdine = new Ordine(codiceTavolo, codice.getText().toString(), Integer.parseInt(qta.getText().toString()));
+			nuovoOrdine.desc = desc.getText().toString();
+			nuovoOrdine.status = vecchioOrdine.status;
+			AdaptersViewModel viewModel = new ViewModelProvider(requireActivity()).get(AdaptersViewModel.class);
+			PendingAdapter adapter = viewModel.getPendingAdapter().getValue();
+			adapter.modificaOrdine(nuovoOrdine);
 			NavHostFragment.findNavController(ModificaOrdineFragment.this).navigateUp();
-		});
-		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
-		salvaNuovo.setOnClickListener(v -> {
-			// TODO scrive le informazioni sul DB
-			codice.setText(null);
-			desc.setText(null);
-			qta.setText(null);
-			view.requestFocus();
 		});
 	}
 	

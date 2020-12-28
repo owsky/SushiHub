@@ -34,12 +34,14 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 	private final Activity activity;
 	private Snackbar snackbar;
 	private final Locale locale;
+	private final AppDatabase database;
 	
 	public PendingAdapter(Activity activity, List<Ordine> dataList, CustomDragListener listener) {
 		this.activity = activity;
 		this.dataList = dataList;
 		this.customDragListener = listener;
 		this.locale = activity.getResources().getConfiguration().locale;
+		database = AppDatabase.getInstance(activity);
 		notifyDataSetChanged();
 	}
 	
@@ -67,7 +69,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 				customDragListener.onDragStarted(holder);
 			return true;
 		});
-		ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(Integer.parseInt(holder.codice.getText().toString()));
+		ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(ordine.idOrdine);
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
 	
@@ -77,12 +79,18 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.PendingV
 	}
 	
 	public void aggiungiOrdine(Ordine ordine) {
-		AppDatabase database = AppDatabase.getInstance(activity);
 		database.ordineDao().insertAll(ordine);
 		// TODO ottimizzare, resetta l'ordine ad ogni modifica
 		dataList.clear();
 		// TODO sostituire getAll con getAllByStatus
-		dataList.addAll(database.ordineDao().getAll());
+		dataList.addAll(database.ordineDao().getAllbyStatus("pending"));
+		notifyDataSetChanged();
+	}
+	
+	public void modificaOrdine(Ordine ordine) {
+		database.ordineDao().updateOrdini(ordine);
+		dataList.clear();
+		dataList.addAll(database.ordineDao().getAllbyStatus("pending"));
 		notifyDataSetChanged();
 	}
 	

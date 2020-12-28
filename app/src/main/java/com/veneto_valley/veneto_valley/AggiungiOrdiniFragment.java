@@ -48,8 +48,8 @@ public class AggiungiOrdiniFragment extends Fragment {
 			view.requestFocus();
 		});
 		
-		PendingViewModel viewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
-		adapter = viewModel.getAdapter().getValue();
+		AdaptersViewModel viewModel = new ViewModelProvider(requireActivity()).get(AdaptersViewModel.class);
+		adapter = viewModel.getPendingAdapter().getValue();
 	}
 	
 	@Override
@@ -70,6 +70,8 @@ public class AggiungiOrdiniFragment extends Fragment {
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString());
 		ordine.desc = desc.getText().toString();
+		ordine.quantita = Integer.parseInt(qta.getText().toString());
+		ordine.status = "pending";
 		adapter.aggiungiOrdine(ordine);
 	}
 }

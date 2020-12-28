@@ -119,7 +119,7 @@
         android:name="com.veneto_valley.veneto_valley.ModificaOrdineFragment"
         android:label="ModificaOrdineFragment" >
         <argument
-            android:name="position"
-            app:argType="integer" />
+            android:name="codiceOrdine"
+            app:argType="long" />
     </fragment>
 </navigation>

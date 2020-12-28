@@ -112,8 +112,8 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 		itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
 		
-		PendingViewModel viewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
-		viewModel.addAdapter(adapter);
+		AdaptersViewModel viewModel = new ViewModelProvider(requireActivity()).get(AdaptersViewModel.class);
+		viewModel.addPendingAdapter(adapter);
 	}
 
 	@Override
