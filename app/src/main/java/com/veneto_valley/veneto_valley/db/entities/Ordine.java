@@ -18,11 +18,15 @@ public class Ordine {
     public String piatto;
     public long utente;
 
-    public Ordine(String tavolo, String piatto, int quantita) {
+    public Ordine(String tavolo, String piatto, int quantita, String status) {
         this.tavolo = tavolo;
         this.piatto = piatto;
         this.quantita = quantita;
-        this.desc = "";
+        this.status = status;
+    }
+
+    public Ordine(String tavolo, String piatto, int quantita) {
+        this(tavolo,piatto,quantita,"daOrdinare");
     }
 
     @Ignore
