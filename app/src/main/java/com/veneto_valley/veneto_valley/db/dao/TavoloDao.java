@@ -18,7 +18,10 @@ public interface TavoloDao extends baseDao<Tavolo>{
     List<Tavolo> getAll();
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
-    List<Tavolo> loadAllByIds(int[] idTavoli);
+    List<Tavolo> loadAllByIds(String[] idTavoli);
+
+    @Query("SELECT * FROM tavolo WHERE idTavolo = :idTavolo")
+    Tavolo loadById(String idTavolo);
 
     @Override
     @Insert
