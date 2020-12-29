@@ -16,7 +16,7 @@ public class ConfirmedViewModel extends BaseViewModel {
 		ordini = repository.getConfirmedOrders();
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) {
+	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
 		repository.retrieveFromMaster(ordine, activity);
 	}
 	

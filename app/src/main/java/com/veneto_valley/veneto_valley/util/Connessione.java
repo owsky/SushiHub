@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -22,6 +24,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.DeliveredViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
+import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 
 import java.io.IOException;
 
@@ -29,7 +35,8 @@ public class Connessione {
     public static final Strategy STRATEGY = Strategy.P2P_STAR;
     //public static final String SERVICE_ID="120001";
     String SERVICE_ID;
-    private OrdiniAdapter adapter;
+    private ConfirmedViewModel viewModel;
+    private DeliveredViewModel viewModelDelivered;
     String strendPointId;
     Activity cont;
     boolean client = false;
@@ -154,8 +161,6 @@ public class Connessione {
                     }
                 }, discoveryOptions);
     }
-    public PayloadCallback mPayloadCallback=null;
-    /*
     private final PayloadCallback mPayloadCallback = new PayloadCallback() {
         @Override
         public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
@@ -167,10 +172,17 @@ public class Connessione {
                     semaforo=1;
                     ricevuto = receivedBytes;
                     semaforo=0;
-//                    TODO: trovare soluzione alternativa
+                    MyViewModelFactory factory = new MyViewModelFactory(cont.getApplication(), SERVICE_ID);
+                    viewModel = new ViewModelProvider((ViewModelStoreOwner) cont, factory).get(ConfirmedViewModel.class);
                     try {
                         risposta = Ordine.getFromBytes(ricevuto);
-                        //TODO: mettere risposta nell`adapter
+                        if(risposta.status.equals("confirmed")){
+                            viewModel.insert(risposta);
+                        }else if(risposta.status.equals("pending")){
+                            viewModel.delete(risposta);
+                        }else{
+                            viewModel.update(risposta);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -187,7 +199,7 @@ public class Connessione {
             }
         }
     };
-*/
+
 
     public void closeConnection(){
         connesso=false;

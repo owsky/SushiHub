@@ -59,8 +59,13 @@ public class ConfirmedOrdersFragment extends Fragment {
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
-				if (direction == ItemTouchHelper.LEFT)
-					viewModel.retrieveFromMaster(ordine, requireActivity());
+				if (direction == ItemTouchHelper.LEFT) {
+					try {
+						viewModel.retrieveFromMaster(ordine, requireActivity());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				else if (direction == ItemTouchHelper.RIGHT) {
 					try {
 						viewModel.markAsDelivered(ordine, requireActivity());

@@ -76,43 +76,12 @@ public class Repository {
 		}
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) {
+	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "pending";
 		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
-		
-		// TODO implementa undo del master
-	}
-	
-	public Ordine receiveFromSlave(Activity activity) {
-		Connessione connessione = new Connessione(false, activity, tavolo);
-		final long[] semaforo = {0};
-		final Ordine[] risposta = {null};
-		connessione.mPayloadCallback = new PayloadCallback() {
-			@Override
-			public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
-				final   byte[] receivedBytes = payload.asBytes();
-				activity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						semaforo[0] =1;
-						try {
-							risposta[0] =Ordine.getFromBytes(receivedBytes);
-						} catch (IOException e) {
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						}
-						semaforo[0]=0;
-					}
-				});
-			}
-
-			@Override
-			public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-
-			}
-		};
-		return risposta[0];
+		Connessione connessione = new Connessione(true, activity, tavolo);
+		connessione.invia(ordine.getBytes());
+		//TODO: CONTROLLARE
 	}
 	
 	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
