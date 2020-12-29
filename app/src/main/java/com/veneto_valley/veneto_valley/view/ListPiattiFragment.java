@@ -58,37 +58,37 @@ public class ListPiattiFragment extends Fragment {
 				case 0: {
 					tab.setText("Pending");
 					tab.setIcon(R.drawable.ic_pending);
-					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-					badgeDrawable.setBackgroundColor(
-							ContextCompat.getColor(requireContext().getApplicationContext(),
-									R.color.design_default_color_primary)
-					);
-					badgeDrawable.setVisible(true);
+//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
+//					badgeDrawable.setBackgroundColor(
+//							ContextCompat.getColor(requireContext().getApplicationContext(),
+//									R.color.design_default_color_primary)
+//					);
+//					badgeDrawable.setVisible(true);
 					break;
 				}
 				case 1: {
 					tab.setText("Confirmed");
 					tab.setIcon(R.drawable.ic_confirmed);
-					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-					badgeDrawable.setBackgroundColor(
-							ContextCompat.getColor(requireContext().getApplicationContext(),
-									R.color.design_default_color_primary)
-					);
-					badgeDrawable.setVisible(true);
-					badgeDrawable.setNumber(8);
+//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
+//					badgeDrawable.setBackgroundColor(
+//							ContextCompat.getColor(requireContext().getApplicationContext(),
+//									R.color.design_default_color_primary)
+//					);
+//					badgeDrawable.setVisible(true);
+//					badgeDrawable.setNumber(8);
 					break;
 				}
 				case 2: {
 					tab.setText("Delivered");
 					tab.setIcon(R.drawable.ic_delivered);
-					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-					badgeDrawable.setBackgroundColor(
-							ContextCompat.getColor(requireContext().getApplicationContext(),
-									R.color.design_default_color_primary)
-					);
-					badgeDrawable.setVisible(true);
-					badgeDrawable.setNumber(100);
-					badgeDrawable.setMaxCharacterCount(3);
+//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
+//					badgeDrawable.setBackgroundColor(
+//							ContextCompat.getColor(requireContext().getApplicationContext(),
+//									R.color.design_default_color_primary)
+//					);
+//					badgeDrawable.setVisible(true);
+//					badgeDrawable.setNumber(100);
+//					badgeDrawable.setMaxCharacterCount(3);
 					break;
 				}
 			}
@@ -96,14 +96,14 @@ public class ListPiattiFragment extends Fragment {
 		);
 		tabLayoutMediator.attach();
 		
-		viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-			@Override
-			public void onPageSelected(int position) {
-				super.onPageSelected(position);
-				BadgeDrawable badgeDrawable = Objects.requireNonNull(tabLayout.getTabAt(position)).getOrCreateBadge();
-				badgeDrawable.setVisible(false);
-			}
-		});
+//		viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//			@Override
+//			public void onPageSelected(int position) {
+//				super.onPageSelected(position);
+//				BadgeDrawable badgeDrawable = Objects.requireNonNull(tabLayout.getTabAt(position)).getOrCreateBadge();
+//				badgeDrawable.setVisible(false);
+//			}
+//		});
 	}
 	
 	@Override
