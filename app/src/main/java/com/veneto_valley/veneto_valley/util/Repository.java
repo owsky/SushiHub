@@ -2,7 +2,6 @@ package com.veneto_valley.veneto_valley.util;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -21,13 +20,11 @@ public class Repository {
 	private final OrdineDao ordineDao;
 	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders;
 	private final String tavolo;
-	private final Application application;
 	
 	public Repository(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
 		ordineDao = database.ordineDao();
 		this.tavolo = tavolo;
-		this.application = application;
 		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo);
 		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo);
 		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo);
@@ -39,17 +36,18 @@ public class Repository {
 			vecchioOrdine.quantita += ordine.quantita;
 			if (!(ordine.desc == null))
 				vecchioOrdine.desc = ordine.desc;
-			new UpdateOrdineAsyncTask(ordineDao).execute(vecchioOrdine);
-		} else
-			new InsertOrdineAsyncTask(ordineDao).execute(ordine);
+			update(vecchioOrdine);
+		} else {
+			new InsertOrdineThread(ordine, ordineDao).start();
+		}
 	}
 	
 	public void update(Ordine ordine) {
-		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		new UpdateOrdineThread(ordine, ordineDao).start();
 	}
 	
 	public void delete(Ordine ordine) {
-		new DeleteOrdineAsyncTask(ordineDao).execute(ordine);
+		new DeleteOrdineThread(ordine, ordineDao).start();
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {
@@ -66,7 +64,7 @@ public class Repository {
 	
 	public void sendToMaster(Ordine ordine, Activity activity) {
 		ordine.status = "confirmed";
-		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		update(ordine);
 		
 		Connessione connessione = new Connessione(true, activity, tavolo);
 		try {
@@ -82,62 +80,67 @@ public class Repository {
 		Connessione connessione = new Connessione(true, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE
+		update(ordine);	
+		// TODO implementa undo del master
 	}
+	
 	
 	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "delivered";
-		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
 	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "confirmed";
-		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
-	// TODO: sostituire componenti deprecati
-	private static class InsertOrdineAsyncTask extends AsyncTask<Ordine, Void, Void> {
-		private final OrdineDao ordineDao;
+	public static class InsertOrdineThread extends Thread {
+		private final Ordine ordine;
+		private final OrdineDao dao;
 		
-		private InsertOrdineAsyncTask(OrdineDao ordineDao) {
-			this.ordineDao = ordineDao;
+		public InsertOrdineThread(Ordine ordine, OrdineDao dao) {
+			this.ordine = ordine;
+			this.dao = dao;
 		}
 		
 		@Override
-		protected Void doInBackground(Ordine... ordini) {
-			ordineDao.insertAll(ordini[0]);
-			return null;
+		public void run() {
+			dao.insertAll(ordine);
 		}
 	}
 	
-	private static class UpdateOrdineAsyncTask extends AsyncTask<Ordine, Void, Void> {
-		private final OrdineDao ordineDao;
+	public static class UpdateOrdineThread extends Thread {
+		private final Ordine ordine;
+		private final OrdineDao dao;
 		
-		private UpdateOrdineAsyncTask(OrdineDao ordineDao) {
-			this.ordineDao = ordineDao;
+		public UpdateOrdineThread(Ordine ordine, OrdineDao dao) {
+			this.ordine = ordine;
+			this.dao = dao;
 		}
 		
 		@Override
-		protected Void doInBackground(Ordine... ordini) {
-			ordineDao.update(ordini[0]);
-			return null;
+		public void run() {
+			dao.update(ordine);
 		}
 	}
 	
-	private static class DeleteOrdineAsyncTask extends AsyncTask<Ordine, Void, Void> {
-		private final OrdineDao ordineDao;
+	public static class DeleteOrdineThread extends Thread {
+		private final Ordine ordine;
+		private final OrdineDao dao;
 		
-		private DeleteOrdineAsyncTask(OrdineDao ordineDao) {
-			this.ordineDao = ordineDao;
+		public DeleteOrdineThread(Ordine ordine, OrdineDao dao) {
+			this.ordine = ordine;
+			this.dao = dao;
 		}
 		
 		@Override
-		protected Void doInBackground(Ordine... ordini) {
-			ordineDao.delete(ordini[0]);
-			return null;
+		public void run() {
+			dao.delete(ordine);
 		}
 	}
 }
