@@ -21,6 +21,8 @@ import com.veneto_valley.veneto_valley.viewmodel.DeliveredViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
 
+import java.io.IOException;
+
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class DeliveredOrdersFragment extends Fragment {
@@ -59,8 +61,13 @@ public class DeliveredOrdersFragment extends Fragment {
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
-				if (direction == ItemTouchHelper.LEFT)
-					viewModel.markAsNotDelivered(ordine, requireActivity());
+				if (direction == ItemTouchHelper.LEFT) {
+					try {
+						viewModel.markAsNotDelivered(ordine, requireActivity());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
 			@Override

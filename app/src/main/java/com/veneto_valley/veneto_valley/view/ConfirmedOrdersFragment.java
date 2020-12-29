@@ -20,6 +20,8 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
+import java.io.IOException;
+
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ConfirmedOrdersFragment extends Fragment {
@@ -59,8 +61,13 @@ public class ConfirmedOrdersFragment extends Fragment {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
 				if (direction == ItemTouchHelper.LEFT)
 					viewModel.retrieveFromMaster(ordine, requireActivity());
-				else if (direction == ItemTouchHelper.RIGHT)
-					viewModel.markAsDelivered(ordine, requireActivity());
+				else if (direction == ItemTouchHelper.RIGHT) {
+					try {
+						viewModel.markAsDelivered(ordine, requireActivity());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 
 			@Override

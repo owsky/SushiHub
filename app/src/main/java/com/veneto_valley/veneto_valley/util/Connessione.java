@@ -154,6 +154,8 @@ public class Connessione {
                     }
                 }, discoveryOptions);
     }
+    public PayloadCallback mPayloadCallback=null;
+    /*
     private final PayloadCallback mPayloadCallback = new PayloadCallback() {
         @Override
         public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
@@ -166,13 +168,6 @@ public class Connessione {
                     ricevuto = receivedBytes;
                     semaforo=0;
 //                    TODO: trovare soluzione alternativa
-//                    AdaptersViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) cont).get(AdaptersViewModel.class);
-//                    adapter = viewModel.getPendingAdapter().getValue();
-                    /*
-                    Toast.makeText(cont, new String(ricevuto),
-                            Toast.LENGTH_LONG).show();
-
-                     */
                     try {
                         risposta = Ordine.getFromBytes(ricevuto);
                         //TODO: mettere risposta nell`adapter
@@ -192,7 +187,7 @@ public class Connessione {
             }
         }
     };
-
+*/
 
     public void closeConnection(){
         connesso=false;

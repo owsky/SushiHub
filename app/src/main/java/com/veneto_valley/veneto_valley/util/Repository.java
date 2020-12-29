@@ -3,8 +3,12 @@ package com.veneto_valley.veneto_valley.util;
 import android.app.Activity;
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.nearby.connection.Payload;
+import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
@@ -77,23 +81,50 @@ public class Repository {
 		// TODO implementa undo del master
 	}
 	
-	public void receiveFromSlave(Activity activity) {
+	public Ordine receiveFromSlave(Activity activity) {
 		Connessione connessione = new Connessione(false, activity, tavolo);
-		// TODO implementa ricezione
+		final long[] semaforo = {0};
+		final Ordine[] risposta = {null};
+		connessione.mPayloadCallback = new PayloadCallback() {
+			@Override
+			public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
+				final   byte[] receivedBytes = payload.asBytes();
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						semaforo[0] =1;
+						try {
+							risposta[0] =Ordine.getFromBytes(receivedBytes);
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+						semaforo[0]=0;
+					}
+				});
+			}
+
+			@Override
+			public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
+
+			}
+		};
+		return risposta[0];
 	}
 	
-	public void markAsDelivered(Ordine ordine, Activity activity) {
+	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "delivered";
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
-		// TODO implementa connettività
+		connessione.invia(ordine.getBytes());
 	}
 	
-	public void markAsNotDelivered(Ordine ordine, Activity activity) {
+	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "confirmed";
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
-		// TODO Implementa connessione
+		connessione.invia(ordine.getBytes());
 	}
 	
 	public static class InsertOrdineThread extends Thread {
