@@ -2,26 +2,6 @@ package com.veneto_valley.veneto_valley;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.veneto_valley.veneto_valley.db.AppDatabase;
-import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
-import com.veneto_valley.veneto_valley.db.dao.PiattoDao;
-import com.veneto_valley.veneto_valley.db.dao.TavoloDao;
-import com.veneto_valley.veneto_valley.db.entities.Ordine;
-import com.veneto_valley.veneto_valley.db.entities.Piatto;
-import com.veneto_valley.veneto_valley.db.entities.Tavolo;
-
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
-
 public class dbTest extends AppCompatActivity {
 //    private static final String TAG = "dbTestLog";
 //    private TextView nElements;

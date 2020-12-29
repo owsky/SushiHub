@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.db.entities.Ordine;
+import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
 //	private final CustomDragListener customDragListener;

@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.veneto_valley.veneto_valley.ConfirmedOrdersFragment;
-import com.veneto_valley.veneto_valley.DeliveredOrdersFragment;
-import com.veneto_valley.veneto_valley.PendingOrdersFragment;
+import com.veneto_valley.veneto_valley.view.ConfirmedOrdersFragment;
+import com.veneto_valley.veneto_valley.view.DeliveredOrdersFragment;
+import com.veneto_valley.veneto_valley.view.PendingOrdersFragment;
 
 public class ListeOrdiniAdapter extends FragmentStateAdapter {
 	
