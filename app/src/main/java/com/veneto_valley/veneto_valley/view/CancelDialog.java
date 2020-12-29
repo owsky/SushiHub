@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley.dialogs;
+package com.veneto_valley.veneto_valley.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

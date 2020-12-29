@@ -16,8 +16,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.veneto_valley.veneto_valley.GeneraQRFragmentArgs;
-import com.veneto_valley.veneto_valley.GeneraQRFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
 
 import java.util.UUID;

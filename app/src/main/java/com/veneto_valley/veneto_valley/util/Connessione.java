@@ -20,7 +20,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
+import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 import java.io.IOException;

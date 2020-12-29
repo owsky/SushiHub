@@ -20,10 +20,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.adapters.ListeOrdiniAdapter;
-import com.veneto_valley.veneto_valley.dialogs.ExitDialog;
 
 import java.util.Objects;
 

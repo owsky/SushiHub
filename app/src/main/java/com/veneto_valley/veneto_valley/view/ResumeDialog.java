@@ -1,17 +1,14 @@
-package com.veneto_valley.veneto_valley.dialogs;
+package com.veneto_valley.veneto_valley.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.veneto_valley.veneto_valley.HomepageFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
 
 public class ResumeDialog extends DialogFragment {

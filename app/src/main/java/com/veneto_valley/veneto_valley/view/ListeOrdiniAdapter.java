@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley.adapters;
+package com.veneto_valley.veneto_valley.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

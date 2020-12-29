@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 

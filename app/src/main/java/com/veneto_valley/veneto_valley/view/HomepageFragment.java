@@ -4,15 +4,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.dialogs.ExitDialog;
-import com.veneto_valley.veneto_valley.dialogs.ResumeDialog;
 
 public class HomepageFragment extends Fragment {
 

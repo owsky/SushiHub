@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 
 import java.util.HashSet;
 import java.util.Set;

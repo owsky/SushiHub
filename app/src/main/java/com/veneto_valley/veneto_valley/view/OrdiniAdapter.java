@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley.adapters;
+package com.veneto_valley.veneto_valley.view;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 

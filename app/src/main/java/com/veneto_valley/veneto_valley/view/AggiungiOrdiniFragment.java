@@ -17,7 +17,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
 import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 
 public class AggiungiOrdiniFragment extends Fragment {

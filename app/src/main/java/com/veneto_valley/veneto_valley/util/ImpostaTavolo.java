@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.veneto_valley.veneto_valley.ImpostaTavoloArgs;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
