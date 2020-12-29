@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -32,16 +31,17 @@
 
             <TextView
                 android:id="@+id/piattoDesc"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="130dp"
                 android:layout_marginLeft="130dp"
                 android:ellipsize="end"
-                android:maxLength="19"
                 android:maxLines="1"
                 android:padding="10dp"
+                android:scrollHorizontally="true"
                 android:text="Descrizione"
                 android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/dragHandle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +85,6 @@
                 android:id="@+id/piattoStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginStart="41dp"
                 android:layout_marginLeft="41dp"
                 android:layout_marginEnd="8dp"
@@ -93,6 +92,7 @@
                 android:padding="10dp"
                 android:text="Status"
                 android:textSize="24sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/piattoDesc"

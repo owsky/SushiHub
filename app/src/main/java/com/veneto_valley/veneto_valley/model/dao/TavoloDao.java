@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -13,7 +14,7 @@ import java.util.List;
 @Dao
 public interface TavoloDao extends baseDao<Tavolo>{
     @Query("SELECT * FROM tavolo")
-    List<Tavolo> getAll();
+    LiveData<List<Tavolo>> getAll();
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(String[] idTavoli);

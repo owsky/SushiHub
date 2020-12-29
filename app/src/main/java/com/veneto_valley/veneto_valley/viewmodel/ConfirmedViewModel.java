@@ -13,14 +13,14 @@ public class ConfirmedViewModel extends BaseViewModel {
 	
 	public ConfirmedViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);
-		ordini = repository.getConfirmedOrders();
+		ordini = repositoryOrdini.getConfirmedOrders();
 	}
 	
 	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
-		repository.retrieveFromMaster(ordine, activity);
+		repositoryOrdini.retrieveFromMaster(ordine, activity);
 	}
 	
 	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
-		repository.markAsDelivered(ordine, activity);
+		repositoryOrdini.markAsDelivered(ordine, activity);
 	}
 }

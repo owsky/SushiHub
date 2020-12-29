@@ -13,10 +13,10 @@ public class DeliveredViewModel extends BaseViewModel {
 	
 	public DeliveredViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);
-		ordini = repository.getDeliveredOrders();
+		ordini = repositoryOrdini.getDeliveredOrders();
 	}
 	
 	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
-		repository.markAsNotDelivered(ordine, activity);
+		repositoryOrdini.markAsNotDelivered(ordine, activity);
 	}
 }

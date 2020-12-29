@@ -51,9 +51,8 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		Ordine currentOrdine = getItem(position);
 		holder.codice.setText(String.valueOf(currentOrdine.piatto));
 		String desc = currentOrdine.desc;
-		if (desc.length() >= 19) // TODO verificare se scala correttamente
-			desc = desc.substring(0, 16) + "...";
-		holder.descrizione.setText(desc);
+		if (desc != null)
+			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
 		if (currentOrdine.status.equals("pending")) {
 //			holder.handle.setOnTouchListener((v, event) -> {

@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Tavolo" />
         <item
-            android:id="@+id/storicoFragment"
+            android:id="@+id/storicoOrdiniPage"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Storico ordini" />
     </group>

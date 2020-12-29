@@ -3,12 +3,8 @@ package com.veneto_valley.veneto_valley.util;
 import android.app.Activity;
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.google.android.gms.nearby.connection.Payload;
-import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
@@ -16,12 +12,12 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import java.io.IOException;
 import java.util.List;
 
-public class Repository {
+public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
 	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders;
 	private final String tavolo;
 	
-	public Repository(Application application, String tavolo) {
+	public RepositoryOrdini(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
 		ordineDao = database.ordineDao();
 		this.tavolo = tavolo;
@@ -76,7 +72,7 @@ public class Repository {
 	
 	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "pending";
-		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		update(ordine);
 		Connessione connessione = new Connessione(true, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE

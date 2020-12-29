@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 		Set<Integer> topLevelDestinations = new HashSet<>();
 		topLevelDestinations.add(R.id.homepageFragment);
 		topLevelDestinations.add(R.id.listaPiattiFragment);
+		topLevelDestinations.add(R.id.storicoOrdiniPage);
 		appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(navigationView, navController);

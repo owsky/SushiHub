@@ -11,10 +11,10 @@ public class PendingViewModel extends BaseViewModel {
 	
 	public PendingViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);
-		ordini = repository.getPendingOrders();
+		ordini = repositoryOrdini.getPendingOrders();
 	}
 	
 	public void sendToMaster(Ordine ordine, Activity activity) {
-		repository.sendToMaster(ordine, activity);
+		repositoryOrdini.sendToMaster(ordine, activity);
 	}
 }

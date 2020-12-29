@@ -117,4 +117,22 @@
             android:name="ordine"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine" />
     </fragment>
+    <fragment
+        android:id="@+id/storicoOrdiniPage"
+        android:name="com.veneto_valley.veneto_valley.view.StoricoOrdiniPage"
+        android:label="Storico ordini"
+        tools:layout="@layout/fragment_storico_ordini_page">
+        <action
+            android:id="@+id/action_storicoOrdiniPage2_to_storicoDettagliPage"
+            app:destination="@id/storicoDettagliPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/storicoDettagliPage"
+        android:name="com.veneto_valley.veneto_valley.view.StoricoDettagliPage"
+        android:label="Storico dettagli"
+        tools:layout="@layout/fragment_storico_dettagli_page">
+        <argument
+            android:name="tavolo"
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Tavolo" />
+    </fragment>
 </navigation>
