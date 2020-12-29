@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -22,7 +20,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
+import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.io.IOException;
@@ -31,7 +29,7 @@ public class Connessione {
     public static final Strategy STRATEGY = Strategy.P2P_STAR;
     //public static final String SERVICE_ID="120001";
     String SERVICE_ID;
-    private PendingAdapter adapter;
+    private OrdiniAdapter adapter;
     String strendPointId;
     Activity cont;
     boolean client = false;

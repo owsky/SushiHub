@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.AsyncTask;
 
@@ -8,18 +9,22 @@ import androidx.lifecycle.LiveData;
 import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
+import com.veneto_valley.veneto_valley.viewmodels.ConfirmedViewModel;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Repository {
 	private final OrdineDao ordineDao;
 	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders;
 	private final String tavolo;
+	private final Application application;
 	
 	public Repository(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
 		ordineDao = database.ordineDao();
 		this.tavolo = tavolo;
+		this.application = application;
 		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo);
 		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo);
 		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo);
@@ -54,6 +59,44 @@ public class Repository {
 	
 	public LiveData<List<Ordine>> getDeliveredOrders() {
 		return deliveredOrders;
+	}
+	
+	public void sendToMaster(Ordine ordine, Activity activity) {
+		ordine.status = "confirmed";
+		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		
+		Connessione connessione = new Connessione(true, activity, tavolo);
+		try {
+			connessione.invia(ordine.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void retrieveFromMaster(Ordine ordine, Activity activity) {
+		ordine.status = "pending";
+		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		
+		// TODO implementa undo del master
+	}
+	
+	public void receiveFromSlave(Activity activity) {
+		Connessione connessione = new Connessione(false, activity, tavolo);
+		// TODO implementa ricezione
+	}
+	
+	public void markAsDelivered(Ordine ordine, Activity activity) {
+		ordine.status = "delivered";
+		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		Connessione connessione = new Connessione(false, activity, tavolo);
+		// TODO implementa connettività
+	}
+	
+	public void markAsNotDelivered(Ordine ordine, Activity activity) {
+		ordine.status = "confirmed";
+		new UpdateOrdineAsyncTask(ordineDao).execute(ordine);
+		Connessione connessione = new Connessione(false, activity, tavolo);
+		// TODO Implementa connessione
 	}
 	
 	// TODO: sostituire componenti deprecati

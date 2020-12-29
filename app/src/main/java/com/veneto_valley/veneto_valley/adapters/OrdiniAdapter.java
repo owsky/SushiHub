@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,15 +17,10 @@ import com.veneto_valley.veneto_valley.ListPiattiFragmentDirections;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
-import java.io.IOException;
-
-public class PendingAdapter extends ListAdapter<Ordine, PendingAdapter.PendingViewHolder> {
+public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
 //	private final CustomDragListener customDragListener;
-//	private Ordine cancellato;
-//	private int indiceCancellato;
-//	private Snackbar snackbar;
 	
-	public PendingAdapter() {
+	public OrdiniAdapter() {
 		super(DIFF_CALLBACK);
 //		this.customDragListener = listener;
 	}
@@ -60,78 +56,33 @@ public class PendingAdapter extends ListAdapter<Ordine, PendingAdapter.PendingVi
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
-//		holder.handle.setOnTouchListener((v, event) -> {
+		if (currentOrdine.status.equals("pending")) {
+//			holder.handle.setOnTouchListener((v, event) -> {
 //			if (event.getAction() == MotionEvent.ACTION_DOWN)
 //				customDragListener.onDragStarted(holder);
 //			return true;
 //		});
-		ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(currentOrdine);
-		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
+			ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(currentOrdine);
+			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
+		} else {
+			holder.handle.setVisibility(View.GONE);
+		}
 	}
 	
 	public Ordine getOrdineAt(int position) {
 		return getItem(position);
 	}
 	
-	public void aggiungiOrdine(Ordine ordine) {
-
-	}
-	
-	public void modificaOrdine(Ordine ordine) {
-
-	}
-	
-	public void inviaAlMaster(int position) throws IOException {
-//		database.ordineDao().updateOrdineStatusByID(dataList.get(position).idOrdine, "confirmed");
-//
-//		String codiceTavolo = preferences.getString("codice_tavolo", null);
-//		Connessione c = new Connessione(false, activity, codiceTavolo);
-//		c.invia(dataList.get(position).getBytes());
-	}
-	
-	public void riceviDaSlave() {
-	
-	}
-	
-	public void deleteItem(int position) {
-//		cancellato = dataList.get(position);
-//		indiceCancellato = position;
-//		dataList.remove(position);
-//		notifyItemRemoved(position);
-//		View view = activity.findViewById(R.id.listaPiattiFragment);
-//		snackbar = Snackbar.make(view, "Snackbar text", Snackbar.LENGTH_SHORT);
-//		snackbar.setAction("Undo delete?", v -> undoDelete());
-//		snackbar.show();
-	}
-	
-	public void retrieveFromConfirmed(int position) {
-	}
-	
-	public void retrieveFromDelivered(int position) {
-	}
-	
-	private void undoSend() {
-	}
-	
-	private void undoDelete() {
-	}
-	
-	private void undoDelivered() {
-	}
-	
-	private void undoConfirmed() {
-	}
-	
 	public static class PendingViewHolder extends RecyclerView.ViewHolder {
 		private final TextView codice, descrizione, quantita;
-//		private final ImageView handle;
+		private final ImageView handle;
 		
 		public PendingViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
-//			handle = itemView.findViewById(R.id.dragHandle);
+			handle = itemView.findViewById(R.id.dragHandle);
 		}
 	}
 	

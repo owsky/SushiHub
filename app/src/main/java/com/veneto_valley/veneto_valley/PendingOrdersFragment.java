@@ -15,25 +15,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
+import com.veneto_valley.veneto_valley.adapters.OrdiniAdapter;
 import com.veneto_valley.veneto_valley.viewmodels.MyViewModelFactory;
 import com.veneto_valley.veneto_valley.viewmodels.PendingViewModel;
-
-import java.io.IOException;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class PendingOrdersFragment extends Fragment {
-	private PendingViewModel pendingViewModel;
-	private ItemTouchHelper itemTouchHelper;
+	private PendingViewModel viewModel;
 	
 	public PendingOrdersFragment() {
 		super(R.layout.fragment_pending_orders);
-	}
-	
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 	}
 	
 	@Override
@@ -42,19 +34,18 @@ public class PendingOrdersFragment extends Fragment {
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-		PendingAdapter adapter = new PendingAdapter();
+		OrdiniAdapter adapter = new OrdiniAdapter();
 		recyclerView.setAdapter(adapter);
 		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		if (codiceTavolo != null) {
 			MyViewModelFactory factory = new MyViewModelFactory(requireActivity().getApplication(), codiceTavolo);
-			pendingViewModel = new ViewModelProvider(requireActivity(), factory).get(PendingViewModel.class);
+			viewModel = new ViewModelProvider(requireActivity(), factory).get(PendingViewModel.class);
 		} else {
-			pendingViewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
+			viewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
 		}
-		pendingViewModel.getOrdini().observe(getViewLifecycleOwner(), adapter::submitList);
-		
+		viewModel.getOrdini().observe(getViewLifecycleOwner(), adapter::submitList);
 		
 		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -66,15 +57,10 @@ public class PendingOrdersFragment extends Fragment {
 
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-				if (direction == ItemTouchHelper.RIGHT) {
-					try {
-						adapter.inviaAlMaster(viewHolder.getAdapterPosition());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+				if (direction == ItemTouchHelper.RIGHT)
+					viewModel.sendToMaster(adapter.getOrdineAt(viewHolder.getAdapterPosition()), requireActivity());
 				else if (direction == ItemTouchHelper.LEFT)
-					pendingViewModel.delete(adapter.getOrdineAt(viewHolder.getAdapterPosition()));
+					viewModel.delete(adapter.getOrdineAt(viewHolder.getAdapterPosition()));
 			}
 
 			@Override
@@ -96,7 +82,7 @@ public class PendingOrdersFragment extends Fragment {
 				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 			}
 		};
-		itemTouchHelper = new ItemTouchHelper(callback);
+		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
 	}
 
