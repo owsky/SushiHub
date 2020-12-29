@@ -14,18 +14,26 @@ import java.util.List;
 public class Repository {
 	private final OrdineDao ordineDao;
 	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders;
+	private final String tavolo;
 	
 	public Repository(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
 		ordineDao = database.ordineDao();
-		// TODO: filtro per tavolo
+		this.tavolo = tavolo;
 		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo);
 		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo);
 		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo);
 	}
 	
 	public void insert(Ordine ordine) {
-		new InsertOrdineAsyncTask(ordineDao).execute(ordine);
+		Ordine vecchioOrdine;
+		if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
+			vecchioOrdine.quantita += ordine.quantita;
+			if (!(ordine.desc == null))
+				vecchioOrdine.desc = ordine.desc;
+			new UpdateOrdineAsyncTask(ordineDao).execute(vecchioOrdine);
+		} else
+			new InsertOrdineAsyncTask(ordineDao).execute(ordine);
 	}
 	
 	public void update(Ordine ordine) {

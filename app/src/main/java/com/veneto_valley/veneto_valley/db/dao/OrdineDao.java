@@ -22,6 +22,9 @@ public interface OrdineDao extends baseDao<Ordine>{
 
     @Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo")
     LiveData<List<Ordine>> getAllbyStatus(String status, String tavolo);
+    
+    @Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND piatto = :piatto")
+    Ordine getOrdineByPiatto(String status, String tavolo, String piatto);
 
     @Update
     void updateOrdini(Ordine... ordini);
