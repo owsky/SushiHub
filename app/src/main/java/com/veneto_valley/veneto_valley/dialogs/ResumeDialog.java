@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.HomepageFragmentDirections;
+import com.veneto_valley.veneto_valley.R;
 
 public class ResumeDialog extends DialogFragment {
 	@NonNull
@@ -20,10 +21,7 @@ public class ResumeDialog extends DialogFragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 		builder.setTitle("Vuoi accedere al tavolo in sospeso?");
 		builder.setPositiveButton("Sì", (dialog, which) -> {
-			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-			HomepageFragmentDirections.ActionHomepageFragmentToListaPiattiFragment action = HomepageFragmentDirections.actionHomepageFragmentToListaPiattiFragment();
-			action.setCodiceTavolo(sharedPreferences.getString("codice_tavolo", null));
-			NavHostFragment.findNavController(requireParentFragment()).navigate(action);
+			NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment);
 		});
 		builder.setNegativeButton("No", (dialog, which) -> dismiss());
 		return builder.create();
