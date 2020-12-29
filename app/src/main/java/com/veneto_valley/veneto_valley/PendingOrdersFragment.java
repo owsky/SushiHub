@@ -1,7 +1,9 @@
 package com.veneto_valley.veneto_valley;
 
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -14,20 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
-import com.veneto_valley.veneto_valley.db.AppDatabase;
-import com.veneto_valley.veneto_valley.db.entities.Ordine;
+import com.veneto_valley.veneto_valley.viewmodels.MyViewModelFactory;
+import com.veneto_valley.veneto_valley.viewmodels.PendingViewModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class PendingOrdersFragment extends Fragment implements PendingAdapter.CustomDragListener {
-	private List<Ordine> dataList = new ArrayList<>();
-	private PendingAdapter adapter;
+public class PendingOrdersFragment extends Fragment {
+	private PendingViewModel pendingViewModel;
 	private ItemTouchHelper itemTouchHelper;
 	
 	public PendingOrdersFragment() {
@@ -37,8 +34,6 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AppDatabase database = AppDatabase.getInstance(requireContext());
-		dataList = database.ordineDao().getAllbyStatus("pending");
 	}
 	
 	@Override
@@ -47,33 +42,25 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-		adapter = new PendingAdapter(requireActivity(), dataList, this);
+		PendingAdapter adapter = new PendingAdapter();
 		recyclerView.setAdapter(adapter);
-
-		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-			@Override
-			public boolean isLongPressDragEnabled() {
-				return true;
-			}
-
-			@Override
-			public boolean isItemViewSwipeEnabled() {
-				return true;
-			}
-			
-			@Override
-			public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-				super.clearView(recyclerView, viewHolder);
-				viewHolder.itemView.setAlpha(1.0f);
-			}
+		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		String codiceTavolo = preferences.getString("codice_tavolo", null);
+		if (codiceTavolo != null) {
+			MyViewModelFactory factory = new MyViewModelFactory(requireActivity().getApplication(), codiceTavolo);
+			pendingViewModel = new ViewModelProvider(requireActivity(), factory).get(PendingViewModel.class);
+		} else {
+			pendingViewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
+		}
+		pendingViewModel.getOrdini().observe(getViewLifecycleOwner(), adapter::submitList);
+		
+		
+		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
 			@Override
 			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-				int fromPosition = viewHolder.getAdapterPosition();
-				int toPosition = target.getAdapterPosition();
-
-				Collections.swap(dataList, fromPosition, toPosition);
-				Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(fromPosition, toPosition);
+				// TODO: investigare se si può supportare facilmente il reorder
 				return false;
 			}
 
@@ -81,13 +68,13 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.RIGHT) {
 					try {
-						adapter.sendItem(viewHolder.getAdapterPosition());
+						adapter.inviaAlMaster(viewHolder.getAdapterPosition());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 				else if (direction == ItemTouchHelper.LEFT)
-					adapter.deleteItem(viewHolder.getAdapterPosition());
+					pendingViewModel.delete(adapter.getOrdineAt(viewHolder.getAdapterPosition()));
 			}
 
 			@Override
@@ -111,13 +98,10 @@ public class PendingOrdersFragment extends Fragment implements PendingAdapter.Cu
 		};
 		itemTouchHelper = new ItemTouchHelper(callback);
 		itemTouchHelper.attachToRecyclerView(recyclerView);
-		
-		AdaptersViewModel viewModel = new ViewModelProvider(requireActivity()).get(AdaptersViewModel.class);
-		viewModel.addPendingAdapter(adapter);
 	}
 
-	@Override
-	public void onDragStarted(RecyclerView.ViewHolder viewHolder) {
-		itemTouchHelper.startDrag(viewHolder);
-	}
+//	@Override
+//	public void onDragStarted(RecyclerView.ViewHolder viewHolder) {
+//		itemTouchHelper.startDrag(viewHolder);
+//	}
 }

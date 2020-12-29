@@ -167,8 +167,9 @@ public class Connessione {
                     semaforo=1;
                     ricevuto = receivedBytes;
                     semaforo=0;
-                    AdaptersViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) cont).get(AdaptersViewModel.class);
-                    adapter = viewModel.getPendingAdapter().getValue();
+//                    TODO: trovare soluzione alternativa
+//                    AdaptersViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) cont).get(AdaptersViewModel.class);
+//                    adapter = viewModel.getPendingAdapter().getValue();
                     /*
                     Toast.makeText(cont, new String(ricevuto),
                             Toast.LENGTH_LONG).show();

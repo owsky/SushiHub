@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.db.AppDatabase;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 
 import java.util.List;
@@ -20,11 +21,13 @@ import java.util.Locale;
 public class ConfirmedAdapter extends RecyclerView.Adapter<ConfirmedAdapter.ConfirmedViewHolder> {
 	private final List<Ordine> dataList;
 	private final Locale locale;
+	private final AppDatabase database;
 	
 	public ConfirmedAdapter(Activity activity, List<Ordine> dataList) {
 		this.dataList = dataList;
 		locale = activity.getResources().getConfiguration().locale;
 		notifyDataSetChanged();
+		database = AppDatabase.getInstance(activity);
 	}
 	
 	@NonNull
@@ -38,13 +41,11 @@ public class ConfirmedAdapter extends RecyclerView.Adapter<ConfirmedAdapter.Conf
 	@Override
 	public void onBindViewHolder(@NonNull ConfirmedViewHolder holder, int position) {
 		Ordine ordine = dataList.get(position);
-		// TODO sostituire idordine con idpiatto
-		holder.codice.setText(String.format(locale, "%d", ordine.idOrdine));
+		holder.codice.setText(ordine.piatto);
 		String desc = ordine.desc;
 		if (desc.length() >= 19) // TODO verificare se scala correttamente
 			desc = desc.substring(0, 16) + "...";
 		holder.descrizione.setText(desc);
-		// TODO fixare quantità
 		holder.quantita.setText(String.format(locale, "%d", ordine.quantita));
 	}
 	

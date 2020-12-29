@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -11,7 +12,7 @@ import java.util.List;
 @Dao
 public interface OrdineDao extends baseDao<Ordine>{
     @Query("SELECT * FROM Ordine")
-    List<Ordine> getAll();
+    LiveData<List<Ordine>> getAll();
 
     @Query("SELECT * FROM Ordine WHERE idOrdine = :idOrdine")
     Ordine getOrdineById(long idOrdine);
@@ -19,8 +20,8 @@ public interface OrdineDao extends baseDao<Ordine>{
     @Query("SELECT * FROM Ordine WHERE idOrdine IN (:idOrdini)")
     List<Ordine> loadAllByIds(long[] idOrdini);
 
-    @Query("SELECT * FROM Ordine WHERE status LIKE :status")
-    List<Ordine> getAllbyStatus(String status);
+    @Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo")
+    LiveData<List<Ordine>> getAllbyStatus(String status, String tavolo);
 
     @Update
     void updateOrdini(Ordine... ordini);

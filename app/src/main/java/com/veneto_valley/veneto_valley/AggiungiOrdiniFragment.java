@@ -15,13 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.veneto_valley.veneto_valley.adapters.PendingAdapter;
 import com.veneto_valley.veneto_valley.db.entities.Ordine;
 import com.veneto_valley.veneto_valley.dialogs.CancelDialog;
+import com.veneto_valley.veneto_valley.viewmodels.PendingViewModel;
 
 public class AggiungiOrdiniFragment extends Fragment {
 	private EditText codice, desc, qta;
-	private PendingAdapter adapter;
 	
 	public AggiungiOrdiniFragment() {
 		super(R.layout.fragment_aggiungi_ordini);
@@ -30,26 +29,24 @@ public class AggiungiOrdiniFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		codice= view.findViewById(R.id.addCodice);
+		codice = view.findViewById(R.id.addCodice);
 		desc = view.findViewById(R.id.addDesc);
 		qta = view.findViewById(R.id.addQuantita);
-		
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
+		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
+		
 		salvaEsci.setOnClickListener(v -> {
-			salva();
+			salvaOrdine();
 			NavHostFragment.findNavController(AggiungiOrdiniFragment.this).navigateUp();
 		});
-		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
+		
 		salvaNuovo.setOnClickListener(v -> {
-			salva();
+			salvaOrdine();
 			codice.setText(null);
 			desc.setText(null);
 			qta.setText(null);
 			view.requestFocus();
 		});
-		
-		AdaptersViewModel viewModel = new ViewModelProvider(requireActivity()).get(AdaptersViewModel.class);
-		adapter = viewModel.getPendingAdapter().getValue();
 	}
 	
 	@Override
@@ -65,11 +62,19 @@ public class AggiungiOrdiniFragment extends Fragment {
 		});
 	}
 	
-	private void salva() {
+	private void salvaOrdine() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
-		Ordine ordine = new Ordine(codiceTavolo, codice.getText().toString(), Integer.parseInt(qta.getText().toString()), "pending");
-		ordine.desc = desc.getText().toString();
-		adapter.aggiungiOrdine(ordine);
+		String codicePiatto = codice.getText().toString();
+		int quantita = Integer.parseInt(qta.getText().toString());
+		String status = "pending";
+		String descrizione = desc.getText().toString();
+		
+		Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status);
+		if (!descrizione.trim().isEmpty())
+			ordine.desc = descrizione;
+		
+		PendingViewModel viewModel = new ViewModelProvider(requireActivity()).get(PendingViewModel.class);
+		viewModel.insert(ordine);
 	}
 }

@@ -2,13 +2,10 @@ package com.veneto_valley.veneto_valley.db.entities;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import com.google.android.material.tabs.TabLayout;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +13,7 @@ import java.util.Date;
 @Entity
 public class Tavolo {
     final static String TAG = "ETavoloLog";
-    @NotNull
+    @NonNull
     @PrimaryKey(autoGenerate = false)
     public String idTavolo;
 
