@@ -13,6 +13,7 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class RepositoryTavoli {
 	private final OrdineDao ordineDao;
@@ -30,7 +31,7 @@ public class RepositoryTavoli {
 		else
 			tavoli = tavoloDao.getAll();
 	}
-	
+	// TODO: implementare Future
 	public LiveData<List<Tavolo>> getTavoli() {
 		return tavoli;
 	}
@@ -39,8 +40,14 @@ public class RepositoryTavoli {
 		return ordineDao.getAllByTable(tavolo.idTavolo);
 	}
 	
+	public float getCostoMenu(String tavolo) {
+		return tavoloDao.getCostoMenu(tavolo);
+	}
+	
 	public void deleteTable(Tavolo tavolo) {
-		ordineDao.deleteByTable(tavolo.idTavolo);
-		tavoloDao.delete(tavolo);
+		Executors.newSingleThreadExecutor().execute(() -> {
+			ordineDao.deleteByTable(tavolo.idTavolo);
+			tavoloDao.delete(tavolo);
+		});
 	}
 }

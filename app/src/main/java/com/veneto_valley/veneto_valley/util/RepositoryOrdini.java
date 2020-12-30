@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,6 +46,14 @@ public class RepositoryOrdini {
 	
 	public void delete(Ordine ordine) {
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
+	}
+	
+	public void deleteSlaves(Tavolo tavolo) {
+		//TODO implementare
+	}
+	
+	public LiveData<List<Ordine>> getAllOrders(long utente, String tavolo) {
+		return ordineDao.getAllByUser(utente, tavolo);
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {

@@ -7,5 +7,10 @@
         app:showAsAction="never" />
     <item android:id="@+id/toExtra"
         android:title="Extra" />
-
+    <item android:id="@+id/toAllOrders"
+        android:title="Tutti gli ordini"
+        app:showAsAction="never" />
+    <item android:id="@+id/toCheckout"
+        android:title="Checkout"
+        app:showAsAction="never" />
 </menu>

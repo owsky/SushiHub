@@ -18,6 +18,9 @@ public interface TavoloDao extends baseDao<Tavolo>{
     
     @Query("SELECT * FROM tavolo WHERE idTavolo <> :tavolo")
     LiveData<List<Tavolo>> getAllMinusCurr(String tavolo);
+    
+    @Query("SELECT costoMenu FROM tavolo WHERE idTavolo = :tavolo")
+    float getCostoMenu(String tavolo);
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(String[] idTavoli);

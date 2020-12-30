@@ -15,6 +15,9 @@ public interface OrdineDao extends baseDao<Ordine>{
     @Query("SELECT * FROM Ordine")
     LiveData<List<Ordine>> getAll();
     
+    @Query("SELECT * FROM Ordine WHERE utente = :user AND tavolo = :tavolo")
+    LiveData<List<Ordine>> getAllByUser(long user, String tavolo);
+    
     @Query("SELECT * FROM Ordine WHERE tavolo = :codiceTavolo")
     LiveData<List<Ordine>> getAllByTable(String codiceTavolo);
 

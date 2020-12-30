@@ -81,10 +81,10 @@ public class ListPiattiFragment extends Fragment {
 	
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		if (preferences.getBoolean("is_master", false))
-			inflater.inflate(R.menu.lista_master_overflow, menu);
-		else
-			inflater.inflate(R.menu.lista_overflow, menu);
+		inflater.inflate(R.menu.lista_overflow, menu);
+		MenuItem item = menu.findItem(R.id.toAllOrders);
+		if (!preferences.getBoolean("is_master", false))
+			item.setVisible(false);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
@@ -102,6 +102,8 @@ public class ListPiattiFragment extends Fragment {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_extra);
 		} else if (item.getItemId() == R.id.toAllOrders) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_allOrders);
+		} else if (item.getItemId() == R.id.toCheckout) {
+			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_checkOutPage2);
 		}
 		return super.onOptionsItemSelected(item);
 	}

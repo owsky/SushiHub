@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_listaPiattiFragment_to_modificaOrdineFragment"
             app:destination="@id/modificaOrdineFragment" />
+        <action
+            android:id="@+id/action_listaPiattiFragment_to_checkOutPage2"
+            app:destination="@id/checkOutPage" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
@@ -134,5 +137,14 @@
         <argument
             android:name="tavolo"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Tavolo" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutPage"
+        android:name="com.veneto_valley.veneto_valley.view.CheckOutPage"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_check_out" >
+        <action
+            android:id="@+id/action_checkOutPage_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
     </fragment>
 </navigation>
