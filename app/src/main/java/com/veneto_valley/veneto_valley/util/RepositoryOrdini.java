@@ -34,16 +34,16 @@ public class RepositoryOrdini {
 				vecchioOrdine.desc = ordine.desc;
 			update(vecchioOrdine);
 		} else {
-			new InsertOrdineThread(ordine, ordineDao).start();
+			new OperazioniThread(() -> ordineDao.insertAll(ordine)).start();
 		}
 	}
 	
 	public void update(Ordine ordine) {
-		new UpdateOrdineThread(ordine, ordineDao).start();
+		new OperazioniThread(() -> ordineDao.update(ordine)).start();
 	}
 	
 	public void delete(Ordine ordine) {
-		new DeleteOrdineThread(ordine, ordineDao).start();
+		new OperazioniThread(() -> ordineDao.delete(ordine)).start();
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {
@@ -76,7 +76,7 @@ public class RepositoryOrdini {
 		Connessione connessione = new Connessione(true, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE
-		update(ordine);	
+		update(ordine);
 		// TODO implementa undo del master
 	}
 	
@@ -95,48 +95,16 @@ public class RepositoryOrdini {
 		connessione.invia(ordine.getBytes());
 	}
 	
-	public static class InsertOrdineThread extends Thread {
-		private final Ordine ordine;
-		private final OrdineDao dao;
+	public static class OperazioniThread extends Thread {
+		private final Runnable runnable;
 		
-		public InsertOrdineThread(Ordine ordine, OrdineDao dao) {
-			this.ordine = ordine;
-			this.dao = dao;
+		public OperazioniThread(Runnable runnable) {
+			this.runnable = runnable;
 		}
 		
 		@Override
 		public void run() {
-			dao.insertAll(ordine);
-		}
-	}
-	
-	public static class UpdateOrdineThread extends Thread {
-		private final Ordine ordine;
-		private final OrdineDao dao;
-		
-		public UpdateOrdineThread(Ordine ordine, OrdineDao dao) {
-			this.ordine = ordine;
-			this.dao = dao;
-		}
-		
-		@Override
-		public void run() {
-			dao.update(ordine);
-		}
-	}
-	
-	public static class DeleteOrdineThread extends Thread {
-		private final Ordine ordine;
-		private final OrdineDao dao;
-		
-		public DeleteOrdineThread(Ordine ordine, OrdineDao dao) {
-			this.ordine = ordine;
-			this.dao = dao;
-		}
-		
-		@Override
-		public void run() {
-			dao.delete(ordine);
+			runnable.run();
 		}
 	}
 }
