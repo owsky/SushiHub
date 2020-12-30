@@ -22,6 +22,7 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.Connessione;
 
 public class ListPiattiFragment extends Fragment {
+	private SharedPreferences preferences;
 	
 	public ListPiattiFragment() {
 		super(R.layout.fragment_list_piatti);
@@ -37,6 +38,11 @@ public class ListPiattiFragment extends Fragment {
 				dialog.show(getParentFragmentManager(), null);
 			}
 		});
+		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		if (preferences.getBoolean("is_master", false)) {
+			String codice_tavolo = preferences.getString("codice_tavolo", null);
+			Connessione c = new Connessione(false, this.getActivity(), codice_tavolo);
+		}
 	}
 	
 	@Override
@@ -55,72 +61,36 @@ public class ListPiattiFragment extends Fragment {
 				case 0: {
 					tab.setText("Pending");
 					tab.setIcon(R.drawable.ic_pending);
-//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-//					badgeDrawable.setBackgroundColor(
-//							ContextCompat.getColor(requireContext().getApplicationContext(),
-//									R.color.design_default_color_primary)
-//					);
-//					badgeDrawable.setVisible(true);
 					break;
 				}
 				case 1: {
 					tab.setText("Confirmed");
 					tab.setIcon(R.drawable.ic_confirmed);
-//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-//					badgeDrawable.setBackgroundColor(
-//							ContextCompat.getColor(requireContext().getApplicationContext(),
-//									R.color.design_default_color_primary)
-//					);
-//					badgeDrawable.setVisible(true);
-//					badgeDrawable.setNumber(8);
 					break;
 				}
 				case 2: {
 					tab.setText("Delivered");
 					tab.setIcon(R.drawable.ic_delivered);
-//					BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-//					badgeDrawable.setBackgroundColor(
-//							ContextCompat.getColor(requireContext().getApplicationContext(),
-//									R.color.design_default_color_primary)
-//					);
-//					badgeDrawable.setVisible(true);
-//					badgeDrawable.setNumber(100);
-//					badgeDrawable.setMaxCharacterCount(3);
 					break;
 				}
 			}
 		}
 		);
 		tabLayoutMediator.attach();
-		
-//		viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//			@Override
-//			public void onPageSelected(int position) {
-//				super.onPageSelected(position);
-//				BadgeDrawable badgeDrawable = Objects.requireNonNull(tabLayout.getTabAt(position)).getOrCreateBadge();
-//				badgeDrawable.setVisible(false);
-//			}
-//		});
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		if (sharedPreferences.getBoolean("is_master", false)) {
-			String codice_tavolo = sharedPreferences.getString("codice_tavolo", null);
-			Connessione c = new Connessione(false, this.getActivity(), codice_tavolo);
+		if (preferences.getBoolean("is_master", false))
 			inflater.inflate(R.menu.lista_master_overflow, menu);
-		}
-		else {
+		else
 			inflater.inflate(R.menu.lista_overflow, menu);
-		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 			if (preferences.contains("codice_tavolo")) {
 				ListPiattiFragmentDirections.ActionListaPiattiFragmentToGeneraQR action = ListPiattiFragmentDirections.actionListaPiattiFragmentToGeneraQR();
 				action.setCodiceTavolo(preferences.getString("codice_tavolo", null));
