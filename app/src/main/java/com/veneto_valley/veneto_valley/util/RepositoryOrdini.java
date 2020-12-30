@@ -11,6 +11,7 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
@@ -34,16 +35,16 @@ public class RepositoryOrdini {
 				vecchioOrdine.desc = ordine.desc;
 			update(vecchioOrdine);
 		} else {
-			new OperazioniThread(() -> ordineDao.insertAll(ordine)).start();
+			Executors.newSingleThreadExecutor().execute(() -> ordineDao.insertAll(ordine));
 		}
 	}
 	
 	public void update(Ordine ordine) {
-		new OperazioniThread(() -> ordineDao.update(ordine)).start();
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.update(ordine));
 	}
 	
 	public void delete(Ordine ordine) {
-		new OperazioniThread(() -> ordineDao.delete(ordine)).start();
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {
@@ -80,7 +81,6 @@ public class RepositoryOrdini {
 		// TODO implementa undo del master
 	}
 	
-	
 	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
 		ordine.status = "delivered";
 		update(ordine);
@@ -93,18 +93,5 @@ public class RepositoryOrdini {
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
-	}
-	
-	public static class OperazioniThread extends Thread {
-		private final Runnable runnable;
-		
-		public OperazioniThread(Runnable runnable) {
-			this.runnable = runnable;
-		}
-		
-		@Override
-		public void run() {
-			runnable.run();
-		}
 	}
 }
