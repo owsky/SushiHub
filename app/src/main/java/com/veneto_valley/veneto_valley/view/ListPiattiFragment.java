@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.Connessione;
 
 public class ListPiattiFragment extends Fragment {
 	
@@ -105,10 +106,14 @@ public class ListPiattiFragment extends Fragment {
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		if (sharedPreferences.getBoolean("is_master", false))
+		if (sharedPreferences.getBoolean("is_master", false)) {
+			String codice_tavolo = sharedPreferences.getString("codice_tavolo", null);
+			Connessione c = new Connessione(false, this.getActivity(), codice_tavolo);
 			inflater.inflate(R.menu.lista_master_overflow, menu);
-		else
+		}
+		else {
 			inflater.inflate(R.menu.lista_overflow, menu);
+		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
