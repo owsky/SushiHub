@@ -12,23 +12,25 @@ import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
 
 import java.util.List;
 
-public class TavoloViewModel extends AndroidViewModel {
-	protected RepositoryTavoli repository;
-	protected LiveData<List<Tavolo>> tavoli;
-	protected LiveData<List<Ordine>> ordini;
+public class StoricoViewModel extends AndroidViewModel {
+	private final RepositoryTavoli repository;
+	private final LiveData<List<Tavolo>> tavoli;
 	
-	public TavoloViewModel(@NonNull Application application) {
+	public StoricoViewModel(@NonNull Application application) {
 		super(application);
 		repository = new RepositoryTavoli(application);
 		tavoli = repository.getTavoli();
-		ordini = repository.getOrdini();
 	}
 	
 	public LiveData<List<Tavolo>> getTavoli() {
 		return tavoli;
 	}
 	
-	public LiveData<List<Ordine>> getOrdini() {
-		return ordini;
+	public LiveData<List<Ordine>> getOrdini(Tavolo tavolo) {
+		return repository.getOrdini(tavolo);
+	}
+	
+	public void deleteTable(Tavolo tavolo) {
+		repository.deleteTable(tavolo);
 	}
 }

@@ -6,6 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public interface OrdineDao extends baseDao<Ordine>{
     @Query("SELECT * FROM Ordine")
     LiveData<List<Ordine>> getAll();
+    
+    @Query("SELECT * FROM Ordine WHERE tavolo = :codiceTavolo")
+    LiveData<List<Ordine>> getAllByTable(String codiceTavolo);
 
     @Query("SELECT * FROM Ordine WHERE idOrdine = :idOrdine")
     Ordine getOrdineById(long idOrdine);
@@ -34,4 +38,7 @@ public interface OrdineDao extends baseDao<Ordine>{
 
     @Query("DELETE FROM ordine WHERE idOrdine = :idOrdine AND status LIKE \"daOrdinare\"") //TODO: Inserire nome status corretto
     int deleteById(long idOrdine);
+    
+    @Query("DELETE FROM Ordine WHERE tavolo = :tavolo")
+    void deleteByTable(String tavolo);
 }

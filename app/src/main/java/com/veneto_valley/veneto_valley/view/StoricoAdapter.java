@@ -30,22 +30,24 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 		public boolean areContentsTheSame(@NonNull Tavolo oldItem, @NonNull Tavolo newItem) {
 			return oldItem.dataCreazione.equals(newItem.dataCreazione) &&
 					oldItem.ristorante == newItem.ristorante &&
-					oldItem.costoMenu == newItem.costoMenu &&
-					oldItem.nome.equals(newItem.nome);
+					oldItem.costoMenu == newItem.costoMenu;
 		}
 	};
 	
 	@NonNull
 	@Override
 	public TavoloViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.storico_item, parent, false);
+		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_storico, parent, false);
 		return new TavoloViewHolder(itemView);
 	}
 	
 	@Override
 	public void onBindViewHolder(@NonNull TavoloViewHolder holder, int position) {
 		Tavolo tavolo = getItem(position);
-		holder.ristorante.setText(tavolo.nome);
+		if (!(tavolo.nome == null))
+			holder.ristorante.setText(tavolo.nome);
+		else
+			holder.ristorante.setText("Ristorante");
 		holder.data.setText(tavolo.dataCreazione.toString());
 		
 		StoricoOrdiniPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action = StoricoOrdiniPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);

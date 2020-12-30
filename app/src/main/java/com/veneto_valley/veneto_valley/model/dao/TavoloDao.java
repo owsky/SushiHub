@@ -15,6 +15,9 @@ import java.util.List;
 public interface TavoloDao extends baseDao<Tavolo>{
     @Query("SELECT * FROM tavolo")
     LiveData<List<Tavolo>> getAll();
+    
+    @Query("SELECT * FROM tavolo WHERE idTavolo <> :tavolo")
+    LiveData<List<Tavolo>> getAllMinusCurr(String tavolo);
 
     @Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
     List<Tavolo> loadAllByIds(String[] idTavoli);

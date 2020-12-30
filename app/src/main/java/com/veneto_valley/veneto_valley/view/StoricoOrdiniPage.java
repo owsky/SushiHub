@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.viewmodel.TavoloViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
 
 public class StoricoOrdiniPage extends Fragment {
 	
@@ -29,7 +29,7 @@ public class StoricoOrdiniPage extends Fragment {
 		StoricoAdapter adapter = new StoricoAdapter();
 		recyclerView.setAdapter(adapter);
 		
-		TavoloViewModel viewModel = new ViewModelProvider(requireActivity()).get(TavoloViewModel.class);
+		StoricoViewModel viewModel = new ViewModelProvider(requireActivity()).get(StoricoViewModel.class);
 		viewModel.getTavoli().observe(getViewLifecycleOwner(), adapter::submitList);
 	}
 }
