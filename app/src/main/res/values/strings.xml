@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Veneto_Valley</string>
+    <string name="app_name">SushiHub</string>
 
     <string name="title_activity_extra">ExtraActivity</string>
     <string name="Bevande"> Aggiungi Extra</string>

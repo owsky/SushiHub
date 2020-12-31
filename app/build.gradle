@@ -8,7 +8,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-    android.defaultConfig.vectorDrawables.useSupportLibrary = true
 
     defaultConfig {
         applicationId "com.veneto_valley.veneto_valley"
@@ -16,7 +15,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
