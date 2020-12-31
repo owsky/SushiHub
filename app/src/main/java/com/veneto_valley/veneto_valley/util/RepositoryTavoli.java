@@ -31,7 +31,7 @@ public class RepositoryTavoli {
 		else
 			tavoli = tavoloDao.getAll();
 	}
-	// TODO: implementare Future
+
 	public LiveData<List<Tavolo>> getTavoli() {
 		return tavoli;
 	}
