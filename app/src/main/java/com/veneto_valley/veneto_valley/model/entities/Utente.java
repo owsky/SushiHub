@@ -1,23 +1,20 @@
 package com.veneto_valley.veneto_valley.model.entities;
 
 import android.content.Context;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.veneto_valley.veneto_valley.db.AppDatabase;
-import com.veneto_valley.veneto_valley.db.dao.OrdineDao;
-import com.veneto_valley.veneto_valley.db.dao.UtenteDao;
+import com.veneto_valley.veneto_valley.model.AppDatabase;
+import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
+import com.veneto_valley.veneto_valley.model.dao.UtenteDao;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 @Entity
 public class Utente {
     @PrimaryKey(autoGenerate = false)
-    @NotNull
+    @NonNull
     public String idUtente;
 
     public String username;

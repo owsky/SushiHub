@@ -25,7 +25,7 @@ public class Ordine implements Parcelable {
     //1-N Relations
     public String tavolo;
     public String piatto;
-    public long utente;
+    public String utente;
     
     //TODO: Implementare test
     public Ordine(String tavolo, String piatto, int quantita, String status) {
@@ -63,7 +63,7 @@ public class Ordine implements Parcelable {
         desc = in.readString();
         tavolo = in.readString();
         piatto = in.readString();
-        utente = in.readLong();
+        utente = in.readString();
     }
     
     @Override
@@ -78,7 +78,7 @@ public class Ordine implements Parcelable {
         dest.writeString(desc);
         dest.writeString(tavolo);
         dest.writeString(piatto);
-        dest.writeLong(utente);
+        dest.writeString(utente);
     }
     
     @SuppressWarnings("unused")
