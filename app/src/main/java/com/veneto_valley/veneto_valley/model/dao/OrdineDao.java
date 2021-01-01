@@ -39,7 +39,7 @@ public interface OrdineDao extends baseDao<Ordine>{
     @Query("UPDATE Ordine SET status=:newStatus WHERE idOrdine = :idOrdine")
     void updateOrdineStatusByID(long idOrdine, String newStatus);
 
-    @Query("DELETE FROM ordine WHERE idOrdine = :idOrdine AND status LIKE \"daOrdinare\"") //TODO: Inserire nome status corretto
+    @Query("DELETE FROM ordine WHERE idOrdine = :idOrdine AND status LIKE \"pending\"") //TODO: Inserire nome status corretto
     int deleteById(long idOrdine);
     
     @Query("DELETE FROM Ordine WHERE tavolo = :tavolo")

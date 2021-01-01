@@ -69,7 +69,7 @@ public class RepositoryOrdini {
 	}
 	
 	public void sendToMaster(Ordine ordine, Activity activity) {
-		ordine.status = "confirmed";
+		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		
 		Connessione connessione = new Connessione(true, activity, tavolo);
@@ -81,7 +81,7 @@ public class RepositoryOrdini {
 	}
 	
 	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
-		ordine.status = "pending";
+		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
 		Connessione connessione = new Connessione(true, activity, tavolo);
 		connessione.invia(ordine.getBytes());
@@ -91,14 +91,14 @@ public class RepositoryOrdini {
 	}
 	
 	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
-		ordine.status = "delivered";
+		ordine.status = Ordine.statusOrdine.delivered;
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
 	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
-		ordine.status = "confirmed";
+		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());

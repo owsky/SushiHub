@@ -18,17 +18,23 @@ public class Ordine implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public long idOrdine;
     
-    public String status;
+    public statusOrdine status;
     public int quantita;
     public String desc;
-    
+
+    public enum statusOrdine {
+        pending,
+        confirmed,
+        delivered
+    }
+
     //1-N Relations
     public String tavolo;
     public String piatto;
     public String utente;
     
     //TODO: Implementare test
-    public Ordine(String tavolo, String piatto, int quantita, String status) {
+    public Ordine(String tavolo, String piatto, int quantita, statusOrdine status) {
         this.tavolo = tavolo;
         this.piatto = piatto;
         this.quantita = quantita;
@@ -37,7 +43,7 @@ public class Ordine implements Parcelable {
     
     @Ignore
     public Ordine(String tavolo, String piatto, int quantita) {
-        this(tavolo,piatto,quantita,"daOrdinare");
+        this(tavolo,piatto,quantita,statusOrdine.pending);
     }
     
     @Ignore
@@ -58,7 +64,7 @@ public class Ordine implements Parcelable {
     }
     
     protected Ordine(Parcel in) {
-        status = in.readString();
+        status = statusOrdine.valueOf(in.readString());
         quantita = in.readInt();
         desc = in.readString();
         tavolo = in.readString();
@@ -73,7 +79,7 @@ public class Ordine implements Parcelable {
     
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(status);
+        dest.writeString(status.toString());
         dest.writeInt(quantita);
         dest.writeString(desc);
         dest.writeString(tavolo);

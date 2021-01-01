@@ -67,7 +67,7 @@ public class AggiungiOrdiniFragment extends Fragment {
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		String codicePiatto = codice.getText().toString();
 		int quantita = Integer.parseInt(qta.getText().toString());
-		String status = "pending";
+		Ordine.statusOrdine status = Ordine.statusOrdine.pending;
 		String descrizione = desc.getText().toString();
 		
 		Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status);
