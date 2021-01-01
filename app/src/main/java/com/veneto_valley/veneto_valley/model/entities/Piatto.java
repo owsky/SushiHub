@@ -7,24 +7,25 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Piatto {
-    @NonNull
-    @PrimaryKey(autoGenerate = false)
-    public String idPiatto;
-
-    public String nomePiatto;
-
-    public float prezzoPiatto;
-
-    @Ignore
-    public Piatto(){}
-
-    @Ignore
-    public Piatto(String idPiatto) {
-        this(idPiatto, "Piatto " + idPiatto);
-    }
-
-    public Piatto(@NonNull String idPiatto, String nomePiatto) {
-        this.idPiatto = idPiatto;
-        this.nomePiatto = nomePiatto;
-    }
+	@NonNull
+	@PrimaryKey(autoGenerate = false)
+	public String idPiatto;
+	
+	public String nomePiatto;
+	
+	public float prezzoPiatto;
+	
+	@Ignore
+	public Piatto() {
+	}
+	
+	@Ignore
+	public Piatto(String idPiatto) {
+		this(idPiatto, "Piatto " + idPiatto);
+	}
+	
+	public Piatto(@NonNull String idPiatto, String nomePiatto) {
+		this.idPiatto = idPiatto;
+		this.nomePiatto = nomePiatto;
+	}
 }

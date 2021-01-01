@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Utente {
-    @PrimaryKey(autoGenerate = false)
-    public long idUtente;
-
-    public String username;
-
-    public Utente(String username) {
-        this.username = username;
-    }
+	@PrimaryKey(autoGenerate = false)
+	public long idUtente;
+	
+	public String username;
+	
+	public Utente(String username) {
+		this.username = username;
+	}
 }

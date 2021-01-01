@@ -9,10 +9,11 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import java.util.List;
 
 public class OrdiniPiatto {
-        @Embedded public Piatto piatto;
-        @Relation(
-                parentColumn = "idPiatto",
-                entityColumn = "piatto"
-        )
-        public List<Ordine> ordine;
-    }
+	@Embedded
+	public Piatto piatto;
+	@Relation(
+			parentColumn = "idPiatto",
+			entityColumn = "piatto"
+	)
+	public List<Ordine> ordine;
+}

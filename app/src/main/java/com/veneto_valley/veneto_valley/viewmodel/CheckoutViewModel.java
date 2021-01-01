@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley.viewmodel;
 
+import android.app.Activity;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -22,5 +23,9 @@ public class CheckoutViewModel extends OrdiniBaseViewModel {
 	
 	public float getCostoExtra() {
 		return repositoryTavoli.getCostoExtra(tavolo);
+	}
+	
+	public void checkout(Activity activity) {
+		repositoryOrdini.checkout(activity);
 	}
 }

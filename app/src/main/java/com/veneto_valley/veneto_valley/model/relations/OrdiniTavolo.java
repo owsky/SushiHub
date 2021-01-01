@@ -9,11 +9,11 @@ import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import java.util.List;
 
 public class OrdiniTavolo {
-    @Embedded
-    public Tavolo tavolo;
-    @Relation(
-            parentColumn = "idTavolo",
-            entityColumn = "tavolo"
-    )
-    public List<Ordine> ordini;
+	@Embedded
+	public Tavolo tavolo;
+	@Relation(
+			parentColumn = "idTavolo",
+			entityColumn = "tavolo"
+	)
+	public List<Ordine> ordini;
 }

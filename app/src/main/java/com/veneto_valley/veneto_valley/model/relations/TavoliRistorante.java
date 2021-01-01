@@ -9,10 +9,11 @@ import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import java.util.List;
 
 public class TavoliRistorante {
-    @Embedded public Ristorante ristorante;
-     @Relation(
-             parentColumn = "idRistorante",
-             entityColumn = "ristorante"
-     )
-    public List<Tavolo> tavoli;
+	@Embedded
+	public Ristorante ristorante;
+	@Relation(
+			parentColumn = "idRistorante",
+			entityColumn = "ristorante"
+	)
+	public List<Tavolo> tavoli;
 }

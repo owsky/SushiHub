@@ -9,13 +9,14 @@ import com.veneto_valley.veneto_valley.model.entities.Utente;
 import java.util.List;
 
 public class OrdiniUtente {
-
-    @Embedded public Utente utente;
-    @Relation(
-            parentColumn = "idUtente",
-            entityColumn = "utente"
-    )
-    public List<Ordine> ordini;
-
-
+	
+	@Embedded
+	public Utente utente;
+	@Relation(
+			parentColumn = "idUtente",
+			entityColumn = "utente"
+	)
+	public List<Ordine> ordini;
+	
+	
 }
