@@ -23,6 +23,7 @@ public class Ordine implements Parcelable {
     public statusOrdine status;
     public int quantita;
     public String desc;
+    public float prezzo;
 
     public enum statusOrdine {
         pending,

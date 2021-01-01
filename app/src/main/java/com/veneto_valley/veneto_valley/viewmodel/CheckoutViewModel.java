@@ -25,7 +25,7 @@ public class CheckoutViewModel extends OrdiniBaseViewModel {
 		return repositoryTavoli.getCostoExtra(tavolo);
 	}
 	
-	public void checkout(Activity activity) {
-		repositoryOrdini.checkout(activity);
+	public void checkout() {
+		repositoryOrdini.checkout();
 	}
 }

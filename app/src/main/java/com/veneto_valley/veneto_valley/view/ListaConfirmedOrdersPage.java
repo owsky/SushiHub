@@ -61,13 +61,13 @@ public class ListaConfirmedOrdersPage extends Fragment {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
 				if (direction == ItemTouchHelper.LEFT) {
 					try {
-						viewModel.retrieveFromMaster(ordine, requireActivity());
+						viewModel.retrieveFromMaster(ordine);
 					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}
 				} else if (direction == ItemTouchHelper.RIGHT) {
 					try {
-						viewModel.markAsDelivered(ordine, requireActivity());
+						viewModel.markAsDelivered(ordine);
 					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}

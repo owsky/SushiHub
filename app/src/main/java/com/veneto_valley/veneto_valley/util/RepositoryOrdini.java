@@ -73,11 +73,11 @@ public class RepositoryOrdini {
 		return extraOrders;
 	}
 	
-	public void sendToMaster(Ordine ordine, Activity activity) {
+	public void sendToMaster(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		
-		Connessione connessione = Connessione.getItance(true, activity, tavolo);
+		Connessione connessione = Connessione.getInstance(true, application, tavolo);
 		try {
 			connessione.invia(ordine.getBytes());
 		} catch (IOException | InterruptedException e) {
@@ -85,37 +85,37 @@ public class RepositoryOrdini {
 		}
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException, InterruptedException {
+	public void retrieveFromMaster(Ordine ordine) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
-		Connessione connessione = Connessione.getItance(true, activity, tavolo);
+		Connessione connessione = Connessione.getInstance(true, application, tavolo);
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE
 		update(ordine);
 		// TODO implementa undo del master
 	}
 	
-	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
+	public void markAsDelivered(Ordine ordine) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.delivered;
 		update(ordine);
-		Connessione connessione = Connessione.getItance(false, activity, tavolo);
+		Connessione connessione = Connessione.getInstance(false, application, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
-	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
+	public void markAsNotDelivered(Ordine ordine) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
-		Connessione connessione = Connessione.getItance(false, activity, tavolo);
+		Connessione connessione = Connessione.getInstance(false, application, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
-	public void checkout(Activity activity) {
+	public void checkout() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
 		//TODO elimina ordini slave
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.remove("codice_tavolo").apply();
-		Connessione connessione = new Connessione(preferences.getBoolean("is_master", false),
-				activity, preferences.getString("codice_tavolo", null));
+		Connessione connessione = Connessione.getInstance(preferences.getBoolean("is_master", false),
+				application, preferences.getString("codice_tavolo", null));
 		connessione.closeConnection();
 	}
 }

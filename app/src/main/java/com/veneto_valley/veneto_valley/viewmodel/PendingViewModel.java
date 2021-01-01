@@ -14,7 +14,7 @@ public class PendingViewModel extends OrdiniBaseViewModel {
 		ordini = repositoryOrdini.getPendingOrders();
 	}
 	
-	public void sendToMaster(Ordine ordine, Activity activity) {
-		repositoryOrdini.sendToMaster(ordine, activity);
+	public void sendToMaster(Ordine ordine) {
+		repositoryOrdini.sendToMaster(ordine);
 	}
 }

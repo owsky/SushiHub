@@ -47,7 +47,7 @@ public class ListaPendingPage extends Fragment {
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				if (direction == ItemTouchHelper.RIGHT)
-					viewModel.sendToMaster(adapter.getOrdineAt(viewHolder.getAdapterPosition()), requireActivity());
+					viewModel.sendToMaster(adapter.getOrdineAt(viewHolder.getAdapterPosition()));
 				else if (direction == ItemTouchHelper.LEFT)
 					viewModel.delete(adapter.getOrdineAt(viewHolder.getAdapterPosition()));
 			}

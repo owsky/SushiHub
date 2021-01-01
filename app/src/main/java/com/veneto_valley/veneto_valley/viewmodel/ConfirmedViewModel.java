@@ -1,6 +1,5 @@
 package com.veneto_valley.veneto_valley.viewmodel;
 
-import android.app.Activity;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -16,11 +15,11 @@ public class ConfirmedViewModel extends OrdiniBaseViewModel {
 		ordini = repositoryOrdini.getConfirmedOrders();
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException, InterruptedException {
-		repositoryOrdini.retrieveFromMaster(ordine, activity);
+	public void retrieveFromMaster(Ordine ordine) throws IOException, InterruptedException {
+		repositoryOrdini.retrieveFromMaster(ordine);
 	}
 	
-	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
-		repositoryOrdini.markAsDelivered(ordine, activity);
+	public void markAsDelivered(Ordine ordine) throws IOException, InterruptedException {
+		repositoryOrdini.markAsDelivered(ordine);
 	}
 }

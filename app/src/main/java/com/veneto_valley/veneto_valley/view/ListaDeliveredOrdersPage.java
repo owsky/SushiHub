@@ -62,7 +62,7 @@ public class ListaDeliveredOrdersPage extends Fragment {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
 				if (direction == ItemTouchHelper.LEFT) {
 					try {
-						viewModel.markAsNotDelivered(ordine, requireActivity());
+						viewModel.markAsNotDelivered(ordine);
 					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}

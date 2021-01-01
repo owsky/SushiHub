@@ -28,7 +28,7 @@ public class Utente {
         Utente u = utenteDao.loadById(idUtente);
         if (u == null) {
             Utente tmp = new Utente(idUtente);
-            utenteDao.insertAll(tmp);
+            utenteDao.insert(tmp);
             u = utenteDao.loadById(idUtente);
         }
         return u;

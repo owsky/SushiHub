@@ -15,11 +15,13 @@ public abstract class OrdiniBaseViewModel extends AndroidViewModel {
 	protected RepositoryOrdini repositoryOrdini;
 	protected LiveData<List<Ordine>> ordini;
 	protected String tavolo;
+	protected Application application;
 	
 	public OrdiniBaseViewModel(@NonNull Application application, String tavolo) {
 		super(application);
 		repositoryOrdini = new RepositoryOrdini(application, tavolo);
 		this.tavolo = tavolo;
+		this.application = application;
 	}
 	
 	public void insert(Ordine ordine) {

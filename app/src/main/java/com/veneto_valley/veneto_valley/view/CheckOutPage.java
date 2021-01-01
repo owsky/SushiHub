@@ -39,7 +39,7 @@ public class CheckOutPage extends Fragment {
 		float tot = menu + extra;
 		totale.setText(String.format(locale, "Costo totale: %s €", tot));
 		finito.setOnClickListener(v -> {
-			viewModel.checkout(requireActivity());
+			viewModel.checkout();
 			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
 		});
 	}
