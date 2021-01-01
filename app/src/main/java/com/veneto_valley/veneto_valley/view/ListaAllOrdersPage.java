@@ -2,7 +2,8 @@ package com.veneto_valley.veneto_valley.view;
 
 import androidx.fragment.app.Fragment;
 
-public class AllOrdersFragment extends Fragment {
+public class ListaAllOrdersPage extends Fragment {
+//	TODO: implementare
 //	private List<Ordine> dataList = new ArrayList<>();
 //	private final AppDatabase database = AppDatabase.getInstance(requireContext());
 //

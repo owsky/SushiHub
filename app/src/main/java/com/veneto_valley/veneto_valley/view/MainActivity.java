@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.veneto_valley.veneto_valley.R;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
 		NavigationView navigationView = findViewById(R.id.navigation_view);
 		
 		Set<Integer> topLevelDestinations = new HashSet<>();
-		topLevelDestinations.add(R.id.homepageFragment);
-		topLevelDestinations.add(R.id.listaPiattiFragment);
-		topLevelDestinations.add(R.id.storicoOrdiniPage);
+		topLevelDestinations.add(R.id.homepageNav);
+		topLevelDestinations.add(R.id.listeTabNav);
+		topLevelDestinations.add(R.id.storicoNav);
 		appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		NavigationUI.setupWithNavController(navigationView, navController);
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 	
 	@Override
 	public boolean onSupportNavigateUp() {
-		if (navController.getCurrentDestination().getId() == R.id.aggiungiOrdiniFragment) {
+		int destination = Objects.requireNonNull(navController.getCurrentDestination()).getId();
+		if (destination == R.id.userInputNav) {
 			CancelDialog dialog = new CancelDialog();
 			dialog.show(getSupportFragmentManager(), null);
 			return true;

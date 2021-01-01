@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
 
-public class CheckoutViewModel extends BaseViewModel{
-	private RepositoryTavoli repositoryTavoli;
+public class CheckoutViewModel extends OrdiniBaseViewModel {
+	private final RepositoryTavoli repositoryTavoli;
 	
 	public CheckoutViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);
@@ -16,7 +16,11 @@ public class CheckoutViewModel extends BaseViewModel{
 		repositoryTavoli = new RepositoryTavoli(application);
 	}
 	
-	public float getCostoMenu(String tavolo) {
+	public float getCostoMenu() {
 		return repositoryTavoli.getCostoMenu(tavolo);
+	}
+	
+	public float getCostoExtra() {
+		return repositoryTavoli.getCostoExtra(tavolo);
 	}
 }

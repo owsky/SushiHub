@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
-public class PendingViewModel extends BaseViewModel {
+public class PendingViewModel extends OrdiniBaseViewModel {
 	
 	public PendingViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);

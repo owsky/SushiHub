@@ -16,10 +16,6 @@ import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloViewHolder> {
 	
-	protected StoricoAdapter() {
-		super(DIFF_CALLBACK);
-	}
-	
 	private static final DiffUtil.ItemCallback<Tavolo> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tavolo>() {
 		@Override
 		public boolean areItemsTheSame(@NonNull Tavolo oldItem, @NonNull Tavolo newItem) {
@@ -33,6 +29,10 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 					oldItem.costoMenu == newItem.costoMenu;
 		}
 	};
+	
+	protected StoricoAdapter() {
+		super(DIFF_CALLBACK);
+	}
 	
 	@NonNull
 	@Override

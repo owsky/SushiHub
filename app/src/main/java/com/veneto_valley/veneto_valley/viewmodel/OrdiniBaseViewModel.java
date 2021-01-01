@@ -6,19 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.veneto_valley.veneto_valley.model.entities.Tavolo;
-import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 
 import java.util.List;
 
-public abstract class BaseViewModel extends AndroidViewModel {
+public abstract class OrdiniBaseViewModel extends AndroidViewModel {
 	protected RepositoryOrdini repositoryOrdini;
 	protected LiveData<List<Ordine>> ordini;
+	protected String tavolo;
 	
-	public BaseViewModel(@NonNull Application application, String tavolo) {
+	public OrdiniBaseViewModel(@NonNull Application application, String tavolo) {
 		super(application);
 		repositoryOrdini = new RepositoryOrdini(application, tavolo);
+		this.tavolo = tavolo;
 	}
 	
 	public void insert(Ordine ordine) {
@@ -31,6 +32,10 @@ public abstract class BaseViewModel extends AndroidViewModel {
 	
 	public void delete(Ordine ordine) {
 		repositoryOrdini.delete(ordine);
+	}
+	
+	public String getTavolo() {
+		return tavolo;
 	}
 	
 	public LiveData<List<Ordine>> getOrdini() {

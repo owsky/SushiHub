@@ -15,9 +15,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 
-public class HomepageFragment extends Fragment {
-
-	public HomepageFragment() {
+public class HomePage extends Fragment {
+	
+	public HomePage() {
 		super(R.layout.fragment_homepage);
 	}
 	

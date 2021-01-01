@@ -15,22 +15,15 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureActivity;
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
-public class ScanQRFragment extends Fragment {
-	
-	public ScanQRFragment() {
-		super(R.layout.fragment_scan_qr);
-	}
+public class ScanQRPage extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		scanCode();
-	}
-	
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
 	}
 	
 	private void scanCode() {
@@ -48,12 +41,7 @@ public class ScanQRFragment extends Fragment {
 		if (result != null) {
 			String contents = result.getContents();
 			if (contents != null) {
-				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-				SharedPreferences.Editor editor = sharedPreferences.edit();
-				editor.putString("codice_tavolo", contents);
-				editor.putBoolean("is_master", false);
-				editor.apply();
-				
+				ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class).creaTavolo(contents);
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQR_to_listPiattiFragment);
 			} else {
 				NavHostFragment.findNavController(this).navigateUp();

@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
 

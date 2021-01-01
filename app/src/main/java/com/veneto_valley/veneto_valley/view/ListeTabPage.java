@@ -1,5 +1,7 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,11 +24,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.Connessione;
 
-public class ListPiattiFragment extends Fragment {
+public class ListeTabPage extends Fragment {
 	private SharedPreferences preferences;
 	
-	public ListPiattiFragment() {
-		super(R.layout.fragment_list_piatti);
+	public ListeTabPage() {
+		super(R.layout.fragment_lista_piatti);
 	}
 	
 	@Override
@@ -35,7 +38,7 @@ public class ListPiattiFragment extends Fragment {
 			@Override
 			public void handleOnBackPressed() {
 				ExitDialog dialog = new ExitDialog();
-				dialog.show(getParentFragmentManager(), null);
+				dialog.show(getParentFragmentManager(), getTag());
 			}
 		});
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
@@ -91,20 +94,24 @@ public class ListPiattiFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
-			if (preferences.contains("codice_tavolo")) {
-				ListPiattiFragmentDirections.ActionListaPiattiFragmentToGeneraQR action = ListPiattiFragmentDirections.actionListaPiattiFragmentToGeneraQR();
-				action.setCodiceTavolo(preferences.getString("codice_tavolo", null));
-				NavHostFragment.findNavController(this).navigate(action);
-			} else {
-				NavHostFragment.findNavController(this).navigate(R.id.homepageFragment);
-			}
-		} else if (item.getItemId() == R.id.toExtra) {
-			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_extra);
+			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_generaQR);
 		} else if (item.getItemId() == R.id.toAllOrders) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_allOrders);
 		} else if (item.getItemId() == R.id.toCheckout) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_checkOutPage2);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public static class ExitDialog extends DialogFragment {
+		@NonNull
+		@Override
+		public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+			builder.setTitle("Vuoi uscire dall'applicazione?");
+			builder.setPositiveButton("OK", (dialog, which) -> requireActivity().finish());
+			builder.setNegativeButton("Annulla", (dialog, which) -> dismiss());
+			return builder.create();
+		}
 	}
 }

@@ -2,6 +2,7 @@ package com.veneto_valley.veneto_valley.model.relations;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
+
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Utente;
 

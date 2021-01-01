@@ -1,8 +1,10 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,28 +22,28 @@ import com.veneto_valley.veneto_valley.R;
 
 import java.util.UUID;
 
-public class GeneraQRFragment extends Fragment {
+public class GeneraQRPage extends Fragment {
 	private String codice;
 	
-	public GeneraQRFragment() {
+	public GeneraQRPage() {
 		super(R.layout.fragment_genera_qr);
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		GeneraQRFragmentArgs args;
-		if (getArguments() != null && (args = GeneraQRFragmentArgs.fromBundle(getArguments())).getCodiceTavolo() != null) {
-			codice = args.getCodiceTavolo();
+		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		codice = preferences.getString("codice_tavolo", null);
+		
+		if (codice != null) {
 			view.findViewById(R.id.doneqr).setVisibility(View.INVISIBLE);
 		} else {
 			codice = UUID.randomUUID().toString();
-			view.findViewById(R.id.doneqr).setVisibility(View.VISIBLE);
+			Button btn = view.findViewById(R.id.doneqr);
+			
+			GeneraQRPageDirections.ActionGeneraQRToImpostaTavolo action = GeneraQRPageDirections.actionGeneraQRToImpostaTavolo(codice);
+			btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRPage.this).navigate(action));
 		}
 		
 		try {
@@ -49,12 +51,6 @@ public class GeneraQRFragment extends Fragment {
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
-		
-		Button btn = view.findViewById(R.id.doneqr);
-		GeneraQRFragmentDirections.ActionGeneraQRToImpostaTavolo action = GeneraQRFragmentDirections.actionGeneraQRToImpostaTavolo();
-		action.setCodiceTavolo(codice);
-		btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRFragment.this).navigate(action));
-		
 	}
 	
 	private void generaQR() throws WriterException {

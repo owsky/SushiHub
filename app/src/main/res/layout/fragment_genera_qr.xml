@@ -6,7 +6,7 @@
     android:id="@+id/qr_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.GeneraQRFragment">
+    tools:context=".view.GeneraQRPage">
 
     <TextView
         android:id="@+id/textView7"
