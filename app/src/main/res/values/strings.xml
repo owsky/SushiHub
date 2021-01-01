@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Veneto_Valley</string>
+    <string name="app_name">SushiHub</string>
 
     <string name="title_activity_extra">ExtraActivity</string>
     <string name="Bevande"> Aggiungi Extra</string>
@@ -19,6 +19,4 @@
     <string name="qr_code">QR Code</string>
     <string name="prosegui">Prosegui</string>
     <string name="inquadra_il_qr">Inquadra il QR</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

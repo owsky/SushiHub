@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homepageFragment"
-        android:name="com.veneto_valley.veneto_valley.HomepageFragment"
+        android:name="com.veneto_valley.veneto_valley.view.HomepageFragment"
         android:label="Home"
         tools:layout="@layout/fragment_homepage">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/generaQR"
-        android:name="com.veneto_valley.veneto_valley.GeneraQRFragment"
+        android:name="com.veneto_valley.veneto_valley.view.GeneraQRFragment"
         android:label="Crea tavolo"
         tools:layout="@layout/fragment_genera_qr">
         <argument
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/scanQR"
-        android:name="com.veneto_valley.veneto_valley.ScanQRFragment"
+        android:name="com.veneto_valley.veneto_valley.view.ScanQRFragment"
         android:label="Unisciti a un tavolo"
         tools:layout="@layout/fragment_scan_qr">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/listaPiattiFragment"
-        android:name="com.veneto_valley.veneto_valley.ListPiattiFragment"
+        android:name="com.veneto_valley.veneto_valley.view.ListPiattiFragment"
         android:label="Tavolo"
         tools:layout="@layout/fragment_list_piatti">
         <action
@@ -62,23 +62,21 @@
         <action
             android:id="@+id/action_listaPiattiFragment_to_allOrders"
             app:destination="@id/allOrders" />
-        <argument
-            android:name="codice_tavolo"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
         <action
             android:id="@+id/action_listaPiattiFragment_to_modificaOrdineFragment"
             app:destination="@id/modificaOrdineFragment" />
+        <action
+            android:id="@+id/action_listaPiattiFragment_to_checkOutPage2"
+            app:destination="@id/checkOutPage" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiOrdiniFragment"
-        android:name="com.veneto_valley.veneto_valley.AggiungiOrdiniFragment"
+        android:name="com.veneto_valley.veneto_valley.view.AggiungiOrdiniFragment"
         android:label="Aggiungi un ordine"
         tools:layout="@layout/fragment_aggiungi_ordini" />
     <fragment
         android:id="@+id/impostaTavolo"
-        android:name="com.veneto_valley.veneto_valley.ImpostaTavolo"
+        android:name="com.veneto_valley.veneto_valley.util.ImpostaTavolo"
         android:label="Informazioni aggiuntive"
         tools:layout="@layout/fragment_imposta_tavolo">
         <action
@@ -93,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/extra"
-        android:name="com.veneto_valley.veneto_valley.Extra"
+        android:name="com.veneto_valley.veneto_valley.view.Extra"
         android:label="Piatti extra"
         tools:layout="@layout/activity_extra" >
         <action
@@ -102,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/aggiungiExtra"
-        android:name="com.veneto_valley.veneto_valley.AggiungiExtra"
+        android:name="com.veneto_valley.veneto_valley.view.AggiungiExtra"
         android:label="aggiungi_extra_fragment"
         tools:layout="@layout/aggiungi_extra_fragment" >
         <action
@@ -111,15 +109,42 @@
     </fragment>
     <fragment
         android:id="@+id/allOrders"
-        android:name="com.veneto_valley.veneto_valley.AllOrdersFragment"
+        android:name="com.veneto_valley.veneto_valley.view.AllOrdersFragment"
         android:label="Tutti gli ordini"
         tools:layout="@layout/fragment_all_orders" />
     <fragment
         android:id="@+id/modificaOrdineFragment"
-        android:name="com.veneto_valley.veneto_valley.ModificaOrdineFragment"
+        android:name="com.veneto_valley.veneto_valley.view.ModificaOrdineFragment"
         android:label="ModificaOrdineFragment" >
         <argument
-            android:name="codiceOrdine"
-            app:argType="long" />
+            android:name="ordine"
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine" />
+    </fragment>
+    <fragment
+        android:id="@+id/storicoOrdiniPage"
+        android:name="com.veneto_valley.veneto_valley.view.StoricoOrdiniPage"
+        android:label="Storico ordini"
+        tools:layout="@layout/fragment_storico_ordini_page">
+        <action
+            android:id="@+id/action_storicoOrdiniPage2_to_storicoDettagliPage"
+            app:destination="@id/storicoDettagliPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/storicoDettagliPage"
+        android:name="com.veneto_valley.veneto_valley.view.StoricoDettagliPage"
+        android:label="Storico dettagli"
+        tools:layout="@layout/fragment_storico_dettagli_page">
+        <argument
+            android:name="tavolo"
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Tavolo" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutPage"
+        android:name="com.veneto_valley.veneto_valley.view.CheckOutPage"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_check_out" >
+        <action
+            android:id="@+id/action_checkOutPage_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
     </fragment>
 </navigation>
