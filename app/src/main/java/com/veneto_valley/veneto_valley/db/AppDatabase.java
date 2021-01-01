@@ -19,7 +19,7 @@ import com.veneto_valley.veneto_valley.db.entities.Tavolo;
 import com.veneto_valley.veneto_valley.db.entities.Utente;
 
 
-@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, }, exportSchema = false,version = 2)
+@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, }, exportSchema = false,version = 1)
 @TypeConverters({TimestampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase dbInstance = null;
