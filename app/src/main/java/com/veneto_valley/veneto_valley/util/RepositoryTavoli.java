@@ -19,19 +19,20 @@ public class RepositoryTavoli {
 	private final OrdineDao ordineDao;
 	private final TavoloDao tavoloDao;
 	private final LiveData<List<Tavolo>> tavoli;
+	private final SharedPreferences preferences;
 	
 	public RepositoryTavoli(Application application) {
 		tavoloDao = AppDatabase.getInstance(application).tavoloDao();
 		ordineDao = AppDatabase.getInstance(application).ordineDao();
 		
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
+		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 		String curr = preferences.getString("codice_tavolo", null);
 		if (curr != null)
 			tavoli = tavoloDao.getAllMinusCurr(curr);
 		else
 			tavoli = tavoloDao.getAll();
 	}
-
+	
 	public LiveData<List<Tavolo>> getTavoli() {
 		return tavoli;
 	}
@@ -44,10 +45,26 @@ public class RepositoryTavoli {
 		return tavoloDao.getCostoMenu(tavolo);
 	}
 	
+	public float getCostoExtra(String tavolo) {
+		return ordineDao.getTotaleExtra(tavolo);
+	}
+	
 	public void deleteTable(Tavolo tavolo) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			ordineDao.deleteByTable(tavolo.idTavolo);
 			tavoloDao.delete(tavolo);
 		});
+	}
+	
+	public void creaTavolo(String codice) {
+		Tavolo tavolo = new Tavolo(codice);
+		preferences.edit().putString("codice_tavolo", codice).apply();
+		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));
+	}
+	
+	public void creaTavolo(String codice, int portate, float menu) {
+		Tavolo tavolo = new Tavolo(codice, portate, menu);
+		preferences.edit().putString("codice_tavolo", codice).apply();
+		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));
 	}
 }
