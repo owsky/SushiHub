@@ -1,6 +1,5 @@
 package com.veneto_valley.veneto_valley.viewmodel;
 
-import android.app.Activity;
 import android.app.Application;
 
 import androidx.annotation.NonNull;

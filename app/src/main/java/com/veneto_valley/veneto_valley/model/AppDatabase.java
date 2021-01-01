@@ -19,19 +19,19 @@ import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import com.veneto_valley.veneto_valley.model.entities.Utente;
 
 
-@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class, }, exportSchema = false,version = 2)
+@Database(entities = {Utente.class, Ordine.class, Piatto.class, Ristorante.class, Tavolo.class,}, exportSchema = false, version = 2)
 @TypeConverters({TimestampConverter.class, StatusEnumConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase dbInstance = null;
-
-    public static synchronized AppDatabase getInstance(Context context) {
-        if (dbInstance == null){
-            //TODO: Rimuovere fallback
-            dbInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,"Veneto_Valley-Db")
-                    .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    .build();
-            //TODO: Rimuovere clear
+	private static AppDatabase dbInstance = null;
+	
+	public static synchronized AppDatabase getInstance(Context context) {
+		if (dbInstance == null) {
+			//TODO: Rimuovere fallback
+			dbInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "Veneto_Valley-Db")
+					.allowMainThreadQueries()
+					.fallbackToDestructiveMigration()
+					.build();
+			//TODO: Rimuovere clear
 //            dbInstance.clearAllTables();
 		}
 		return dbInstance;

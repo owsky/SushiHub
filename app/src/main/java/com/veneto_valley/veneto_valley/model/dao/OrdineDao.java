@@ -33,7 +33,7 @@ public interface OrdineDao extends baseDao<Ordine> {
 	
 	@Query("DELETE FROM Ordine WHERE tavolo = :tavolo")
 	void deleteByTable(String tavolo);
-
-    @Query("DELETE FROM utente WHERE idUtente != :idUtente")
-    void deleteNotUser(String idUtente);
+	
+	@Query("DELETE FROM utente WHERE idUtente != :idUtente")
+	void deleteNotUser(String idUtente);
 }

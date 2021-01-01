@@ -20,8 +20,6 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
@@ -31,6 +29,7 @@ import java.util.concurrent.Executors;
 
 public class Connessione {
 	public static final Strategy STRATEGY = Strategy.P2P_STAR;
+	private static Connessione connessione = null;
 	private final Application application;
 	//public static final String SERVICE_ID="120001";
 	private final String SERVICE_ID;
@@ -38,8 +37,43 @@ public class Connessione {
 	private String strendPointId;
 	private volatile boolean connesso = false;
 	private long semaforo = 0;
-	private static Connessione connessione = null;
 	private byte[] ricevuto = null;    //qui puoi prendere le richieste che ti arrivano
+	private final PayloadCallback mPayloadCallback = new PayloadCallback() {
+		@Override
+		public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
+			final byte[] receivedBytes = payload.asBytes();
+			Executors.newSingleThreadExecutor().execute(() -> {
+				Ordine risposta;
+				semaforo = 1;
+				ricevuto = receivedBytes;
+				semaforo = 0;
+				MyViewModelFactory factory = new MyViewModelFactory(application, SERVICE_ID);
+				viewModel = new ViewModelProvider((ViewModelStoreOwner) application, factory).get(ConfirmedViewModel.class);
+				try {
+					risposta = Ordine.getFromBytes(ricevuto);
+					if (risposta.status.equals("confirmed")) {
+						viewModel.insert(risposta);
+					} else if (risposta.status.equals("pending")) {
+						viewModel.delete(risposta);
+					} else {
+						viewModel.update(risposta);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			});
+		}
+		
+		@Override
+		public void onPayloadTransferUpdate(@NonNull String s,
+		                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
+			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
+				// Do something with is here...
+			}
+		}
+	};
 	
 	private Connessione(boolean client, Application application, String SERVICE_ID) {
 		this.application = application;
@@ -109,7 +143,7 @@ public class Connessione {
 		Payload bytesPayload = Payload.fromBytes(oggetto);
 		Nearby.getConnectionsClient(application).sendPayload(endPointId, bytesPayload)
 				.addOnSuccessListener(aVoid -> Toast.makeText(application, "inviato",
-				Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(application,
+						Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(application,
 				"errore", Toast.LENGTH_LONG).show());
 	}
 	
@@ -160,43 +194,6 @@ public class Connessione {
 					}
 				}, discoveryOptions);
 	}
-	
-	private final PayloadCallback mPayloadCallback = new PayloadCallback() {
-		@Override
-		public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
-			final byte[] receivedBytes = payload.asBytes();
-			Executors.newSingleThreadExecutor().execute(() -> {
-				Ordine risposta;
-				semaforo = 1;
-				ricevuto = receivedBytes;
-				semaforo = 0;
-				MyViewModelFactory factory = new MyViewModelFactory(application, SERVICE_ID);
-				viewModel = new ViewModelProvider((ViewModelStoreOwner) application, factory).get(ConfirmedViewModel.class);
-				try {
-					risposta = Ordine.getFromBytes(ricevuto);
-					if (risposta.status.equals("confirmed")) {
-						viewModel.insert(risposta);
-					} else if (risposta.status.equals("pending")) {
-						viewModel.delete(risposta);
-					} else {
-						viewModel.update(risposta);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			});
-		}
-		
-		@Override
-		public void onPayloadTransferUpdate(@NonNull String s,
-		                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
-				// Do something with is here...
-			}
-		}
-	};
 	
 	public void closeConnection() {
 		connesso = false;
