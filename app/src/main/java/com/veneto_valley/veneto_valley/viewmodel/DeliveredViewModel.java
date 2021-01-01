@@ -16,7 +16,7 @@ public class DeliveredViewModel extends OrdiniBaseViewModel {
 		ordini = repositoryOrdini.getDeliveredOrders();
 	}
 	
-	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
+	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		repositoryOrdini.markAsNotDelivered(ordine, activity);
 	}
 }

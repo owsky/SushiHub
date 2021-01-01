@@ -80,7 +80,7 @@ public class UserInputPage extends Fragment {
 		String codiceTavolo = viewModel.getTavolo();
 		String codicePiatto = codice.getText().toString();
 		int quantita = Integer.parseInt(qta.getText().toString());
-		String status = "pending";
+		Ordine.statusOrdine status = Ordine.statusOrdine.pending;
 		String descrizione = desc.getText().toString();
 		String prezzoExtra = prezzo.getText().toString();
 		

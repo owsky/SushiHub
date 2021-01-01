@@ -62,13 +62,13 @@ public class ListaConfirmedOrdersPage extends Fragment {
 				if (direction == ItemTouchHelper.LEFT) {
 					try {
 						viewModel.retrieveFromMaster(ordine, requireActivity());
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}
 				} else if (direction == ItemTouchHelper.RIGHT) {
 					try {
 						viewModel.markAsDelivered(ordine, requireActivity());
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
