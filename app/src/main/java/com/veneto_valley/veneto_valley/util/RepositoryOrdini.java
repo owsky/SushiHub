@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,8 +17,9 @@ import java.util.concurrent.Executors;
 
 public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
-	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders;
+	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders, extraOrders;
 	private final String tavolo;
+	private final Application application;
 	
 	public RepositoryOrdini(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
@@ -28,8 +28,11 @@ public class RepositoryOrdini {
 		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo);
 		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo);
 		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo);
+		extraOrders = ordineDao.getAllExtra(tavolo);
+		this.application = application;
 	}
 	
+	// TODO: fix overwrite extra
 	public void insert(Ordine ordine) {
 		Ordine vecchioOrdine;
 		if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
@@ -38,7 +41,7 @@ public class RepositoryOrdini {
 				vecchioOrdine.desc = ordine.desc;
 			update(vecchioOrdine);
 		} else {
-			Executors.newSingleThreadExecutor().execute(() -> ordineDao.insertAll(ordine));
+			Executors.newSingleThreadExecutor().execute(() -> ordineDao.insert(ordine));
 		}
 	}
 	
@@ -48,10 +51,6 @@ public class RepositoryOrdini {
 	
 	public void delete(Ordine ordine) {
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
-	}
-	
-	public void deleteSlaves(Tavolo tavolo) {
-		//TODO implementare
 	}
 	
 	public LiveData<List<Ordine>> getAllOrders(long utente, String tavolo) {
@@ -68,6 +67,10 @@ public class RepositoryOrdini {
 	
 	public LiveData<List<Ordine>> getDeliveredOrders() {
 		return deliveredOrders;
+	}
+	
+	public LiveData<List<Ordine>> getAllExtra() {
+		return extraOrders;
 	}
 	
 	public void sendToMaster(Ordine ordine, Activity activity) {
