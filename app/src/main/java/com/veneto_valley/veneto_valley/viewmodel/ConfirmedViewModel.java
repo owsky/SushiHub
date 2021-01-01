@@ -16,11 +16,11 @@ public class ConfirmedViewModel extends BaseViewModel {
 		ordini = repositoryOrdini.getConfirmedOrders();
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
+	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		repositoryOrdini.retrieveFromMaster(ordine, activity);
 	}
 	
-	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
+	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		repositoryOrdini.markAsDelivered(ordine, activity);
 	}
 }

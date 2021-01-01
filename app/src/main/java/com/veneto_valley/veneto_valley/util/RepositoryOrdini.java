@@ -72,35 +72,35 @@ public class RepositoryOrdini {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		
-		Connessione connessione = new Connessione(true, activity, tavolo);
+		Connessione connessione = Connessione.getItance(true, activity, tavolo);
 		try {
 			connessione.invia(ordine.getBytes());
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException {
+	public void retrieveFromMaster(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
-		Connessione connessione = new Connessione(true, activity, tavolo);
+		Connessione connessione = Connessione.getItance(true, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE
 		update(ordine);
 		// TODO implementa undo del master
 	}
 	
-	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException {
+	public void markAsDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.delivered;
 		update(ordine);
-		Connessione connessione = new Connessione(false, activity, tavolo);
+		Connessione connessione = Connessione.getItance(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
-	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException {
+	public void markAsNotDelivered(Ordine ordine, Activity activity) throws IOException, InterruptedException {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
-		Connessione connessione = new Connessione(false, activity, tavolo);
+		Connessione connessione = Connessione.getItance(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 }

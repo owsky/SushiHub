@@ -47,7 +47,7 @@ public class CheckOutPage extends Fragment {
 		finito.setOnClickListener(v -> {
 			preferences.edit().remove("codice_tavolo").apply();
 			//TODO eliminare slave
-			Connessione connessione = new Connessione(true, requireActivity(), tavolo);
+			Connessione connessione = Connessione.getItance(true, requireActivity(), tavolo);
 			connessione.closeConnection();
 			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
 		});

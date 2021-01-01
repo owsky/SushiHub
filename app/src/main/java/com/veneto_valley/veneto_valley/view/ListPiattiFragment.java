@@ -41,7 +41,7 @@ public class ListPiattiFragment extends Fragment {
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (preferences.getBoolean("is_master", false)) {
 			String codice_tavolo = preferences.getString("codice_tavolo", null);
-			Connessione c = new Connessione(false, this.getActivity(), codice_tavolo);
+			Connessione c = Connessione.getItance(false, this.getActivity(), codice_tavolo);
 		}
 	}
 	
