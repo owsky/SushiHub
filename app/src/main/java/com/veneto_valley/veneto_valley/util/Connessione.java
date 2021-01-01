@@ -20,6 +20,7 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
+import com.google.android.gms.nearby.messages.Distance;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
@@ -42,8 +43,9 @@ public class Connessione {
     boolean client = false;
     boolean connesso=false;
     public long semaforo=0;
+    private static  Connessione connessione = null;
     public byte[] ricevuto=null;    //qui puoi prendere le richieste che ti arrivano
-    public Connessione(boolean client, Activity cont, String SERVICE_ID){
+    private Connessione(boolean client, Activity cont, String SERVICE_ID){
         this.cont=cont;
         this.SERVICE_ID=SERVICE_ID; //service id deve essere il numero del qr code generato
         this.client=client;
@@ -53,16 +55,24 @@ public class Connessione {
             startAdvertising();
         }
     }
-    public void invia(byte[] oggetto){
-        if(connesso){
-            sendPayLoad(strendPointId, oggetto);
-        }else{
-            if(client){
-                startDiscovery();
-            }else{
-                startAdvertising();
-            }
+    public static Connessione getItance(boolean client, Activity cont, String SERVICE_ID){
+        if(connessione==null){
+            connessione = new Connessione(client, cont, SERVICE_ID);
         }
+        return connessione;
+    }
+    public void invia(byte[] oggetto) throws InterruptedException {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!connesso){}
+                sendPayLoad(strendPointId, oggetto);
+            }
+        });
+        t.start();
+
+
+
     }
 
     private void startAdvertising () {

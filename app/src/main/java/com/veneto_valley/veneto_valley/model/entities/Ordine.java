@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.veneto_valley.veneto_valley.util.ParcelableUtil;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -45,16 +47,12 @@ public class Ordine implements Parcelable {
         this(tavolo,piatto,1);
     }
     public byte[] getBytes() throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(this);
-        oos.flush();
-        return bos.toByteArray();
+        byte[] oggetto = ParcelableUtil.marshall(this);
+        return oggetto;
     }
     public static Ordine getFromBytes(byte[] ordine) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream in = new ByteArrayInputStream(ordine);
-        ObjectInputStream is = new ObjectInputStream(in);
-        return (Ordine) is.readObject();
+        Parcel parcel = ParcelableUtil.unmarshall(ordine);
+        return new Ordine(parcel);
     }
     
     protected Ordine(Parcel in) {

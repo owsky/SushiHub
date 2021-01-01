@@ -64,7 +64,7 @@ public class DeliveredOrdersFragment extends Fragment {
 				if (direction == ItemTouchHelper.LEFT) {
 					try {
 						viewModel.markAsNotDelivered(ordine, requireActivity());
-					} catch (IOException e) {
+					} catch (IOException | InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
