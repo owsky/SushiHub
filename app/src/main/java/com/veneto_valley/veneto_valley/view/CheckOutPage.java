@@ -1,8 +1,6 @@
 package com.veneto_valley.veneto_valley.view;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.util.Connessione;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.CheckoutViewModel;
 
 import java.util.Locale;
@@ -32,23 +30,16 @@ public class CheckOutPage extends Fragment {
 		TextView totale = view.findViewById(R.id.checkoutTotale);
 		Button finito = view.findViewById(R.id.checkoutFinito);
 		
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		String tavolo = preferences.getString("codice_tavolo", null);
-		CheckoutViewModel checkoutViewModel = new CheckoutViewModel(requireActivity().getApplication(), tavolo);
-		
+		CheckoutViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CheckoutViewModel.class);
 		final Locale locale = requireActivity().getResources().getConfiguration().locale;
-		
-		costoMenu.setText(String.format(locale, "Costo Menu: %s €", checkoutViewModel.getCostoMenu(tavolo)));
-
-//		TODO assegnare costo extra
-//		costoExtra.setText(String.format(locale, "Costo Extra: %s €", checkoutViewModel.getCostoExtra(tavolo)));
-//		TODO sommare menu ed extra e scrivere su totale
-		totale.setText(String.format(locale, "Costo totale: %s €", checkoutViewModel.getCostoMenu(tavolo)));
+		float menu = viewModel.getCostoMenu();
+		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));
+		float extra = viewModel.getCostoExtra();
+		costoExtra.setText(String.format(locale, "Costo Extra: %s €", extra));
+		float tot = menu + extra;
+		totale.setText(String.format(locale, "Costo totale: %s €", tot));
 		finito.setOnClickListener(v -> {
-			preferences.edit().remove("codice_tavolo").apply();
-			//TODO eliminare slave
-			Connessione connessione = new Connessione(true, requireActivity(), tavolo);
-			connessione.closeConnection();
+			viewModel.checkout(requireActivity());
 			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
 		});
 	}

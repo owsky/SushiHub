@@ -2,6 +2,8 @@ package com.veneto_valley.veneto_valley.util;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import androidx.lifecycle.LiveData;
 
@@ -102,5 +104,15 @@ public class RepositoryOrdini {
 		update(ordine);
 		Connessione connessione = new Connessione(false, activity, tavolo);
 		connessione.invia(ordine.getBytes());
+	}
+	
+	public void checkout(Activity activity) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
+		//TODO elimina ordini slave
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.remove("codice_tavolo").apply();
+		Connessione connessione = new Connessione(preferences.getBoolean("is_master", false),
+				activity, preferences.getString("codice_tavolo", null));
+		connessione.closeConnection();
 	}
 }
