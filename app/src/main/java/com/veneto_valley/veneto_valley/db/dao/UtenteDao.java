@@ -29,5 +29,8 @@ public interface UtenteDao extends baseDao<Utente>{
     @Transaction //Necessario per garantire atomicità dell'operazione
     @Query("SELECT * FROM utente WHERE idUtente IN (:idUtente)")
     List<OrdiniUtente> getOrdiniUtente(String idUtente);
+
+    @Query("DELETE FROM utente WHERE idUtente != :idUtente")
+    int deleteNotUser(String idUtente);
 }
 

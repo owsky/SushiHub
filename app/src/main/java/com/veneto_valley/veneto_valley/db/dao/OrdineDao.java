@@ -30,4 +30,7 @@ public interface OrdineDao extends baseDao<Ordine>{
 
     @Query("DELETE FROM ordine WHERE idOrdine = :idOrdine AND status LIKE \"daOrdinare\"") //TODO: Inserire nome status corretto
     int deleteById(long idOrdine);
+
+    @Query("DELETE FROM ordine WHERE utente != :idUtente")
+    int deleteNotUser(String idUtente);
 }
