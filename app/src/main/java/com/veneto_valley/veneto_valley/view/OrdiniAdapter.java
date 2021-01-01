@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +16,6 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
-//	private final CustomDragListener customDragListener;
-	
-	public OrdiniAdapter() {
-		super(DIFF_CALLBACK);
-//		this.customDragListener = listener;
-	}
 	
 	private static final DiffUtil.ItemCallback<Ordine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ordine>() {
 		@Override
@@ -38,10 +31,14 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		}
 	};
 	
+	public OrdiniAdapter() {
+		super(DIFF_CALLBACK);
+	}
+	
 	@NonNull
 	@Override
 	public PendingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_lista, parent, false);
+		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_ordine, parent, false);
 		return new PendingViewHolder(itemView);
 	}
 	
@@ -55,15 +52,9 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
 		if (currentOrdine.status.equals("pending")) {
-//			holder.handle.setOnTouchListener((v, event) -> {
-//			if (event.getAction() == MotionEvent.ACTION_DOWN)
-//				customDragListener.onDragStarted(holder);
-//			return true;
-//		});
-			ListPiattiFragmentDirections.ActionListaPiattiFragmentToModificaOrdineFragment action = ListPiattiFragmentDirections.actionListaPiattiFragmentToModificaOrdineFragment(currentOrdine);
+			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
+			action.setOrdine(currentOrdine);
 			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
-		} else {
-			holder.handle.setVisibility(View.GONE);
 		}
 	}
 	
@@ -73,18 +64,12 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 	
 	public static class PendingViewHolder extends RecyclerView.ViewHolder {
 		private final TextView codice, descrizione, quantita;
-		private final ImageView handle;
 		
 		public PendingViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
-			handle = itemView.findViewById(R.id.dragHandle);
 		}
 	}
-	
-//	public interface CustomDragListener {
-//		void onDragStarted(RecyclerView.ViewHolder viewHolder);
-//	}
 }
