@@ -12,10 +12,10 @@ import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 import java.util.List;
 
 public abstract class OrdiniBaseViewModel extends AndroidViewModel {
-	protected RepositoryOrdini repositoryOrdini;
+	protected final RepositoryOrdini repositoryOrdini;
+	protected final String tavolo;
+	protected final Application application;
 	protected LiveData<List<Ordine>> ordini;
-	protected String tavolo;
-	protected Application application;
 	
 	public OrdiniBaseViewModel(@NonNull Application application, String tavolo) {
 		super(application);

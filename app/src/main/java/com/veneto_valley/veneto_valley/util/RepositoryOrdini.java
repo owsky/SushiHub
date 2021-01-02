@@ -10,7 +10,6 @@ import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -77,14 +76,10 @@ public class RepositoryOrdini {
 		update(ordine);
 		
 		Connessione connessione = Connessione.getInstance(true, application, tavolo);
-		try {
-			connessione.invia(ordine.getBytes());
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
+		connessione.invia(ordine.getBytes());
 	}
 	
-	public void retrieveFromMaster(Ordine ordine) throws IOException, InterruptedException {
+	public void retrieveFromMaster(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
 		Connessione connessione = Connessione.getInstance(true, application, tavolo);
@@ -94,14 +89,14 @@ public class RepositoryOrdini {
 		// TODO implementa undo del master
 	}
 	
-	public void markAsDelivered(Ordine ordine) throws IOException, InterruptedException {
+	public void markAsDelivered(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.delivered;
 		update(ordine);
 		Connessione connessione = Connessione.getInstance(false, application, tavolo);
 		connessione.invia(ordine.getBytes());
 	}
 	
-	public void markAsNotDelivered(Ordine ordine) throws IOException, InterruptedException {
+	public void markAsNotDelivered(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		Connessione connessione = Connessione.getInstance(false, application, tavolo);

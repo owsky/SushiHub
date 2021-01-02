@@ -15,11 +15,11 @@ public class ConfirmedViewModel extends OrdiniBaseViewModel {
 		ordini = repositoryOrdini.getConfirmedOrders();
 	}
 	
-	public void retrieveFromMaster(Ordine ordine) throws IOException, InterruptedException {
+	public void retrieveFromMaster(Ordine ordine) {
 		repositoryOrdini.retrieveFromMaster(ordine);
 	}
 	
-	public void markAsDelivered(Ordine ordine) throws IOException, InterruptedException {
+	public void markAsDelivered(Ordine ordine) {
 		repositoryOrdini.markAsDelivered(ordine);
 	}
 }

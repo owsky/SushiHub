@@ -23,6 +23,6 @@ public interface UtenteDao extends baseDao<Utente> {
 	List<OrdiniUtente> getOrdiniUtente(String idUtente);
 	
 	@Query("DELETE FROM utente WHERE idUtente != :idUtente")
-	int deleteNotUser(String idUtente);
+	void deleteNotUser(String idUtente);
 }
 

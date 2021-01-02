@@ -24,7 +24,6 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 
 public class Connessione {
@@ -49,19 +48,13 @@ public class Connessione {
 				semaforo = 0;
 				MyViewModelFactory factory = new MyViewModelFactory(application, SERVICE_ID);
 				viewModel = new ViewModelProvider((ViewModelStoreOwner) application, factory).get(ConfirmedViewModel.class);
-				try {
-					risposta = Ordine.getFromBytes(ricevuto);
-					if (risposta.status.equals("confirmed")) {
-						viewModel.insert(risposta);
-					} else if (risposta.status.equals("pending")) {
-						viewModel.delete(risposta);
-					} else {
-						viewModel.update(risposta);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+				risposta = Ordine.getFromBytes(ricevuto);
+				if (risposta.status.equals(Ordine.statusOrdine.confirmed)) {
+					viewModel.insert(risposta);
+				} else if (risposta.status.equals(Ordine.statusOrdine.pending)) {
+					viewModel.delete(risposta);
+				} else {
+					viewModel.update(risposta);
 				}
 			});
 		}
@@ -69,9 +62,9 @@ public class Connessione {
 		@Override
 		public void onPayloadTransferUpdate(@NonNull String s,
 		                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
-				// Do something with is here...
-			}
+//			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
+//				// Do something with is here...
+//			}
 		}
 	};
 	
@@ -92,14 +85,11 @@ public class Connessione {
 		return connessione;
 	}
 	
-	public void invia(byte[] oggetto) throws InterruptedException {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (!connesso) {
-				}
-				sendPayLoad(strendPointId, oggetto);
+	public void invia(byte[] oggetto) {
+		Thread t = new Thread(() -> {
+			while (!connesso) {
 			}
+			sendPayLoad(strendPointId, oggetto);
 		});
 		t.start();
 	}

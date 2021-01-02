@@ -16,7 +16,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:padding="10dp"
-        android:text="Benvenuto in SushiHub"
+        android:text="@string/benvenuto_in_sushihub"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +31,9 @@
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
         android:layout_marginBottom="36dp"
-        android:text="Vuoi creare un tavolo o unirti ad uno già esistente?"
-        android:textSize="16sp"
         android:padding="10dp"
+        android:text="@string/vuoi_creare_un_tavolo_o_unirti_ad_uno_gi_esistente"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnCrea"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
@@ -46,7 +46,7 @@
         android:layout_marginEnd="92dp"
         android:layout_marginRight="92dp"
         android:layout_marginBottom="56dp"
-        android:text="Unisciti"
+        android:text="@string/unisciti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnCrea" />
@@ -58,7 +58,7 @@
         android:layout_marginStart="92dp"
         android:layout_marginLeft="92dp"
         android:layout_marginBottom="56dp"
-        android:text="Crea"
+        android:text="@string/crea"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

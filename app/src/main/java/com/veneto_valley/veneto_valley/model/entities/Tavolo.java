@@ -15,34 +15,22 @@ import java.util.Date;
 
 @Entity
 public class Tavolo implements Parcelable {
-	@SuppressWarnings("unused")
-	public static final Parcelable.Creator<Tavolo> CREATOR = new Parcelable.Creator<Tavolo>() {
-		@Override
-		public Tavolo createFromParcel(Parcel in) {
-			return new Tavolo(in);
-		}
-		
-		@Override
-		public Tavolo[] newArray(int size) {
-			return new Tavolo[size];
-		}
-	};
 	final static String TAG = "ETavoloLog";
+	@PrimaryKey
 	@NonNull
-	@PrimaryKey(autoGenerate = false)
-	public String idTavolo;
+	public final String idTavolo;
 	public String nome;
 	public Date dataCreazione;
 	public int maxPiatti;
 	public float costoMenu;
 	public int ristorante;
 	
-	public Tavolo(String idTavolo) {
+	public Tavolo(@NonNull String idTavolo) {
 		this.idTavolo = idTavolo;
 	}
 	
 	@Ignore
-	public Tavolo(String idTavolo, int maxPiatti, float costoMenu) {
+	public Tavolo(@NonNull String idTavolo, int maxPiatti, float costoMenu) {
 		this.idTavolo = idTavolo;
 		this.maxPiatti = maxPiatti;
 		this.costoMenu = costoMenu;
@@ -92,6 +80,18 @@ public class Tavolo implements Parcelable {
 		// Compare the data members and return accordingly
 		return this.idTavolo.equals(t.idTavolo); //TODO: Ampliare Confronto
 	}
+	
+	public static final Parcelable.Creator<Tavolo> CREATOR = new Parcelable.Creator<Tavolo>() {
+		@Override
+		public Tavolo createFromParcel(Parcel in) {
+			return new Tavolo(in);
+		}
+		
+		@Override
+		public Tavolo[] newArray(int size) {
+			return new Tavolo[size];
+		}
+	};
 	
 	@Override
 	public int describeContents() {

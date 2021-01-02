@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/modificaOrdine"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Codice"
+        android:text="@string/codice"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,9 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:inputType="textCapWords"
         android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCodice" />
+        app:layout_constraintTop_toBottomOf="@+id/textCodice"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/textQuantita"
@@ -38,7 +41,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="172dp"
         android:layout_marginRight="172dp"
-        android:text="Quantità"
+        android:text="@string/quantit"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editCodice"
@@ -57,7 +60,8 @@
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editCodice"
-        app:layout_constraintTop_toBottomOf="@+id/textQuantita" />
+        app:layout_constraintTop_toBottomOf="@+id/textQuantita"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/textDesc"
@@ -66,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Descrizione"
+        android:text="@string/descrizione"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editCodice" />
@@ -77,9 +81,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:inputType="text"
         android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDesc" />
+        app:layout_constraintTop_toBottomOf="@+id/textDesc"
+        tools:ignore="Autofill,LabelFor" />
 
     <Button
         android:id="@+id/salvaModifica"
@@ -90,7 +96,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Salva"
+        android:text="@string/salva"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

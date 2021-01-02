@@ -60,17 +60,9 @@ public class ListaConfirmedOrdersPage extends Fragment {
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
 				if (direction == ItemTouchHelper.LEFT) {
-					try {
-						viewModel.retrieveFromMaster(ordine);
-					} catch (IOException | InterruptedException e) {
-						e.printStackTrace();
-					}
+					viewModel.retrieveFromMaster(ordine);
 				} else if (direction == ItemTouchHelper.RIGHT) {
-					try {
-						viewModel.markAsDelivered(ordine);
-					} catch (IOException | InterruptedException e) {
-						e.printStackTrace();
-					}
+					viewModel.markAsDelivered(ordine);
 				}
 			}
 			

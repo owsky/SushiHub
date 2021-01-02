@@ -53,12 +53,9 @@ public class StoricoDettagliPage extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.eliminaTavolo) {
-			ConfirmDialog dialog = new ConfirmDialog(new Runnable() {
-				@Override
-				public void run() {
-					viewModel.deleteTable(tavolo);
-					NavHostFragment.findNavController(StoricoDettagliPage.this).navigateUp();
-				}
+			ConfirmDialog dialog = new ConfirmDialog(() -> {
+				viewModel.deleteTable(tavolo);
+				NavHostFragment.findNavController(StoricoDettagliPage.this).navigateUp();
 			});
 			dialog.show(getParentFragmentManager(), null);
 			return true;

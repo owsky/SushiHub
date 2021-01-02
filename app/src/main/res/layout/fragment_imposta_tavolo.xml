@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".util.ImpostaTavolo"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".util.ImpostaTavolo">
 
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_marginTop="45dp"
         android:layout_marginEnd="247dp"
         android:layout_marginRight="247dp"
-        android:text="Costo Menu"
+        android:text="@string/costo_menu"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:layout_marginTop="45dp"
         android:layout_marginEnd="108dp"
         android:layout_marginRight="108dp"
-        android:text="Portate massime a persona"
+        android:text="@string/portate_massime_a_persona"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,8 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        tools:ignore="Autofill,LabelFor" />
 
     <EditText
         android:id="@+id/portatePersona"
@@ -64,7 +65,8 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        tools:ignore="Autofill,LabelFor" />
 
     <Button
         android:id="@+id/impostaFinito"
@@ -73,7 +75,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Finito"
+        android:text="@string/prosegui"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

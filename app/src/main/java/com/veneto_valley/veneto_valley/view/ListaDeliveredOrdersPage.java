@@ -61,11 +61,7 @@ public class ListaDeliveredOrdersPage extends Fragment {
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 				Ordine ordine = adapter.getOrdineAt(viewHolder.getAdapterPosition());
 				if (direction == ItemTouchHelper.LEFT) {
-					try {
-						viewModel.markAsNotDelivered(ordine);
-					} catch (IOException | InterruptedException e) {
-						e.printStackTrace();
-					}
+					viewModel.markAsNotDelivered(ordine);
 				}
 			}
 			

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CheckOutPage"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".view.CheckOutPage">
 
     <TextView
         android:id="@+id/checkoutTotale"
@@ -14,7 +14,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:text="Totale:"
+        android:text="@string/totale"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkoutExtra" />
@@ -26,7 +26,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:text="Costo Menu:"
+        android:text="@string/costo_menu"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:text="Costo Extra:"
+        android:text="@string/costo_extra"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkoutMenu" />
@@ -50,7 +50,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp"
-        android:text="Finito"
+        android:text="@string/prosegui"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,22 +9,8 @@ import androidx.room.PrimaryKey;
 
 import com.veneto_valley.veneto_valley.util.ParcelableUtil;
 
-import java.io.IOException;
-
 @Entity
 public class Ordine implements Parcelable {
-	@SuppressWarnings("unused")
-	public static final Parcelable.Creator<Ordine> CREATOR = new Parcelable.Creator<Ordine>() {
-		@Override
-		public Ordine createFromParcel(Parcel in) {
-			return new Ordine(in);
-		}
-		
-		@Override
-		public Ordine[] newArray(int size) {
-			return new Ordine[size];
-		}
-	};
 	@PrimaryKey(autoGenerate = true)
 	public long idOrdine;
 	public statusOrdine status;
@@ -54,6 +40,18 @@ public class Ordine implements Parcelable {
 		this(tavolo, piatto, 1);
 	}
 	
+	public static final Parcelable.Creator<Ordine> CREATOR = new Parcelable.Creator<Ordine>() {
+		@Override
+		public Ordine createFromParcel(Parcel in) {
+			return new Ordine(in);
+		}
+		
+		@Override
+		public Ordine[] newArray(int size) {
+			return new Ordine[size];
+		}
+	};
+	
 	protected Ordine(Parcel in) {
 		status = statusOrdine.valueOf(in.readString());
 		quantita = in.readInt();
@@ -63,14 +61,13 @@ public class Ordine implements Parcelable {
 		utente = in.readString();
 	}
 	
-	public static Ordine getFromBytes(byte[] ordine) throws IOException, ClassNotFoundException {
+	public static Ordine getFromBytes(byte[] ordine) {
 		Parcel parcel = ParcelableUtil.unmarshall(ordine);
 		return new Ordine(parcel);
 	}
 	
-	public byte[] getBytes() throws IOException {
-		byte[] oggetto = ParcelableUtil.marshall(this);
-		return oggetto;
+	public byte[] getBytes() {
+		return ParcelableUtil.marshall(this);
 	}
 	
 	@Override

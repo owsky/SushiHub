@@ -51,7 +51,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		if (desc != null)
 			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
-		if (currentOrdine.status.equals("pending")) {
+		if (currentOrdine.status.equals(Ordine.statusOrdine.pending)) {
 			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 			action.setOrdine(currentOrdine);
 			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));

@@ -23,12 +23,8 @@ public class HomePage extends Fragment {
 	
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> {
-			NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR);
-		});
-		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> {
-			NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_generaQR);
-		});
+		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR));
+		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_generaQR));
 		
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
@@ -43,9 +39,7 @@ public class HomePage extends Fragment {
 		public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
-			builder.setPositiveButton("Sì", (dialog, which) -> {
-				NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment);
-			});
+			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment));
 			builder.setNegativeButton("No", (dialog, which) -> {
 				// TODO: cancellazione ordini slave
 				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());

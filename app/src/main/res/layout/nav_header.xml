@@ -17,12 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Easy sushi is easy"
+        android:text="@string/easy_sushi_is_easy"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Better with friends" />
+        android:text="@string/better_with_friends" />
 
 </LinearLayout>

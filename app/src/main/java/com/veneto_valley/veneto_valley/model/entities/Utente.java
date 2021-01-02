@@ -13,17 +13,17 @@ import com.veneto_valley.veneto_valley.model.dao.UtenteDao;
 
 @Entity
 public class Utente {
-	@PrimaryKey(autoGenerate = false)
+	@PrimaryKey
 	@NonNull
-	public String idUtente;
+	public final String idUtente;
 	
 	public String username;
 	
-	public Utente(String idUtente) {
+	public Utente(@NonNull String idUtente) {
 		this.idUtente = idUtente;
 	}
 	
-	public static Utente getUser(String idUtente, Context ctx) {
+	public static Utente getUser(@NonNull String idUtente, Context ctx) {
 		UtenteDao utenteDao = AppDatabase.getInstance(ctx).utenteDao();
 		Utente u = utenteDao.loadById(idUtente);
 		if (u == null) {

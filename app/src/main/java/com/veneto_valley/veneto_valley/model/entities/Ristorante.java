@@ -5,10 +5,9 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Ristorante {
+	public final String nome;
 	@PrimaryKey
 	public long idRistorante;
-	
-	public String nome;
 	
 	public Ristorante(String nome) {
 		this.nome = nome;

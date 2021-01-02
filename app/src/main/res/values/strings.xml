@@ -1,22 +1,24 @@
 <resources>
     <string name="app_name">SushiHub</string>
-
-    <string name="title_activity_extra">ExtraActivity</string>
-    <string name="Bevande"> Aggiungi Extra</string>
-    <string name="Quantita"> Quantità</string>
-    <string name="Prezzo1"> Prezzo</string>
-    <string name="Nome"> Nome</string>
-    <string name="pr1"> prezzo MENÙ totale </string>
-    <string name="BUTT"> SALVA </string>
-    <string name="conferma"> CONFERMA </string>
-    <string name="annulla"> ANNULLA </string>
-    <string name="inserisciN"> Inserisci Nome </string>
-    <string name="quantita"> Inserisci Quantità </string>
-    <string name="Prezzo"> Inserisci Prezzo </string>
-    <string name="drawer_close">Drawer close</string>
-    <string name="drawer_open">Drawer open</string>
     <string name="scannerizzami">Scannerizzami</string>
-    <string name="qr_code">QR Code</string>
+    <string name="qr_code">QR_CODE</string>
     <string name="prosegui">Prosegui</string>
-    <string name="inquadra_il_qr">Inquadra il QR</string>
+    <string name="totale">Totale:</string>
+    <string name="costo_menu">Costo Menu:</string>
+    <string name="costo_extra">Costo Extra:</string>
+    <string name="benvenuto_in_sushihub">Benvenuto in SushiHub</string>
+    <string name="vuoi_creare_un_tavolo_o_unirti_ad_uno_gi_esistente">Vuoi creare un tavolo o unirti ad uno già esistente?</string>
+    <string name="unisciti">Unisciti</string>
+    <string name="crea">Crea</string>
+    <string name="portate_massime_a_persona">Portate massime a persona</string>
+    <string name="icona_pi">Icona più</string>
+    <string name="codice">Codice</string>
+    <string name="quantit">Quantità</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="salva">Salva</string>
+    <string name="salva_e_nuovo">Salva e nuovo</string>
+    <string name="salva_e_esci">Salva e esci</string>
+    <string name="prezzo">Prezzo</string>
+    <string name="easy_sushi_is_easy">Easy sushi is easy</string>
+    <string name="better_with_friends">Better with friends</string>
 </resources>
