@@ -87,12 +87,12 @@
         android:id="@+id/allOrdersNav"
         android:name="com.veneto_valley.veneto_valley.view.ListaAllOrdersPage"
         android:label="Tutti gli ordini"
-        tools:layout="@layout/fragment_all_orders" />
+        tools:layout="@layout/fragment_recyclerview" />
     <fragment
         android:id="@+id/storicoNav"
         android:name="com.veneto_valley.veneto_valley.view.StoricoOrdiniPage"
         android:label="Storico ordini"
-        tools:layout="@layout/fragment_storico_ordini_page">
+        tools:layout="@layout/fragment_recyclerview">
         <action
             android:id="@+id/action_storicoOrdiniPage2_to_storicoDettagliPage"
             app:destination="@id/storicoDettagliNav" />
@@ -101,7 +101,7 @@
         android:id="@+id/storicoDettagliNav"
         android:name="com.veneto_valley.veneto_valley.view.StoricoDettagliPage"
         android:label="Storico dettagli"
-        tools:layout="@layout/fragment_storico_dettagli_page">
+        tools:layout="@layout/fragment_recyclerview">
         <argument
             android:name="tavolo"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Tavolo" />

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
 
 public class StoricoDettagliPage extends Fragment {
@@ -26,21 +27,21 @@ public class StoricoDettagliPage extends Fragment {
 	private Tavolo tavolo;
 	
 	public StoricoDettagliPage() {
-		super(R.layout.fragment_storico_dettagli_page);
+		super(R.layout.fragment_recyclerview);
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
-		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewStoricoPage);
+		RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		StoricoDettagliAdapter adapter = new StoricoDettagliAdapter();
 		recyclerView.setAdapter(adapter);
 		
 		tavolo = StoricoDettagliPageArgs.fromBundle(requireArguments()).getTavolo();
-		viewModel = new ViewModelProvider(requireActivity()).get(StoricoViewModel.class);
+		viewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
 		viewModel.getOrdini(tavolo).observe(getViewLifecycleOwner(), adapter::submitList);
 	}
 	

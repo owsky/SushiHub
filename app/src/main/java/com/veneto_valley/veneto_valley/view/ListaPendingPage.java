@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +23,13 @@ public class ListaPendingPage extends Fragment {
 	private PendingViewModel viewModel;
 	
 	public ListaPendingPage() {
-		super(R.layout.fragment_pending_orders);
+		super(R.layout.fragment_recyclerview);
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPending);
+		RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		OrdiniAdapter adapter = new OrdiniAdapter();

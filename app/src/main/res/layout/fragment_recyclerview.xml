@@ -7,7 +7,7 @@
     tools:context=".view.ListaPendingPage">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPending"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

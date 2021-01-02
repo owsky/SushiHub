@@ -2,7 +2,10 @@ package com.veneto_valley.veneto_valley.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 
 public class ListeOrdiniAdapter extends FragmentStateAdapter {
 	

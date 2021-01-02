@@ -2,15 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/mostraQR"
-        android:title="Mostra QR"
+    <item
+        android:id="@+id/mostraQR"
+        android:title="@string/mostra_qr"
         app:showAsAction="never" />
-    <item android:id="@+id/toExtra"
-        android:title="Extra" />
-    <item android:id="@+id/toAllOrders"
-        android:title="Tutti gli ordini"
+    <item
+        android:id="@+id/toAllOrders"
+        android:title="@string/tutti_gli_ordini"
         app:showAsAction="never" />
-    <item android:id="@+id/toCheckout"
-        android:title="Checkout"
+    <item
+        android:id="@+id/toCheckout"
+        android:title="@string/checkout"
         app:showAsAction="never" />
 </menu>

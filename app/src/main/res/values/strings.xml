@@ -21,4 +21,12 @@
     <string name="prezzo">Prezzo</string>
     <string name="easy_sushi_is_easy">Easy sushi is easy</string>
     <string name="better_with_friends">Better with friends</string>
+    <string name="mostra_qr">Mostra QR</string>
+    <string name="tutti_gli_ordini">Tutti gli ordini</string>
+    <string name="checkout">Checkout</string>
+    <string name="tavolo">Tavolo</string>
+    <string name="storico_ordini">Storico ordini</string>
+    <string name="social">Social</string>
+    <string name="share">Share</string>
+    <string name="elimina_tavolo">Elimina tavolo</string>
 </resources>

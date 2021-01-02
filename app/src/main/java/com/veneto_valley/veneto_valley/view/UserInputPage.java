@@ -53,7 +53,7 @@ public class UserInputPage extends Fragment {
 			qta.setText(String.valueOf(ordine.quantita));
 			prezzo.setText(String.valueOf(ordine.prezzo));
 			salvaEsci.setVisibility(View.GONE);
-			salvaNuovo.setText("Salva");
+			salvaNuovo.setText(R.string.salva);
 			salvaNuovo.setOnClickListener(v -> {
 				salvaOrdine();
 				NavHostFragment.findNavController(UserInputPage.this).navigateUp();

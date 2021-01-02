@@ -1,26 +1,21 @@
 package com.veneto_valley.veneto_valley.view;
 
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
-import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
-
-import java.io.IOException;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -28,26 +23,19 @@ public class ListaConfirmedOrdersPage extends Fragment {
 	private ConfirmedViewModel viewModel;
 	
 	public ListaConfirmedOrdersPage() {
-		super(R.layout.fragment_confirmed_orders);
+		super(R.layout.fragment_recyclerview);
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewConfirmed);
+		RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 		OrdiniAdapter adapter = new OrdiniAdapter();
 		recyclerView.setAdapter(adapter);
 		
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		String codiceTavolo = preferences.getString("codice_tavolo", null);
-		if (codiceTavolo != null) {
-			MyViewModelFactory factory = new MyViewModelFactory(requireActivity().getApplication(), codiceTavolo);
-			viewModel = new ViewModelProvider(requireActivity(), factory).get(ConfirmedViewModel.class);
-		} else {
-			viewModel = new ViewModelProvider(requireActivity()).get(ConfirmedViewModel.class);
-		}
+		viewModel = ViewModelUtil.getViewModel(requireActivity(), ConfirmedViewModel.class);
 		viewModel.getOrdini().observe(getViewLifecycleOwner(), adapter::submitList);
 		
 		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
