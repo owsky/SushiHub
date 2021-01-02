@@ -30,13 +30,13 @@ public class RepositoryOrdini {
 		this.application = application;
 	}
 	
-	// TODO: fix overwrite extra
 	public void insert(Ordine ordine) {
 		Ordine vecchioOrdine;
 		if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
 			vecchioOrdine.quantita += ordine.quantita;
 			if (!(ordine.desc == null))
 				vecchioOrdine.desc = ordine.desc;
+			vecchioOrdine.prezzo = ordine.prezzo;
 			update(vecchioOrdine);
 		} else {
 			Executors.newSingleThreadExecutor().execute(() -> ordineDao.insert(ordine));
