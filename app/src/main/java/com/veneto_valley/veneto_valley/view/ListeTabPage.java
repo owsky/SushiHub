@@ -23,6 +23,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.Connessione;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.OrdiniBaseViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 
 public class ListeTabPage extends Fragment {
 	private SharedPreferences preferences;
@@ -44,7 +47,8 @@ public class ListeTabPage extends Fragment {
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (preferences.getBoolean("is_master", false)) {
 			String codice_tavolo = preferences.getString("codice_tavolo", null);
-			Connessione.getInstance(false, requireActivity().getApplication(), codice_tavolo);
+			OrdiniBaseViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), PendingViewModel.class);
+			Connessione.getInstance(false, requireActivity().getApplication(), codice_tavolo, viewModel.getCallback());
 		}
 	}
 	

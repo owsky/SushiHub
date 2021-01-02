@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 
@@ -42,5 +43,9 @@ public abstract class OrdiniBaseViewModel extends AndroidViewModel {
 	
 	public LiveData<List<Ordine>> getOrdini() {
 		return ordini;
+	}
+	
+	public PayloadCallback getCallback() {
+		return repositoryOrdini.getCallback();
 	}
 }

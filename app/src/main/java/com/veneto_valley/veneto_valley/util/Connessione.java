@@ -32,45 +32,14 @@ public class Connessione {
 	private final Application application;
 	//public static final String SERVICE_ID="120001";
 	private final String SERVICE_ID;
-	private ConfirmedViewModel viewModel;
 	private String strendPointId;
 	private volatile boolean connesso = false;
-	private long semaforo = 0;
-	private byte[] ricevuto = null;    //qui puoi prendere le richieste che ti arrivano
-	private final PayloadCallback mPayloadCallback = new PayloadCallback() {
-		@Override
-		public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
-			final byte[] receivedBytes = payload.asBytes();
-			Executors.newSingleThreadExecutor().execute(() -> {
-				Ordine risposta;
-				semaforo = 1;
-				ricevuto = receivedBytes;
-				semaforo = 0;
-				MyViewModelFactory factory = new MyViewModelFactory(application, SERVICE_ID);
-				viewModel = new ViewModelProvider((ViewModelStoreOwner) application, factory).get(ConfirmedViewModel.class);
-				risposta = Ordine.getFromBytes(ricevuto);
-				if (risposta.status.equals(Ordine.statusOrdine.confirmed)) {
-					viewModel.insert(risposta);
-				} else if (risposta.status.equals(Ordine.statusOrdine.pending)) {
-					viewModel.delete(risposta);
-				} else {
-					viewModel.update(risposta);
-				}
-			});
-		}
-		
-		@Override
-		public void onPayloadTransferUpdate(@NonNull String s,
-		                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-//			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
-//				// Do something with is here...
-//			}
-		}
-	};
+	private final PayloadCallback mPayloadCallback;
 	
-	private Connessione(boolean client, Application application, String SERVICE_ID) {
+	private Connessione(boolean client, Application application, String SERVICE_ID, PayloadCallback callback) {
 		this.application = application;
 		this.SERVICE_ID = SERVICE_ID; //service id deve essere il numero del qr code generato
+		mPayloadCallback = callback;
 		if (client) {
 			startDiscovery();
 		} else {
@@ -78,9 +47,9 @@ public class Connessione {
 		}
 	}
 	
-	public static Connessione getInstance(boolean client, Application application, String SERVICE_ID) {
+	public static Connessione getInstance(boolean client, Application application, String SERVICE_ID, PayloadCallback callback) {
 		if (connessione == null) {
-			connessione = new Connessione(client, application, SERVICE_ID);
+			connessione = new Connessione(client, application, SERVICE_ID, callback);
 		}
 		return connessione;
 	}

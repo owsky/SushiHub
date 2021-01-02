@@ -4,11 +4,16 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.nearby.connection.Payload;
+import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -79,14 +84,14 @@ public class RepositoryOrdini {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		
-		Connessione connessione = Connessione.getInstance(true, application, tavolo);
+		Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
 		connessione.invia(ordine.getBytes());
 	}
 	
 	public void retrieveFromMaster(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(true, application, tavolo);
+		Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
 		connessione.invia(ordine.getBytes());
 		//TODO: CONTROLLARE
 		update(ordine);
@@ -96,14 +101,14 @@ public class RepositoryOrdini {
 	public void markAsDelivered(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.delivered;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(false, application, tavolo);
+		Connessione connessione = Connessione.getInstance(false, application, tavolo, getCallback());
 		connessione.invia(ordine.getBytes());
 	}
 	
 	public void markAsNotDelivered(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(false, application, tavolo);
+		Connessione connessione = Connessione.getInstance(false, application, tavolo, getCallback());
 		connessione.invia(ordine.getBytes());
 	}
 	
@@ -113,7 +118,35 @@ public class RepositoryOrdini {
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.remove("codice_tavolo").apply();
 		Connessione connessione = Connessione.getInstance(preferences.getBoolean("is_master", false),
-				application, preferences.getString("codice_tavolo", null));
+				application, preferences.getString("codice_tavolo", null), getCallback());
 		connessione.closeConnection();
+	}
+	
+	public PayloadCallback getCallback() {
+		return new PayloadCallback() {
+			@Override
+			public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
+				final byte[] receivedBytes = payload.asBytes();
+				Executors.newSingleThreadExecutor().execute(() -> {
+					Ordine ordine = Ordine.getFromBytes(receivedBytes);
+					
+					if (ordine.status.equals(Ordine.statusOrdine.confirmed)) {
+						ordineDao.insert(ordine);
+					} else if (ordine.status.equals(Ordine.statusOrdine.pending)) {
+						ordineDao.delete(ordine);
+					} else {
+						ordineDao.update(ordine);
+					}
+				});
+			}
+			
+			@Override
+			public void onPayloadTransferUpdate(@NonNull String s,
+			                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
+//			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
+//				// Do something with is here...
+//			}
+			}
+		};
 	}
 }
