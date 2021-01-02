@@ -20,7 +20,6 @@ import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ListaPendingPage extends Fragment {
-	private PendingViewModel viewModel;
 	
 	public ListaPendingPage() {
 		super(R.layout.fragment_recyclerview);
@@ -35,7 +34,7 @@ public class ListaPendingPage extends Fragment {
 		OrdiniAdapter adapter = new OrdiniAdapter();
 		recyclerView.setAdapter(adapter);
 		
-		viewModel = ViewModelUtil.getViewModel(requireActivity(), PendingViewModel.class);
+		final PendingViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), PendingViewModel.class);
 		viewModel.getOrdini().observe(getViewLifecycleOwner(), adapter::submitList);
 		
 		ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

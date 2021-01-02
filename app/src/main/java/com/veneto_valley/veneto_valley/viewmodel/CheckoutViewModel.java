@@ -12,7 +12,7 @@ public class CheckoutViewModel extends OrdiniBaseViewModel {
 	public CheckoutViewModel(@NonNull Application application, String tavolo) {
 		super(application, tavolo);
 		// TODO: inserire codice utente
-		ordini = repositoryOrdini.getAllOrders(-1, tavolo);
+		ordini = repositoryOrdini.getAllOrdersByUser(-1);
 		repositoryTavoli = new RepositoryTavoli(application);
 	}
 	

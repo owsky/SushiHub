@@ -51,7 +51,11 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
 	}
 	
-	public LiveData<List<Ordine>> getAllOrders(long utente, String tavolo) {
+	public LiveData<List<Ordine>> getAllOrders() {
+		return ordineDao.getAllByTable(tavolo);
+	}
+	
+	public LiveData<List<Ordine>> getAllOrdersByUser(long utente) {
 		return ordineDao.getAllByUser(utente, tavolo);
 	}
 	
