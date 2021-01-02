@@ -33,8 +33,7 @@
     <fragment
         android:id="@+id/scanQRNav"
         android:name="com.veneto_valley.veneto_valley.view.ScanQRPage"
-        android:label="Unisciti a un tavolo"
-        tools:layout="@layout/fragment_scan_qr">
+        android:label="Unisciti a un tavolo">
         <action
             android:id="@+id/action_scanQR_to_listPiattiFragment"
             app:destination="@id/listeTabNav"
@@ -53,22 +52,22 @@
             app:destination="@id/generaQRNav"
             app:popUpToInclusive="false" />
         <action
-            android:id="@+id/action_listaPiattiFragment_to_allOrders"
-            app:destination="@id/allOrdersNav" />
-        <action
             android:id="@+id/action_listaPiattiFragment_to_checkOutPage2"
             app:destination="@id/checkoutNav" />
+        <action
+            android:id="@+id/action_listeTabNav_to_allOrders"
+            app:destination="@id/allOrders" />
     </fragment>
     <fragment
         android:id="@+id/userInputNav"
         android:name="com.veneto_valley.veneto_valley.view.UserInputPage"
         android:label="Aggiungi un ordine"
-        tools:layout="@layout/fragment_user_input" >
+        tools:layout="@layout/fragment_user_input">
         <argument
             android:name="ordine"
+            android:defaultValue="@null"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/impostaTavoloNav"
@@ -84,18 +83,17 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/allOrdersNav"
-        android:name="com.veneto_valley.veneto_valley.view.ListaAllOrdersPage"
-        android:label="Tutti gli ordini"
-        tools:layout="@layout/fragment_recyclerview" />
-    <fragment
         android:id="@+id/storicoNav"
-        android:name="com.veneto_valley.veneto_valley.view.StoricoOrdiniPage"
+        android:name="com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage"
         android:label="Storico ordini"
         tools:layout="@layout/fragment_recyclerview">
         <action
             android:id="@+id/action_storicoOrdiniPage2_to_storicoDettagliPage"
             app:destination="@id/storicoDettagliNav" />
+        <argument
+            android:name="tipoLista"
+            app:argType="com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage$TipoLista"
+            android:defaultValue="storico" />
     </fragment>
     <fragment
         android:id="@+id/storicoDettagliNav"
@@ -114,5 +112,14 @@
         <action
             android:id="@+id/action_checkOutPage_to_homepageFragment"
             app:destination="@id/homepageNav" />
+    </fragment>
+    <fragment
+        android:id="@+id/allOrders"
+        android:name="com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage"
+        android:label="@string/tutti_gli_ordini"
+        tools:layout="@layout/fragment_recyclerview">
+        <argument
+            android:name="tipoLista"
+            app:argType="com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage$TipoLista" />
     </fragment>
 </navigation>

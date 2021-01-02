@@ -4,7 +4,7 @@
     android:id="@+id/fragmentRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ListaPendingPage"
+    tools:context=".view.ListaOrdiniGenericaPage"
     android:layout_marginTop="?attr/actionBarSize">
 
     <androidx.recyclerview.widget.RecyclerView

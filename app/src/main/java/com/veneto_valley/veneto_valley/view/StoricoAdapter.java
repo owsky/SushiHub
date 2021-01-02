@@ -47,10 +47,10 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 		if (!(tavolo.nome == null))
 			holder.ristorante.setText(tavolo.nome);
 		else
-			holder.ristorante.setText("Ristorante");
+			holder.ristorante.setText(R.string.ristorante);
 		holder.data.setText(tavolo.dataCreazione.toString());
 		
-		StoricoOrdiniPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action = StoricoOrdiniPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);
+		ListaOrdiniGenericaPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action = ListaOrdiniGenericaPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
 	

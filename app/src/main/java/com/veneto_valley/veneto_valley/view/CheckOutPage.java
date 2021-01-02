@@ -31,7 +31,7 @@ public class CheckOutPage extends Fragment {
 		Button finito = view.findViewById(R.id.checkoutFinito);
 		
 		CheckoutViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CheckoutViewModel.class);
-		final Locale locale = requireActivity().getResources().getConfiguration().locale;
+		final Locale locale = requireActivity().getResources().getConfiguration().getLocales().get(0);
 		float menu = viewModel.getCostoMenu();
 		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));
 		float extra = viewModel.getCostoExtra();

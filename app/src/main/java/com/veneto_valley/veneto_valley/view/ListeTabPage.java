@@ -55,7 +55,7 @@ public class ListeTabPage extends Fragment {
 		view.findViewById(R.id.fab).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
 		
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
-		viewPager2.setAdapter(new ListeOrdiniAdapter(this));
+		viewPager2.setAdapter(new ListeTabAdapter(this));
 		viewPager2.setUserInputEnabled(false);
 		TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 		TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
@@ -96,7 +96,8 @@ public class ListeTabPage extends Fragment {
 		if (item.getItemId() == R.id.mostraQR) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_generaQR);
 		} else if (item.getItemId() == R.id.toAllOrders) {
-			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_allOrders);
+			ListeTabPageDirections.ActionListeTabNavToAllOrders action = ListeTabPageDirections.actionListeTabNavToAllOrders(ListaOrdiniGenericaPage.TipoLista.allOrders);
+			NavHostFragment.findNavController(this).navigate(action);
 		} else if (item.getItemId() == R.id.toCheckout) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_checkOutPage2);
 		}
