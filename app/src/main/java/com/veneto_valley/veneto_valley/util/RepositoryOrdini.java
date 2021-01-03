@@ -115,15 +115,16 @@ public class RepositoryOrdini {
 				.invia(ordine.getBytes());
 	}
 	
+	public void cleanDatabase() {
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.deleteNotUser(Utente.getCurrentUser(application)));
 	}
 	
 	public void checkout() {
-		//TODO elimina ordini slave
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.remove("codice_tavolo").apply();
-		Connessione connessione = Connessione.getInstance(preferences.getBoolean("is_master", false),
-				application, preferences.getString("codice_tavolo", null), getCallback());
-		connessione.closeConnection();
+		cleanDatabase();
+		preferences.edit().clear().apply();
+		new RepositoryTavoli(application).checkoutTavolo(tavolo);
+		Connessione.getInstance(preferences.getBoolean("is_master", false),
+				application, tavolo, getCallback()).closeConnection();
 	}
 	
 	public PayloadCallback getCallback() {

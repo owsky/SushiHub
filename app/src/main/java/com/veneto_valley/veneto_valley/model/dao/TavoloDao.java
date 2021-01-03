@@ -12,17 +12,14 @@ import java.util.List;
 
 @Dao
 public interface TavoloDao extends baseDao<Tavolo> {
-	@Query("SELECT * FROM tavolo")
-	LiveData<List<Tavolo>> getAll();
+	@Query("SELECT * FROM Tavolo WHERE idTavolo = :tavolo")
+	Tavolo getTavolo(String tavolo);
 	
-	@Query("SELECT * FROM tavolo WHERE idTavolo <> :tavolo")
-	LiveData<List<Tavolo>> getAllMinusCurr(String tavolo);
+	@Query("SELECT * FROM tavolo WHERE checkedOut IS 1")
+	LiveData<List<Tavolo>> getAllButCurrent();
 	
 	@Query("SELECT costoMenu FROM tavolo WHERE idTavolo = :tavolo")
 	float getCostoMenu(String tavolo);
-	
-	@Query("SELECT * FROM tavolo WHERE idTavolo IN (:idTavoli)")
-	List<Tavolo> loadAllByIds(String[] idTavoli);
 	
 	@Query("SELECT * FROM tavolo WHERE idTavolo = :idTavolo")
 	Tavolo loadById(String idTavolo);

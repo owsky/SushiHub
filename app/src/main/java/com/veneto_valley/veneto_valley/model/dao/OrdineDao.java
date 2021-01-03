@@ -13,26 +13,20 @@ public interface OrdineDao extends baseDao<Ordine> {
 	@Query("SELECT * FROM Ordine")
 	LiveData<List<Ordine>> getAll();
 	
-	@Query("SELECT * FROM Ordine WHERE utente = :user AND tavolo = :tavolo")
-	LiveData<List<Ordine>> getAllByUser(long user, String tavolo);
-	
 	@Query("SELECT * FROM Ordine WHERE tavolo = :codiceTavolo")
 	LiveData<List<Ordine>> getAllByTable(String codiceTavolo);
 	
-	@Query("SELECT SUM(prezzo) FROM Ordine WHERE tavolo = :tavolo")
-	float getTotaleExtra(String tavolo);
-	
-	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND prezzo > 0")
-	LiveData<List<Ordine>> getAllExtra(String tavolo);
+	@Query("SELECT SUM(prezzo) FROM Ordine WHERE tavolo = :tavolo AND utente = :utente")
+	float getTotaleExtra(String tavolo, String utente);
 	
 	@Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND utente = :utente")
-	LiveData<List<Ordine>> getAllbyStatus(String status, String tavolo, String utente);
+	LiveData<List<Ordine>> getAllbyStatus(Ordine.StatusOrdine status, String tavolo, String utente);
 	
 	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND utente <> :master")
 	LiveData<List<Ordine>> getAllSynchronized(String tavolo, String master);
 	
-	@Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND piatto = :piatto")
-	Ordine getOrdineByPiatto(String status, String tavolo, String piatto);
+	@Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND piatto = :piatto AND utente = :utente")
+	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto, String utente);
 	
 	@Query("DELETE FROM Ordine WHERE tavolo = :tavolo")
 	void deleteByTable(String tavolo);

@@ -11,29 +11,28 @@ import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.dao.TavoloDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
+import com.veneto_valley.veneto_valley.model.entities.Utente;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 
 public class RepositoryTavoli {
+	private final Application application;
 	private final OrdineDao ordineDao;
 	private final TavoloDao tavoloDao;
-	private final LiveData<List<Tavolo>> tavoli;
 	private final SharedPreferences preferences;
+	private LiveData<List<Tavolo>> tavoli = null;
 	
 	public RepositoryTavoli(Application application) {
+		this.application = application;
 		tavoloDao = AppDatabase.getInstance(application).tavoloDao();
 		ordineDao = AppDatabase.getInstance(application).ordineDao();
-		
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
-		String curr = preferences.getString("codice_tavolo", null);
-		if (curr != null)
-			tavoli = tavoloDao.getAllMinusCurr(curr);
-		else
-			tavoli = tavoloDao.getAll();
 	}
 	
 	public LiveData<List<Tavolo>> getTavoli() {
+		if (tavoli == null)
+			tavoli = tavoloDao.getAllButCurrent();
 		return tavoli;
 	}
 	
@@ -46,7 +45,15 @@ public class RepositoryTavoli {
 	}
 	
 	public float getCostoExtra(String tavolo) {
-		return ordineDao.getTotaleExtra(tavolo);
+		return ordineDao.getTotaleExtra(tavolo, Utente.getCurrentUser(application));
+	}
+	
+	public void checkoutTavolo(String idTavolo) {
+		Executors.newSingleThreadExecutor().execute(() -> {
+			Tavolo tavolo = tavoloDao.getTavolo(idTavolo);
+			tavolo.checkedOut = true;
+			tavoloDao.update(tavolo);
+		});
 	}
 	
 	public void deleteTable(Tavolo tavolo) {
