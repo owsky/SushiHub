@@ -4,8 +4,6 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -18,11 +16,7 @@ import com.google.android.gms.nearby.connection.DiscoveryOptions;
 import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
-import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
-import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
 import java.util.concurrent.Executors;
 
@@ -31,10 +25,10 @@ public class Connessione {
 	private static Connessione connessione = null;
 	private final Application application;
 	private final String SERVICE_ID;
-	private String strendPointId;
-	private volatile boolean connesso = false;
 	private final PayloadCallback mPayloadCallback;
 	private final Object lock = new Object();
+	private String strendPointId;
+	private volatile boolean connesso = false;
 	
 	private Connessione(boolean client, Application application, String SERVICE_ID, PayloadCallback callback) {
 		this.application = application;

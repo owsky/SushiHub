@@ -54,7 +54,7 @@ public class GeneraQRPage extends Fragment {
 	}
 	
 	private void generaQR() throws WriterException {
-		int qr_size = 250;
+		int qr_size = 177;
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		

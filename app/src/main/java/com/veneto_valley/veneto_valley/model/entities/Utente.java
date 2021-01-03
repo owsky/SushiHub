@@ -13,10 +13,10 @@ import com.veneto_valley.veneto_valley.model.dao.UtenteDao;
 
 @Entity
 public class Utente {
+	public static String ownerId;
 	@PrimaryKey
 	@NonNull
 	public final String idUtente;
-	
 	public String username;
 	
 	public Utente(@NonNull String idUtente) {
@@ -34,10 +34,8 @@ public class Utente {
 		return u;
 	}
 	
-	public static String ownerId;
-	
-	public static Utente getCurrentUser(Application application) {
-		return getUser(ownerId, application);
+	public static String getCurrentUser(Application application) {
+		return getUser(ownerId, application).idUtente;
 	}
 	
 	public static void deleteAllButCurrentUser(Application application) {

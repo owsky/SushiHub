@@ -11,36 +11,6 @@ import com.veneto_valley.veneto_valley.util.ParcelableUtil;
 
 @Entity
 public class Ordine implements Parcelable {
-	@PrimaryKey(autoGenerate = true)
-	public long idOrdine;
-	public statusOrdine status;
-	public int quantita;
-	public String desc;
-	public float prezzo;
-	//1-N Relations
-	public String tavolo;
-	public String piatto;
-	public String utente;
-	
-	//TODO: Implementare test
-	public Ordine(String tavolo, String piatto, int quantita, statusOrdine status, String utente) {
-		this.tavolo = tavolo;
-		this.piatto = piatto;
-		this.quantita = quantita;
-		this.status = status;
-		this.utente = utente;
-	}
-	
-	@Ignore
-	public Ordine(String tavolo, String piatto, int quantita, String utente) {
-		this(tavolo, piatto, quantita, statusOrdine.pending, utente);
-	}
-	
-	@Ignore
-	public Ordine(String tavolo, String piatto, String utente) {
-		this(tavolo, piatto, 1, utente);
-	}
-	
 	public static final Parcelable.Creator<Ordine> CREATOR = new Parcelable.Creator<Ordine>() {
 		@Override
 		public Ordine createFromParcel(Parcel in) {
@@ -52,9 +22,38 @@ public class Ordine implements Parcelable {
 			return new Ordine[size];
 		}
 	};
+	@PrimaryKey(autoGenerate = true)
+	public long idOrdine;
+	public StatusOrdine status;
+	public int quantita;
+	public String desc;
+	public float prezzo;
+	//1-N Relations
+	public String tavolo;
+	public String piatto;
+	public String utente;
+	
+	//TODO: Implementare test
+	public Ordine(String tavolo, String piatto, int quantita, StatusOrdine status, String utente) {
+		this.tavolo = tavolo;
+		this.piatto = piatto;
+		this.quantita = quantita;
+		this.status = status;
+		this.utente = utente;
+	}
+	
+	@Ignore
+	public Ordine(String tavolo, String piatto, int quantita, String utente) {
+		this(tavolo, piatto, quantita, StatusOrdine.pending, utente);
+	}
+	
+	@Ignore
+	public Ordine(String tavolo, String piatto, String utente) {
+		this(tavolo, piatto, 1, utente);
+	}
 	
 	protected Ordine(Parcel in) {
-		status = statusOrdine.valueOf(in.readString());
+		status = StatusOrdine.valueOf(in.readString());
 		quantita = in.readInt();
 		desc = in.readString();
 		tavolo = in.readString();
@@ -86,7 +85,7 @@ public class Ordine implements Parcelable {
 		dest.writeString(utente);
 	}
 	
-	public enum statusOrdine {
+	public enum StatusOrdine {
 		pending,
 		confirmed,
 		delivered

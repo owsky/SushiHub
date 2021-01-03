@@ -29,11 +29,47 @@ public class ListeTabAdapter extends FragmentStateAdapter {
 		this.fragment = fragment;
 	}
 	
+	public static ItemTouchHelper.SimpleCallback makeCallback(Context context, int dragDir2, Consumer<Integer> consumerRight, Consumer<Integer> consumerLeft, int colorRight, int colorLeft, int drawableRight, int drawableLeft) {
+		return new ItemTouchHelper.SimpleCallback(0, dragDir2) {
+			@Override
+			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+				return false;
+			}
+			
+			@Override
+			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+				if (direction == ItemTouchHelper.RIGHT)
+					consumerRight.accept(viewHolder.getAdapterPosition());
+				else if (direction == ItemTouchHelper.LEFT)
+					consumerLeft.accept(viewHolder.getAdapterPosition());
+			}
+			
+			@Override
+			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+				if (dX < 0) {
+					new RecyclerViewSwipeDecorator.Builder(context, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+							.addBackgroundColor(colorLeft)
+							.addSwipeLeftActionIcon(drawableLeft)
+							.create()
+							.decorate();
+				} else if (dX > 0) {
+					new RecyclerViewSwipeDecorator.Builder(context, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+							.addBackgroundColor(colorRight)
+							.addSwipeRightActionIcon(drawableRight)
+							.create()
+							.decorate();
+				}
+				
+				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+			}
+		};
+	}
+	
 	@NonNull
 	@Override
 	public Fragment createFragment(int position) {
 		ItemTouchHelper.SimpleCallback callback;
-		OrdiniAdapter adapter = new OrdiniAdapter();
+		OrdiniAdapter adapter = new OrdiniAdapter(false);
 		switch (position) {
 			case 0:
 				PendingViewModel pendingViewModel = ViewModelUtil.getViewModel(fragment.requireActivity(), PendingViewModel.class);
@@ -69,41 +105,5 @@ public class ListeTabAdapter extends FragmentStateAdapter {
 	@Override
 	public int getItemCount() {
 		return 3;
-	}
-	
-	public static ItemTouchHelper.SimpleCallback makeCallback(Context context, int dragDir2, Consumer<Integer> consumerRight, Consumer<Integer> consumerLeft, int colorRight, int colorLeft, int drawableRight, int drawableLeft) {
-		return new ItemTouchHelper.SimpleCallback(0, dragDir2) {
-			@Override
-			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-				return false;
-			}
-			
-			@Override
-			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-				if (direction == ItemTouchHelper.RIGHT)
-					consumerRight.accept(viewHolder.getAdapterPosition());
-				else if (direction == ItemTouchHelper.LEFT)
-					consumerLeft.accept(viewHolder.getAdapterPosition());
-			}
-			
-			@Override
-			public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-				if (dX < 0) {
-					new RecyclerViewSwipeDecorator.Builder(context, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-							.addBackgroundColor(colorLeft)
-							.addSwipeLeftActionIcon(drawableLeft)
-							.create()
-							.decorate();
-				} else if (dX > 0) {
-					new RecyclerViewSwipeDecorator.Builder(context, c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-							.addBackgroundColor(colorRight)
-							.addSwipeRightActionIcon(drawableRight)
-							.create()
-							.decorate();
-				}
-				
-				super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-			}
-		};
 	}
 }

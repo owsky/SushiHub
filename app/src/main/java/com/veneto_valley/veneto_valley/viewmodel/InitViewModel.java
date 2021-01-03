@@ -20,6 +20,6 @@ public class InitViewModel extends AndroidViewModel {
 	}
 	
 	public String getOwner() {
-		return repositoryUtenti.getCurrentUser().idUtente;
+		return repositoryUtenti.getCurrentUser();
 	}
 }

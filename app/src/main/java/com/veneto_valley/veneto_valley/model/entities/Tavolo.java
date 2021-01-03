@@ -15,6 +15,17 @@ import java.util.Date;
 
 @Entity
 public class Tavolo implements Parcelable {
+	public static final Parcelable.Creator<Tavolo> CREATOR = new Parcelable.Creator<Tavolo>() {
+		@Override
+		public Tavolo createFromParcel(Parcel in) {
+			return new Tavolo(in);
+		}
+		
+		@Override
+		public Tavolo[] newArray(int size) {
+			return new Tavolo[size];
+		}
+	};
 	final static String TAG = "ETavoloLog";
 	@PrimaryKey
 	@NonNull
@@ -24,6 +35,7 @@ public class Tavolo implements Parcelable {
 	public int maxPiatti;
 	public float costoMenu;
 	public int ristorante;
+	public boolean checkedOut;
 	
 	public Tavolo(@NonNull String idTavolo) {
 		this.idTavolo = idTavolo;
@@ -35,6 +47,7 @@ public class Tavolo implements Parcelable {
 		this.maxPiatti = maxPiatti;
 		this.costoMenu = costoMenu;
 		this.dataCreazione = Calendar.getInstance().getTime();
+		checkedOut = false;
 		Log.d(TAG, "Current time => " + this.dataCreazione);
 	}
 	
@@ -80,18 +93,6 @@ public class Tavolo implements Parcelable {
 		// Compare the data members and return accordingly
 		return this.idTavolo.equals(t.idTavolo); //TODO: Ampliare Confronto
 	}
-	
-	public static final Parcelable.Creator<Tavolo> CREATOR = new Parcelable.Creator<Tavolo>() {
-		@Override
-		public Tavolo createFromParcel(Parcel in) {
-			return new Tavolo(in);
-		}
-		
-		@Override
-		public Tavolo[] newArray(int size) {
-			return new Tavolo[size];
-		}
-	};
 	
 	@Override
 	public int describeContents() {

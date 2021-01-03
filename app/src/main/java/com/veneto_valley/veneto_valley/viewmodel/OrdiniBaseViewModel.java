@@ -29,10 +29,6 @@ public abstract class OrdiniBaseViewModel extends AndroidViewModel {
 		repositoryOrdini.insert(ordine);
 	}
 	
-	public void update(Ordine ordine) {
-		repositoryOrdini.update(ordine);
-	}
-	
 	public void delete(Ordine ordine) {
 		repositoryOrdini.delete(ordine);
 	}

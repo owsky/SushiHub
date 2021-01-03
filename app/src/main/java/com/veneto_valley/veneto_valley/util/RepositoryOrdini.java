@@ -20,27 +20,25 @@ import java.util.concurrent.Executors;
 
 public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
-	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders, extraOrders;
 	private final String tavolo;
 	private final Application application;
 	private final SharedPreferences preferences;
+	private LiveData<List<Ordine>> pendingOrders = null;
+	private LiveData<List<Ordine>> confirmedOrders = null;
+	private LiveData<List<Ordine>> deliveredOrders = null;
+	private LiveData<List<Ordine>> allSynchronized = null;
 	
 	public RepositoryOrdini(Application application, String tavolo) {
-		AppDatabase database = AppDatabase.getInstance(application);
-		ordineDao = database.ordineDao();
-		this.tavolo = tavolo;
-		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo, Utente.getCurrentUser(application).idUtente);
-		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo, Utente.getCurrentUser(application).idUtente);
-		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo, Utente.getCurrentUser(application).idUtente);
-		extraOrders = ordineDao.getAllExtra(tavolo);
 		this.application = application;
+		this.tavolo = tavolo;
+		ordineDao = AppDatabase.getInstance(application).ordineDao();
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
 	public void insert(Ordine ordine) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Ordine vecchioOrdine;
-			if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
+			if ((vecchioOrdine = ordineDao.contains(Ordine.StatusOrdine.pending, tavolo, ordine.piatto, Utente.getCurrentUser(application))) != null) {
 				vecchioOrdine.quantita += ordine.quantita;
 				if (!(ordine.desc == null))
 					vecchioOrdine.desc = ordine.desc;
@@ -61,61 +59,62 @@ public class RepositoryOrdini {
 	}
 	
 	public LiveData<List<Ordine>> getAllSynchronized() {
-		return ordineDao.getAllSynchronized(tavolo, Utente.getCurrentUser(application).idUtente);
-	}
-	
-	public LiveData<List<Ordine>> getAllOrdersByUser(long utente) {
-		return ordineDao.getAllByUser(utente, tavolo);
+		if (allSynchronized == null)
+			allSynchronized = ordineDao.getAllSynchronized(tavolo, Utente.getCurrentUser(application));
+		return allSynchronized;
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {
+		if (pendingOrders == null)
+			pendingOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.pending, tavolo, Utente.getCurrentUser(application));
 		return pendingOrders;
 	}
 	
 	public LiveData<List<Ordine>> getConfirmedOrders() {
+		if (confirmedOrders == null)
+			confirmedOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.confirmed, tavolo, Utente.getCurrentUser(application));
 		return confirmedOrders;
 	}
 	
 	public LiveData<List<Ordine>> getDeliveredOrders() {
+		if (deliveredOrders == null)
+			deliveredOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.delivered, tavolo, Utente.getCurrentUser(application));
 		return deliveredOrders;
 	}
 	
-	public LiveData<List<Ordine>> getAllExtra() {
-		return extraOrders;
-	}
-	
 	public void sendToMaster(Ordine ordine) {
-		ordine.status = Ordine.statusOrdine.confirmed;
+		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
 		
 		if (preferences.contains("is_master")) {
-			Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
-			connessione.invia(ordine.getBytes());
+			Connessione.getInstance(true, application, tavolo, getCallback())
+					.invia(ordine.getBytes());
 		}
 	}
 	
 	public void retrieveFromMaster(Ordine ordine) {
-		ordine.status = Ordine.statusOrdine.pending;
+		ordine.status = Ordine.StatusOrdine.pending;
 		update(ordine);
 		if (!preferences.contains("is_master")) {
-			Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
-			connessione.invia(ordine.getBytes());
-			// TODO implementa undo del master
+			Connessione.getInstance(true, application, tavolo, getCallback())
+					.invia(ordine.getBytes());
 		}
 	}
 	
 	public void markAsDelivered(Ordine ordine) {
-		ordine.status = Ordine.statusOrdine.delivered;
+		ordine.status = Ordine.StatusOrdine.delivered;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(false, application, tavolo, getCallback());
-		connessione.invia(ordine.getBytes());
+		Connessione.getInstance(false, application, tavolo, getCallback())
+				.invia(ordine.getBytes());
 	}
 	
 	public void markAsNotDelivered(Ordine ordine) {
-		ordine.status = Ordine.statusOrdine.confirmed;
+		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(false, application, tavolo, getCallback());
-		connessione.invia(ordine.getBytes());
+		Connessione.getInstance(false, application, tavolo, getCallback())
+				.invia(ordine.getBytes());
+	}
+	
 	}
 	
 	public void checkout() {
@@ -135,9 +134,9 @@ public class RepositoryOrdini {
 				Executors.newSingleThreadExecutor().execute(() -> {
 					Ordine ordine = Ordine.getFromBytes(receivedBytes);
 					
-					if (ordine.status.equals(Ordine.statusOrdine.confirmed)) {
+					if (ordine.status.equals(Ordine.StatusOrdine.confirmed)) {
 						ordineDao.insert(ordine);
-					} else if (ordine.status.equals(Ordine.statusOrdine.pending)) {
+					} else if (ordine.status.equals(Ordine.StatusOrdine.pending)) {
 						ordineDao.delete(ordine);
 					} else {
 						ordineDao.update(ordine);

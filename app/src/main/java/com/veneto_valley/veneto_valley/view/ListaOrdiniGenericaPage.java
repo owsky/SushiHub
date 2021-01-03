@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.AllOrdersViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
@@ -47,16 +46,14 @@ public class ListaOrdiniGenericaPage extends Fragment {
 			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
 			if (args.getTipoLista() == TipoLista.allOrders) {
 				AllOrdersViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), AllOrdersViewModel.class);
-				ordiniAdapter = new OrdiniAdapter();
+				OrdiniAdapter ordiniAdapter = new OrdiniAdapter(true);
 				recyclerView.setAdapter(ordiniAdapter);
-				liveDataOrdini = viewModel.getOrdini();
-				liveDataOrdini.observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
+				viewModel.getOrdini().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 			} else {
 				StoricoViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
 				StoricoAdapter storicoAdapter = new StoricoAdapter();
 				recyclerView.setAdapter(storicoAdapter);
-				LiveData<List<Tavolo>> liveDataTavoli = viewModel.getTavoli();
-				liveDataTavoli.observe(getViewLifecycleOwner(), storicoAdapter::submitList);
+				viewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 			}
 		} else {
 			recyclerView.setAdapter(ordiniAdapter);

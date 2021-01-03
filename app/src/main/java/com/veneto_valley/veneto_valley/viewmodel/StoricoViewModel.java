@@ -14,15 +14,16 @@ import java.util.List;
 
 public class StoricoViewModel extends AndroidViewModel {
 	private final RepositoryTavoli repository;
-	private final LiveData<List<Tavolo>> tavoli;
+	private LiveData<List<Tavolo>> tavoli = null;
 	
 	public StoricoViewModel(@NonNull Application application) {
 		super(application);
 		repository = new RepositoryTavoli(application);
-		tavoli = repository.getTavoli();
 	}
 	
 	public LiveData<List<Tavolo>> getTavoli() {
+		if (tavoli == null)
+			tavoli = repository.getTavoli();
 		return tavoli;
 	}
 	

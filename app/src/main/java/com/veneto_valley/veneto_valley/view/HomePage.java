@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.CheckoutViewModel;
 
 public class HomePage extends Fragment {
 	
@@ -41,9 +43,7 @@ public class HomePage extends Fragment {
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
 			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment));
 			builder.setNegativeButton("No", (dialog, which) -> {
-				// TODO: cancellazione ordini slave
-				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-				preferences.edit().remove("codice_tavolo").apply();
+				ViewModelUtil.getViewModel(requireActivity(), CheckoutViewModel.class).checkout();
 				dismiss();
 			});
 			return builder.create();

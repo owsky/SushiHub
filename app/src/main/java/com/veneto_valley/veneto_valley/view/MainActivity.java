@@ -40,14 +40,14 @@ import java.util.Set;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-	private DrawerLayout drawer;
-	private NavController navController;
-	private AppBarConfiguration appBarConfiguration;
-	private String[] permissionCodes;
 	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
 	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 		//TODO: show dialog
 	});
+	private DrawerLayout drawer;
+	private NavController navController;
+	private AppBarConfiguration appBarConfiguration;
+	private String[] permissionCodes;
 	private BluetoothAdapter bluetoothAdapter;
 	private InitViewModel viewModel;
 	

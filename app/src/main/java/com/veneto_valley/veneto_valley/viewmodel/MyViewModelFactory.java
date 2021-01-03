@@ -26,13 +26,7 @@ public class MyViewModelFactory extends ViewModelProvider.AndroidViewModelFactor
 		if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
 			try {
 				return modelClass.getConstructor(application.getClass(), String.class).newInstance(application, tavolo);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			} catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}

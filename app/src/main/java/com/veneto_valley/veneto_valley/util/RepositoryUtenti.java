@@ -17,7 +17,7 @@ public class RepositoryUtenti {
 		}
 	}
 	
-	public Utente getCurrentUser() {
+	public String getCurrentUser() {
 		return Utente.getCurrentUser(application);
 	}
 }
