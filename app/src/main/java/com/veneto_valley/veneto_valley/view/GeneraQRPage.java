@@ -20,9 +20,7 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class GeneraQRPage extends Fragment {
 	private String dati;
@@ -40,14 +38,14 @@ public class GeneraQRPage extends Fragment {
 		
 		dati = String.format("%s;%s;%s", infoTavolo.get(0), infoTavolo.get(1), infoTavolo.get(2));
 		GeneraQRPageArgs args = GeneraQRPageArgs.fromBundle(requireArguments());
-		if (args.getUnisciti()){
+		if (args.getUnisciti()) {
 			view.findViewById(R.id.doneqr).setVisibility(View.INVISIBLE);
 		} else {
 			Button btn = view.findViewById(R.id.doneqr);
 			btn.setOnClickListener(v -> NavHostFragment.findNavController(GeneraQRPage.this)
 					.navigate(R.id.action_generaQRNav_to_impostaUtentePage));
 		}
-
+		
 		try {
 			generaQR();
 		} catch (WriterException e) {
