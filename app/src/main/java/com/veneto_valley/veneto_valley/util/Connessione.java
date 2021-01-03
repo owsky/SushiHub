@@ -56,7 +56,7 @@ public class Connessione {
 	}
 	
 	public void invia(byte[] oggetto) {
-		Thread t = new Thread(() -> {
+		Executors.newSingleThreadExecutor().execute(() -> {
 			synchronized (lock) {
 				while (!connesso) {
 					try {
@@ -68,7 +68,6 @@ public class Connessione {
 			}
 			sendPayLoad(strendPointId, oggetto);
 		});
-		t.start();
 	}
 	
 	private void startAdvertising() {
