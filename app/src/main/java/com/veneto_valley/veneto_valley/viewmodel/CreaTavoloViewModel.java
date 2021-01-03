@@ -20,7 +20,7 @@ public class CreaTavoloViewModel extends AndroidViewModel {
 		repository.creaTavolo(codice);
 	}
 	
-	public void creaTavolo(String codice, int portate, float menu) {
-		repository.creaTavolo(codice, portate, menu);
+	public void creaTavolo(String codice, String nome, int portate, float menu) {
+		repository.creaTavolo(codice, nome, portate, menu);
 	}
 }

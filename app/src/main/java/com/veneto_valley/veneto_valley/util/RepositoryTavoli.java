@@ -62,8 +62,8 @@ public class RepositoryTavoli {
 		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));
 	}
 	
-	public void creaTavolo(String codice, int portate, float menu) {
-		Tavolo tavolo = new Tavolo(codice, portate, menu);
+	public void creaTavolo(String codice, String nome, int portate, float menu) {
+		Tavolo tavolo = new Tavolo(codice, nome, portate, menu);
 		preferences.edit().putString("codice_tavolo", codice).apply();
 		preferences.edit().putBoolean("is_master", true).apply();
 		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));

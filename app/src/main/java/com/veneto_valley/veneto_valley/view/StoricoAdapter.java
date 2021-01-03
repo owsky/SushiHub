@@ -44,10 +44,7 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 	@Override
 	public void onBindViewHolder(@NonNull TavoloViewHolder holder, int position) {
 		Tavolo tavolo = getItem(position);
-		if (!(tavolo.nome == null))
-			holder.ristorante.setText(tavolo.nome);
-		else
-			holder.ristorante.setText(R.string.ristorante);
+		holder.ristorante.setText(tavolo.nome);
 		holder.data.setText(tavolo.dataCreazione.toString());
 		
 		ListaOrdiniGenericaPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action = ListaOrdiniGenericaPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);
