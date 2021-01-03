@@ -1,5 +1,6 @@
 package com.veneto_valley.veneto_valley.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
@@ -15,7 +16,7 @@ public interface UtenteDao extends baseDao<Utente> {
 	List<Utente> getAll();
 	
 	@Query("SELECT * FROM Utente WHERE idUtente = :idUtente")
-	Utente loadById(String idUtente);
+	Utente getUtente(String idUtente);
 	
 	//Relazioni
 	@Transaction //Necessario per garantire atomicità dell'operazione

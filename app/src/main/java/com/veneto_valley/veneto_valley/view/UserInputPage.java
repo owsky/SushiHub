@@ -16,6 +16,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.InitViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
 
 public class UserInputPage extends Fragment {
@@ -96,7 +97,8 @@ public class UserInputPage extends Fragment {
 		String descrizione = desc.getText().toString();
 		String prezzoExtra = prezzo.getText().toString();
 		
-		Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status);
+		InitViewModel initViewModel = ViewModelUtil.getViewModel(requireActivity(), InitViewModel.class);
+		Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, initViewModel.getOwner());
 		if (!descrizione.trim().isEmpty())
 			ordine.desc = descrizione;
 		

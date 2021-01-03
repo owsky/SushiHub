@@ -23,21 +23,22 @@ public class Ordine implements Parcelable {
 	public String utente;
 	
 	//TODO: Implementare test
-	public Ordine(String tavolo, String piatto, int quantita, statusOrdine status) {
+	public Ordine(String tavolo, String piatto, int quantita, statusOrdine status, String utente) {
 		this.tavolo = tavolo;
 		this.piatto = piatto;
 		this.quantita = quantita;
 		this.status = status;
+		this.utente = utente;
 	}
 	
 	@Ignore
-	public Ordine(String tavolo, String piatto, int quantita) {
-		this(tavolo, piatto, quantita, statusOrdine.pending);
+	public Ordine(String tavolo, String piatto, int quantita, String utente) {
+		this(tavolo, piatto, quantita, statusOrdine.pending, utente);
 	}
 	
 	@Ignore
-	public Ordine(String tavolo, String piatto) {
-		this(tavolo, piatto, 1);
+	public Ordine(String tavolo, String piatto, String utente) {
+		this(tavolo, piatto, 1, utente);
 	}
 	
 	public static final Parcelable.Creator<Ordine> CREATOR = new Parcelable.Creator<Ordine>() {

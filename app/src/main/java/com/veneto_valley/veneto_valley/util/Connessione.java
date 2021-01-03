@@ -30,7 +30,6 @@ public class Connessione {
 	public static final Strategy STRATEGY = Strategy.P2P_STAR;
 	private static Connessione connessione = null;
 	private final Application application;
-	//public static final String SERVICE_ID="120001";
 	private final String SERVICE_ID;
 	private String strendPointId;
 	private volatile boolean connesso = false;

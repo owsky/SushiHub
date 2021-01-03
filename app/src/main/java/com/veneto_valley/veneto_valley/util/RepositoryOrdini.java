@@ -13,7 +13,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.viewmodel.ConfirmedViewModel;
+import com.veneto_valley.veneto_valley.model.entities.Utente;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -23,29 +23,33 @@ public class RepositoryOrdini {
 	private final LiveData<List<Ordine>> pendingOrders, confirmedOrders, deliveredOrders, extraOrders;
 	private final String tavolo;
 	private final Application application;
+	private final SharedPreferences preferences;
 	
 	public RepositoryOrdini(Application application, String tavolo) {
 		AppDatabase database = AppDatabase.getInstance(application);
 		ordineDao = database.ordineDao();
 		this.tavolo = tavolo;
-		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo);
-		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo);
-		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo);
+		pendingOrders = ordineDao.getAllbyStatus("pending", tavolo, Utente.getCurrentUser(application).idUtente);
+		confirmedOrders = ordineDao.getAllbyStatus("confirmed", tavolo, Utente.getCurrentUser(application).idUtente);
+		deliveredOrders = ordineDao.getAllbyStatus("delivered", tavolo, Utente.getCurrentUser(application).idUtente);
 		extraOrders = ordineDao.getAllExtra(tavolo);
 		this.application = application;
+		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
 	public void insert(Ordine ordine) {
-		Ordine vecchioOrdine;
-		if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
-			vecchioOrdine.quantita += ordine.quantita;
-			if (!(ordine.desc == null))
-				vecchioOrdine.desc = ordine.desc;
-			vecchioOrdine.prezzo = ordine.prezzo;
-			update(vecchioOrdine);
-		} else {
-			Executors.newSingleThreadExecutor().execute(() -> ordineDao.insert(ordine));
-		}
+		Executors.newSingleThreadExecutor().execute(() -> {
+			Ordine vecchioOrdine;
+			if ((vecchioOrdine = ordineDao.getOrdineByPiatto("pending", tavolo, ordine.piatto)) != null) {
+				vecchioOrdine.quantita += ordine.quantita;
+				if (!(ordine.desc == null))
+					vecchioOrdine.desc = ordine.desc;
+				vecchioOrdine.prezzo = ordine.prezzo;
+				update(vecchioOrdine);
+			} else {
+				ordineDao.insert(ordine);
+			}
+		});
 	}
 	
 	public void update(Ordine ordine) {
@@ -56,8 +60,8 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
 	}
 	
-	public LiveData<List<Ordine>> getAllOrders() {
-		return ordineDao.getAllByTable(tavolo);
+	public LiveData<List<Ordine>> getAllSynchronized() {
+		return ordineDao.getAllSynchronized(tavolo, Utente.getCurrentUser(application).idUtente);
 	}
 	
 	public LiveData<List<Ordine>> getAllOrdersByUser(long utente) {
@@ -84,18 +88,20 @@ public class RepositoryOrdini {
 		ordine.status = Ordine.statusOrdine.confirmed;
 		update(ordine);
 		
-		Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
-		connessione.invia(ordine.getBytes());
+		if (preferences.contains("is_master")) {
+			Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
+			connessione.invia(ordine.getBytes());
+		}
 	}
 	
 	public void retrieveFromMaster(Ordine ordine) {
 		ordine.status = Ordine.statusOrdine.pending;
 		update(ordine);
-		Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
-		connessione.invia(ordine.getBytes());
-		//TODO: CONTROLLARE
-		update(ordine);
-		// TODO implementa undo del master
+		if (!preferences.contains("is_master")) {
+			Connessione connessione = Connessione.getInstance(true, application, tavolo, getCallback());
+			connessione.invia(ordine.getBytes());
+			// TODO implementa undo del master
+		}
 	}
 	
 	public void markAsDelivered(Ordine ordine) {
@@ -113,7 +119,6 @@ public class RepositoryOrdini {
 	}
 	
 	public void checkout() {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
 		//TODO elimina ordini slave
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.remove("codice_tavolo").apply();
