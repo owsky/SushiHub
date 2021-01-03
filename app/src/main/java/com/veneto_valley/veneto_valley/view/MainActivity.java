@@ -1,13 +1,21 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -19,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.veneto_valley.veneto_valley.R;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private DrawerLayout drawer;
 	private NavController navController;
 	private AppBarConfiguration appBarConfiguration;
+	private String[] permissionCodes;
+	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
+	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+		//TODO: show dialog
+	});
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +59,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(drawer).build();
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		navigationView.setNavigationItemSelectedListener(this);
+		
+		try {
+			PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_PERMISSIONS);
+			permissionCodes = info.requestedPermissions;
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		for (String permesso : permissionCodes) {
+			if (!(ContextCompat.checkSelfPermission(this, permesso) == PackageManager.PERMISSION_GRANTED)) {
+				requestPermissionLauncher.launch(permissionCodes);
+			}
+		}
+		
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (!bluetoothAdapter.isEnabled()) {
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			requestBluetoothLauncher.launch(enableBtIntent);
+		}
 	}
 	
 	@Override
