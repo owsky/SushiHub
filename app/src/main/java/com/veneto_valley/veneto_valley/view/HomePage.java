@@ -26,7 +26,7 @@ public class HomePage extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR));
-		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_generaQR));
+		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_impostaTavoloNav));
 		
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {

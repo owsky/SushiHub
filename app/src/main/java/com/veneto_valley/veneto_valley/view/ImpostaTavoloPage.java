@@ -37,10 +37,9 @@ public class ImpostaTavoloPage extends Fragment {
 			else if (TextUtils.isEmpty(portate.getText()))
 				Toast.makeText(requireContext(), "Inserisci il numero di portate massime a persona", Toast.LENGTH_SHORT).show();
 			else {
-				ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(requireArguments());
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
-				viewModel.creaTavolo(args.getCodiceTavolo(), nome.getText().toString(), Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
-				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_impostaUtentePage);
+				viewModel.creaTavolo(Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
+				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
 		});
 	}

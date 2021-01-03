@@ -98,7 +98,9 @@ public class ListeTabPage extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
-			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_generaQR);
+			ListeTabPageDirections.ActionListaPiattiFragmentToGeneraQR action = ListeTabPageDirections.actionListaPiattiFragmentToGeneraQR();
+			action.setUnisciti(true);
+			NavHostFragment.findNavController(this).navigate(action);
 		} else if (item.getItemId() == R.id.toAllOrders) {
 			ListeTabPageDirections.ActionListeTabNavToAllOrders action = ListeTabPageDirections.actionListeTabNavToAllOrders(ListaOrdiniGenericaPage.TipoLista.allOrders);
 			NavHostFragment.findNavController(this).navigate(action);

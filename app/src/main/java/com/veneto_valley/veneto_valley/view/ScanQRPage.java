@@ -36,7 +36,8 @@ public class ScanQRPage extends Fragment {
 		if (result != null) {
 			String contents = result.getContents();
 			if (contents != null) {
-				ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class).creaTavolo(contents);
+				String[] info = contents.split(";");
+				ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class).creaTavolo(info[0], Integer.parseInt(info[1]), Float.parseFloat(info[2]));
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQRNav_to_impostaUtentePage);
 			} else {
 				NavHostFragment.findNavController(this).navigateUp();

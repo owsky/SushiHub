@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
 
+import java.util.List;
+
 public class CreaTavoloViewModel extends AndroidViewModel {
 	private final RepositoryTavoli repository;
 	
@@ -15,12 +17,15 @@ public class CreaTavoloViewModel extends AndroidViewModel {
 		repository = new RepositoryTavoli(application);
 	}
 	
-	//TODO: se sei slave ricevi tavolo da master
-	public void creaTavolo(String codice) {
-		repository.creaTavolo(codice);
+	public void creaTavolo(String codice, int portate, float menu) {
+		repository.creaTavolo(codice, portate, menu);
 	}
 	
-	public void creaTavolo(String codice, String nome, int portate, float menu) {
-		repository.creaTavolo(codice, nome, portate, menu);
+	public void creaTavolo(int portate, float menu) {
+		repository.creaTavolo(portate, menu);
+	}
+	
+	public List<String> getInfoTavolo() {
+		return repository.getInfoTavolo();
 	}
 }

@@ -13,18 +13,18 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import com.veneto_valley.veneto_valley.model.entities.Utente;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 public class RepositoryTavoli {
-	private final Application application;
 	private final OrdineDao ordineDao;
 	private final TavoloDao tavoloDao;
 	private final SharedPreferences preferences;
 	private LiveData<List<Tavolo>> tavoli = null;
 	
 	public RepositoryTavoli(Application application) {
-		this.application = application;
 		tavoloDao = AppDatabase.getInstance(application).tavoloDao();
 		ordineDao = AppDatabase.getInstance(application).ordineDao();
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
@@ -65,16 +65,30 @@ public class RepositoryTavoli {
 		});
 	}
 	
-	public void creaTavolo(String codice) {
-		Tavolo tavolo = new Tavolo(codice);
-		preferences.edit().putString("codice_tavolo", codice).apply();
-		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));
+	public void creaTavolo(String codice, int portate, float menu) {
+		Executors.newSingleThreadExecutor().execute(() -> {
+			Tavolo tavolo = new Tavolo(codice, portate, menu);
+			preferences.edit().putString("codice_tavolo", codice).apply();
+			tavoloDao.insert(tavolo);
+		});
 	}
 	
-	public void creaTavolo(String codice, String nome, int portate, float menu) {
-		Tavolo tavolo = new Tavolo(codice, nome, portate, menu);
-		preferences.edit().putString("codice_tavolo", codice).apply();
-		preferences.edit().putBoolean("is_master", true).apply();
-		Executors.newSingleThreadExecutor().execute(() -> tavoloDao.insert(tavolo));
+	public void creaTavolo(int portate, float menu) {
+		Executors.newSingleThreadExecutor().execute(() -> {
+			String codice = UUID.randomUUID().toString();
+			Tavolo tavolo = new Tavolo(codice, portate, menu);
+			preferences.edit().putString("codice_tavolo", codice).putBoolean("is_master", true).apply();
+			tavoloDao.insert(tavolo);
+		});
+	}
+	
+	public List<String> getInfoTavolo() {
+		String codiceTavolo = preferences.getString("codice_tavolo", null);
+		Tavolo curr = tavoloDao.getTavolo(codiceTavolo);
+		List<String> info = new ArrayList<>();
+		info.add(curr.idTavolo);
+		info.add(Integer.toString(curr.maxPiatti));
+		info.add(Float.toString(curr.costoMenu));
+		return info;
 	}
 }
