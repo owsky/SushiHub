@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/impostaTavoloNav"
-        android:name="com.veneto_valley.veneto_valley.util.ImpostaTavolo"
+        android:name="com.veneto_valley.veneto_valley.view.ImpostaTavoloPage"
         android:label="Informazioni aggiuntive"
         tools:layout="@layout/fragment_imposta_tavolo">
         <action

@@ -15,9 +15,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
-public class ImpostaTavolo extends Fragment {
+public class ImpostaTavoloPage extends Fragment {
 	//TODO inserire nome ristorante
-	public ImpostaTavolo() {
+	public ImpostaTavoloPage() {
 		super(R.layout.fragment_imposta_tavolo);
 	}
 	
@@ -32,7 +32,7 @@ public class ImpostaTavolo extends Fragment {
 			if (TextUtils.isEmpty(costoMenu.getText()))
 				Toast.makeText(requireContext(), "Inserisci il costo del menu", Toast.LENGTH_SHORT).show();
 			else {
-				ImpostaTavoloArgs args = ImpostaTavoloArgs.fromBundle(requireArguments());
+				ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(requireArguments());
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 				viewModel.creaTavolo(args.getCodiceTavolo(), Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
