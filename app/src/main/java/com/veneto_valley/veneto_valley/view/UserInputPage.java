@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -63,8 +64,8 @@ public class UserInputPage extends Fragment {
 			salvaEsci.setVisibility(View.GONE);
 			salvaNuovo.setText(R.string.salva);
 			salvaNuovo.setOnClickListener(v -> {
-				salvaOrdine();
-				NavHostFragment.findNavController(UserInputPage.this).navigateUp();
+				if (salvaOrdine())
+					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
 			});
 			if (ordine.prezzo > 0) {
 				prezzo.setVisibility(View.VISIBLE);
@@ -73,42 +74,51 @@ public class UserInputPage extends Fragment {
 			}
 		} else {
 			salvaEsci.setOnClickListener(v -> {
-				salvaOrdine();
-				NavHostFragment.findNavController(UserInputPage.this).navigateUp();
+				if (salvaOrdine())
+					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
 			});
 			
 			salvaNuovo.setOnClickListener(v -> {
-				salvaOrdine();
-				codice.setText(null);
-				desc.setText(null);
-				qta.setText(null);
-				prezzo.setText(null);
-				view.requestFocus();
+				if (salvaOrdine()) {
+					codice.setText(null);
+					desc.setText(null);
+					qta.setText(null);
+					prezzo.setText(null);
+					view.requestFocus();
+				}
 			});
 		}
 	}
 	
-	private void salvaOrdine() {
+	private boolean salvaOrdine() {
 		PendingViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), PendingViewModel.class);
 		String codiceTavolo = viewModel.getTavolo();
 		String codicePiatto = codice.getText().toString();
-		int quantita = Integer.parseInt(qta.getText().toString());
-		Ordine.statusOrdine status = Ordine.statusOrdine.pending;
+		Ordine.StatusOrdine status = Ordine.StatusOrdine.pending;
 		String descrizione = desc.getText().toString();
 		String prezzoExtra = prezzo.getText().toString();
 		
-		InitViewModel initViewModel = ViewModelUtil.getViewModel(requireActivity(), InitViewModel.class);
-		Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, initViewModel.getOwner());
-		if (!descrizione.trim().isEmpty())
-			ordine.desc = descrizione;
-		
-		if (!prezzoExtra.isEmpty())
-			ordine.prezzo = Float.parseFloat(prezzoExtra);
-		
-		if (!isExtra)
-			ordine.prezzo = 0;
-		
-		viewModel.insert(ordine);
+		if (codicePiatto.trim().isEmpty())
+			Toast.makeText(requireContext(), "Inserisci il codice del piatto", Toast.LENGTH_SHORT).show();
+		else if (qta.getText().toString().isEmpty())
+			Toast.makeText(requireContext(), "Inserisci la quantità", Toast.LENGTH_SHORT).show();
+		else {
+			int quantita = Integer.parseInt(qta.getText().toString());
+			InitViewModel initViewModel = ViewModelUtil.getViewModel(requireActivity(), InitViewModel.class);
+			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, initViewModel.getOwner());
+			if (!descrizione.trim().isEmpty())
+				ordine.desc = descrizione;
+			
+			if (!prezzoExtra.isEmpty())
+				ordine.prezzo = Float.parseFloat(prezzoExtra);
+			
+			if (!isExtra)
+				ordine.prezzo = 0;
+			
+			viewModel.insert(ordine);
+			return true;
+		}
+		return false;
 	}
 	
 	private void flipExtra() {
