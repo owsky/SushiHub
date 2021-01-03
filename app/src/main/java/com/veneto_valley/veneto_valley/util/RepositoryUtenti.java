@@ -1,23 +1,23 @@
 package com.veneto_valley.veneto_valley.util;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.veneto_valley.veneto_valley.model.entities.Utente;
 
 public class RepositoryUtenti {
-	private final Application application;
+	private final SharedPreferences preferences;
 	
 	public RepositoryUtenti(Application application) {
-		this.application = application;
+		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public void initUtente(String codice) {
-		if (Utente.ownerId == null) {
-			Utente.ownerId = codice;
-		}
+	public void initUtente(String username) {
+		preferences.edit().putString("username", username).apply();
 	}
 	
-	public String getCurrentUser() {
-		return Utente.getCurrentUser(application);
+	public String getUsername() {
+		return preferences.getString("username", "username");
 	}
 }

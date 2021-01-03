@@ -18,8 +18,4 @@ public class InitViewModel extends AndroidViewModel {
 	public void initUtente(String codice) {
 		repositoryUtenti.initUtente(codice);
 	}
-	
-	public String getOwner() {
-		return repositoryUtenti.getCurrentUser();
-	}
 }

@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,8 +106,9 @@ public class UserInputPage extends Fragment {
 			Toast.makeText(requireContext(), "Inserisci la quantità", Toast.LENGTH_SHORT).show();
 		else {
 			int quantita = Integer.parseInt(qta.getText().toString());
-			InitViewModel initViewModel = ViewModelUtil.getViewModel(requireActivity(), InitViewModel.class);
-			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, initViewModel.getOwner());
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+			String username = preferences.getString("username", "username");
+			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, username, false);
 			if (!descrizione.trim().isEmpty())
 				ordine.desc = descrizione;
 			

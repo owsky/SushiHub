@@ -14,6 +14,7 @@ import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Utente;
+import com.veneto_valley.veneto_valley.viewmodel.InitViewModel;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -38,7 +39,7 @@ public class RepositoryOrdini {
 	public void insert(Ordine ordine) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Ordine vecchioOrdine;
-			if ((vecchioOrdine = ordineDao.contains(Ordine.StatusOrdine.pending, tavolo, ordine.piatto, Utente.getCurrentUser(application))) != null) {
+			if ((vecchioOrdine = ordineDao.contains(Ordine.StatusOrdine.pending, tavolo, ordine.piatto)) != null) {
 				vecchioOrdine.quantita += ordine.quantita;
 				if (!(ordine.desc == null))
 					vecchioOrdine.desc = ordine.desc;
@@ -59,26 +60,27 @@ public class RepositoryOrdini {
 	}
 	
 	public LiveData<List<Ordine>> getAllSynchronized() {
-		if (allSynchronized == null)
-			allSynchronized = ordineDao.getAllSynchronized(tavolo, Utente.getCurrentUser(application));
+		if (allSynchronized == null) {
+			allSynchronized = ordineDao.getAllSynchronized(tavolo);
+		}
 		return allSynchronized;
 	}
 	
 	public LiveData<List<Ordine>> getPendingOrders() {
 		if (pendingOrders == null)
-			pendingOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.pending, tavolo, Utente.getCurrentUser(application));
+			pendingOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.pending, tavolo);
 		return pendingOrders;
 	}
 	
 	public LiveData<List<Ordine>> getConfirmedOrders() {
 		if (confirmedOrders == null)
-			confirmedOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.confirmed, tavolo, Utente.getCurrentUser(application));
+			confirmedOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.confirmed, tavolo);
 		return confirmedOrders;
 	}
 	
 	public LiveData<List<Ordine>> getDeliveredOrders() {
 		if (deliveredOrders == null)
-			deliveredOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.delivered, tavolo, Utente.getCurrentUser(application));
+			deliveredOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.delivered, tavolo);
 		return deliveredOrders;
 	}
 	
@@ -116,7 +118,7 @@ public class RepositoryOrdini {
 	}
 	
 	public void cleanDatabase() {
-		Executors.newSingleThreadExecutor().execute(() -> ordineDao.deleteNotUser(Utente.getCurrentUser(application)));
+		Executors.newSingleThreadExecutor().execute(ordineDao::deleteSlaves);
 	}
 	
 	public void checkout() {

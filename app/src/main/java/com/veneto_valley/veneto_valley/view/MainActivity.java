@@ -7,13 +7,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.ads.identifier.AdvertisingIdClient;
-import androidx.ads.identifier.AdvertisingIdInfo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,18 +23,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.InitViewModel;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
@@ -48,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private NavController navController;
 	private AppBarConfiguration appBarConfiguration;
 	private String[] permissionCodes;
-	private BluetoothAdapter bluetoothAdapter;
-	private InitViewModel viewModel;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 			}
 		}
 		
-		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (!bluetoothAdapter.isEnabled()) {
 			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			requestBluetoothLauncher.launch(enableBtIntent);
 		}
-		viewModel = ViewModelUtil.getViewModel(MainActivity.this, InitViewModel.class);
-		determineAdvertisingInfo();
 	}
 	
 	@Override
@@ -124,33 +111,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		}
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
-	}
-	
-	private void determineAdvertisingInfo() {
-		if (AdvertisingIdClient.isAdvertisingIdProviderAvailable(MainActivity.this)) {
-			ListenableFuture<AdvertisingIdInfo> advertisingIdInfoListenableFuture = AdvertisingIdClient.getAdvertisingIdInfo(getApplicationContext());
-			Futures.addCallback(advertisingIdInfoListenableFuture, new FutureCallback<AdvertisingIdInfo>() {
-				@Override
-				public void onSuccess(AdvertisingIdInfo adInfo) {
-					String id = adInfo.getId();
-//					String providerPackageName = adInfo.getProviderPackageName();
-//					boolean isLimitTrackingEnabled = adInfo.isLimitAdTrackingEnabled();
-					viewModel.initUtente(id);
-				}
-				
-				// Any exceptions thrown by getAdvertisingIdInfo()
-				// cause this method to get called.
-				@Override
-				public void onFailure(@NonNull Throwable throwable) {
-					Log.e("MY_APP_TAG",
-							"Failed to connect to Advertising ID provider.");
-					// Try to connect to the Advertising ID provider again,
-					// or fall back to an ads solution that doesn't require
-					// using the Advertising ID library.
-				}
-			}, Executors.newSingleThreadExecutor());
-		} else {
-			viewModel.initUtente(bluetoothAdapter.getAddress());
-		}
 	}
 }

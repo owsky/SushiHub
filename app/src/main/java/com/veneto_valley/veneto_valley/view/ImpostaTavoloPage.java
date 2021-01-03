@@ -40,7 +40,7 @@ public class ImpostaTavoloPage extends Fragment {
 				ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(requireArguments());
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 				viewModel.creaTavolo(args.getCodiceTavolo(), nome.getText().toString(), Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
-				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavolo_to_listaPiattiFragment);
+				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_impostaUtentePage);
 			}
 		});
 	}

@@ -13,14 +13,13 @@ import com.veneto_valley.veneto_valley.model.dao.UtenteDao;
 
 @Entity
 public class Utente {
-	public static String ownerId;
-	@PrimaryKey
+	@PrimaryKey(autoGenerate = true)
+	public int idUtente;
 	@NonNull
-	public final String idUtente;
 	public String username;
 	
-	public Utente(@NonNull String idUtente) {
-		this.idUtente = idUtente;
+	public Utente(@NonNull String username) {
+		this.username = username;
 	}
 	
 	public static Utente getUser(@NonNull String idUtente, Application application) {
@@ -34,15 +33,9 @@ public class Utente {
 		return u;
 	}
 	
-	public static String getCurrentUser(Application application) {
-		return getUser(ownerId, application).idUtente;
-	}
-	
 	public static void deleteAllButCurrentUser(Application application) {
 		UtenteDao utenteDao = AppDatabase.getInstance(application).utenteDao();
 		OrdineDao ordineDao = AppDatabase.getInstance(application).ordineDao();
 		
-		ordineDao.deleteNotUser(ownerId);
-		utenteDao.deleteNotUser(ownerId);
 	}
 }

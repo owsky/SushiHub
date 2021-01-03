@@ -35,9 +35,8 @@
         android:name="com.veneto_valley.veneto_valley.view.ScanQRPage"
         android:label="Unisciti a un tavolo">
         <action
-            android:id="@+id/action_scanQR_to_listPiattiFragment"
-            app:destination="@id/listeTabNav"
-            app:popUpTo="@id/listeTabNav" />
+            android:id="@+id/action_scanQRNav_to_impostaUtentePage"
+            app:destination="@id/impostaUtentePage" />
     </fragment>
     <fragment
         android:id="@+id/listeTabNav"
@@ -74,13 +73,12 @@
         android:name="com.veneto_valley.veneto_valley.view.ImpostaTavoloPage"
         android:label="Informazioni aggiuntive"
         tools:layout="@layout/fragment_imposta_tavolo">
-        <action
-            android:id="@+id/action_impostaTavolo_to_listaPiattiFragment"
-            app:destination="@id/listeTabNav"
-            app:popUpTo="@id/listeTabNav" />
         <argument
             android:name="codiceTavolo"
             app:argType="string" />
+        <action
+            android:id="@+id/action_impostaTavoloNav_to_impostaUtentePage"
+            app:destination="@id/impostaUtentePage" />
     </fragment>
     <fragment
         android:id="@+id/storicoNav"
@@ -121,5 +119,14 @@
         <argument
             android:name="tipoLista"
             app:argType="com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage$TipoLista" />
+    </fragment>
+    <fragment
+        android:id="@+id/impostaUtentePage"
+        android:name="com.veneto_valley.veneto_valley.view.ImpostaUtentePage"
+        android:label="fragment_imposta_utente_page"
+        tools:layout="@layout/fragment_imposta_utente_page" >
+        <action
+            android:id="@+id/action_impostaUtentePage_to_listeTabNav"
+            app:destination="@id/listeTabNav" />
     </fragment>
 </navigation>
