@@ -16,7 +16,6 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
-	
 	private static final DiffUtil.ItemCallback<Ordine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ordine>() {
 		@Override
 		public boolean areItemsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
@@ -30,9 +29,11 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 					oldItem.quantita == newItem.quantita;
 		}
 	};
+	private final boolean isAllOrders;
 	
-	public OrdiniAdapter() {
+	public OrdiniAdapter(boolean isAllOrders) {
 		super(DIFF_CALLBACK);
+		this.isAllOrders = isAllOrders;
 	}
 	
 	@NonNull
@@ -48,10 +49,14 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		Ordine currentOrdine = getItem(position);
 		holder.codice.setText(String.valueOf(currentOrdine.piatto));
 		String desc = currentOrdine.desc;
-		if (desc != null)
+		if (isAllOrders) {
+			holder.utente.setText(currentOrdine.utente);
+			holder.utente.setVisibility(View.VISIBLE);
+			holder.descrizione.setVisibility(View.GONE);
+		} else if (desc != null)
 			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
-		if (currentOrdine.status.equals(Ordine.statusOrdine.pending)) {
+		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending)) {
 			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 			action.setOrdine(currentOrdine);
 			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
@@ -63,13 +68,14 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 	}
 	
 	public static class PendingViewHolder extends RecyclerView.ViewHolder {
-		private final TextView codice, descrizione, quantita;
+		private final TextView codice, descrizione, quantita, utente;
 		
 		public PendingViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
 			quantita = itemView.findViewById(R.id.piattoQuantita);
+			utente = itemView.findViewById(R.id.piattoUtente);
 		}
 	}
 }
