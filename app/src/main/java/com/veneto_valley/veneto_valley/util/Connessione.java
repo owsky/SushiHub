@@ -35,6 +35,7 @@ public class Connessione {
 	private String strendPointId;
 	private volatile boolean connesso = false;
 	private final PayloadCallback mPayloadCallback;
+	private final Object lock = new Object();
 	
 	private Connessione(boolean client, Application application, String SERVICE_ID, PayloadCallback callback) {
 		this.application = application;
@@ -56,7 +57,14 @@ public class Connessione {
 	
 	public void invia(byte[] oggetto) {
 		Thread t = new Thread(() -> {
-			while (!connesso) {
+			synchronized (lock) {
+				while (!connesso) {
+					try {
+						lock.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			sendPayLoad(strendPointId, oggetto);
 		});
@@ -79,7 +87,10 @@ public class Connessione {
 						//siamo connessi possiamo iniziare a prendere i dati
 						strendPointId = endPointId;
 						Toast.makeText(application, "siamo connessi", Toast.LENGTH_LONG).show();
-						connesso = true;
+						synchronized (lock) {
+							connesso = true;
+							lock.notify();
+						}
 						break;
 					case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
 						Toast.makeText(application, "cn rif", Toast.LENGTH_LONG).show();
@@ -128,7 +139,10 @@ public class Connessione {
 											case ConnectionsStatusCodes.STATUS_OK:
 												Toast.makeText(application, "connessi",
 														Toast.LENGTH_LONG).show();
-												connesso = true;
+												synchronized (lock) {
+													connesso = true;
+													lock.notify();
+												}
 												break;
 											case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
 												Toast.makeText(application, "cn rif",

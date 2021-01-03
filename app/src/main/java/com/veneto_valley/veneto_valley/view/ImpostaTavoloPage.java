@@ -1,4 +1,4 @@
-package com.veneto_valley.veneto_valley.util;
+package com.veneto_valley.veneto_valley.view;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
 public class ImpostaTavoloPage extends Fragment {
