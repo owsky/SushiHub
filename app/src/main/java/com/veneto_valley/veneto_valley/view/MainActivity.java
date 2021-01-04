@@ -1,17 +1,22 @@
 package com.veneto_valley.veneto_valley.view;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.view.MenuItem;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -33,12 +38,21 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
 	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-		//TODO: show dialog
+		if (!bluetoothAdapter.isEnabled()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("SushiHub necessita del Bluetooth per funzionare. Vuoi abilitarlo?")
+					.setPositiveButton("OK", (dialog, which) -> bluetoothAdapter.enable())
+					.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss())
+					.create().show();
+		}
+	});
+	private final ActivityResultLauncher<Intent> requestWifiLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 	});
 	private DrawerLayout drawer;
 	private NavController navController;
 	private AppBarConfiguration appBarConfiguration;
-	private String[] permissionCodes;
+	private final String[] permissionCodes = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
+	private static final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +73,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		navigationView.setNavigationItemSelectedListener(this);
 		
-		try {
-			PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_PERMISSIONS);
-			permissionCodes = info.requestedPermissions;
-		} catch (PackageManager.NameNotFoundException e) {
-			e.printStackTrace();
-		}
 		for (String permesso : permissionCodes) {
 			if (!(ContextCompat.checkSelfPermission(this, permesso) == PackageManager.PERMISSION_GRANTED)) {
 				requestPermissionLauncher.launch(permissionCodes);
 			}
 		}
-		
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (!bluetoothAdapter.isEnabled()) {
-			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			requestBluetoothLauncher.launch(enableBtIntent);
+		requestBluetoothLauncher.launch(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
+		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+			Intent enableWifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
+			if (!wifiManager.isWifiEnabled())
+				requestWifiLauncher.launch(enableWifiIntent);
+		} else {
+			wifiManager.setWifiEnabled(true);
 		}
 	}
 	
