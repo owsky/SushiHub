@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
@@ -71,11 +73,17 @@ public class UserInputPage extends Fragment {
 					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
 			});
 			if (ordine.prezzo > 0) {
+				desc.setNextFocusDownId(prezzo.getId());
 				prezzo.setVisibility(View.VISIBLE);
 				prezzoTextView.setVisibility(View.VISIBLE);
 				switchMaterial.setChecked(true);
+			} else {
+				desc.setNextFocusDownId(salvaNuovo.getId());
 			}
 		} else {
+			if (!isExtra)
+				desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
+			
 			salvaEsci.setOnClickListener(v -> {
 				if (salvaOrdine())
 					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
@@ -87,7 +95,7 @@ public class UserInputPage extends Fragment {
 					desc.setText(null);
 					qta.setText(null);
 					prezzo.setText(null);
-					view.requestFocus();
+					codice.requestFocus();
 				}
 			});
 		}
@@ -129,14 +137,18 @@ public class UserInputPage extends Fragment {
 	}
 	
 	private void flipExtra() {
+		Misc.hideKeyboard(requireActivity());
 		if (isExtra) {
 			prezzoTextView.setVisibility(View.INVISIBLE);
 			prezzo.setVisibility(View.INVISIBLE);
 			isExtra = false;
+			desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		} else {
 			prezzoTextView.setVisibility(View.VISIBLE);
 			prezzo.setVisibility(View.VISIBLE);
 			isExtra = true;
+			desc.setNextFocusDownId(prezzo.getId());
+			desc.setImeOptions(EditorInfo.TYPE_NULL);
 		}
 	}
 }

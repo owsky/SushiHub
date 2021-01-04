@@ -3,6 +3,7 @@ package com.veneto_valley.veneto_valley.view;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
@@ -29,6 +31,7 @@ public class ImpostaTavoloPage extends Fragment {
 		EditText portate = view.findViewById(R.id.portatePersona);
 		Button finito = view.findViewById(R.id.impostaFinito);
 		
+		portate.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		finito.setOnClickListener(v -> {
 			// verifico che tutte le edittext siano state compilato dell'utente
 			if (TextUtils.isEmpty(nome.getText()))
@@ -41,6 +44,7 @@ public class ImpostaTavoloPage extends Fragment {
 				// creo un tavolo tramite lo user input attraverso il viewmodel
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 				viewModel.creaTavolo(Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
+				Misc.hideKeyboard(requireActivity());
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
 		});
