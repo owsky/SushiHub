@@ -38,10 +38,12 @@ public class RepositoryTavoli {
 		return tavoli;
 	}
 	
-	public LiveData<List<Ordine>> getOrdini(Tavolo tavolo) {
+	// costruisce al volo un livedata per lo storico
+	public LiveData<List<Ordine>> getOrdiniStorico(Tavolo tavolo) {
 		return ordineDao.getAllByTable(tavolo.idTavolo);
 	}
 	
+	// metodi per checkout
 	public float getCostoMenu(String tavolo) {
 		return tavoloDao.getCostoMenu(tavolo);
 	}
@@ -71,6 +73,7 @@ public class RepositoryTavoli {
 		});
 	}
 	
+	// creazione tavolo per gli slave
 	public void creaTavolo(String codice, int portate, float menu) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo;
@@ -86,6 +89,7 @@ public class RepositoryTavoli {
 		});
 	}
 	
+	// creazione tavolo per il master
 	public void creaTavolo(int portate, float menu) {
 		// operazioni sincrone perché necessarie alla view successiva
 		String codice = UUID.randomUUID().toString();
@@ -94,6 +98,7 @@ public class RepositoryTavoli {
 		tavoloDao.insert(tavolo);
 	}
 	
+	// ritorna i parametri di costruzione del tavolo
 	public List<String> getInfoTavolo() {
 		String codiceTavolo = preferences.getString("codice_tavolo", null);
 		Tavolo curr = tavoloDao.getTavolo(codiceTavolo);

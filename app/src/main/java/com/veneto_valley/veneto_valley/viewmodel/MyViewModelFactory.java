@@ -13,13 +13,13 @@ public class MyViewModelFactory extends ViewModelProvider.AndroidViewModelFactor
 	private final Application application;
 	private final String tavolo;
 	
-	
 	public MyViewModelFactory(@NonNull Application application, String tavolo) {
 		super(application);
 		this.application = application;
 		this.tavolo = tavolo;
 	}
 	
+	// costruisco il viewmodel con parametro tavolo
 	@NonNull
 	@Override
 	public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

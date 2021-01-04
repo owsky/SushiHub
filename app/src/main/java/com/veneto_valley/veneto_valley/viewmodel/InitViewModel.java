@@ -15,6 +15,7 @@ public class InitViewModel extends AndroidViewModel {
 		repositoryUtenti = new RepositoryUtenti(application);
 	}
 	
+	// salvo lo username dell'utente
 	public void initUtente(String codice) {
 		repositoryUtenti.initUtente(codice);
 	}

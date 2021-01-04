@@ -16,6 +16,8 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
+	
+	// callback che consente al listadapter di confrontare gli elementi della lista
 	private static final DiffUtil.ItemCallback<Ordine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ordine>() {
 		@Override
 		public boolean areItemsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
@@ -49,6 +51,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		Ordine currentOrdine = getItem(position);
 		holder.codice.setText(String.valueOf(currentOrdine.piatto));
 		String desc = currentOrdine.desc;
+		// se isAllOrders è true costruisce il viewholder degli ordini sincronizzati
 		if (isAllOrders) {
 			holder.utente.setText(currentOrdine.utente);
 			holder.utente.setVisibility(View.VISIBLE);
@@ -56,6 +59,8 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		} else if (desc != null)
 			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
+		// se lo status dell'ordine è pending, crea un click listener che consente di navigare alla
+		// view userinput con safearg l'ordine da modificare
 		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending)) {
 			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 			action.setOrdine(currentOrdine);

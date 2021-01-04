@@ -38,6 +38,9 @@ public class ListaOrdiniGenericaPage extends Fragment {
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		
+		// utilizzo il safearg/parametro tipolista per costruire la view di riferimento estraendo il viewmodel
+		// corretto e invocando il relativo metodo che ritorna un livedata, che viene poi osservato
+		// dalla view
 		if (getArguments() != null) {
 			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
 			if (args.getTipoLista() == TipoLista.allOrders) {
@@ -63,6 +66,8 @@ public class ListaOrdiniGenericaPage extends Fragment {
 				ordini = viewModel.getDelivered();
 			}
 			recyclerView.setAdapter(ordiniAdapter);
+			// questa view necessita di user input quindi richiede al viewmodel la creazione della
+			// callback necessaria
 			ItemTouchHelper.SimpleCallback callback = viewModel.getRecyclerCallback(requireContext(), ordiniAdapter, tipoLista);
 			ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
 			itemTouchHelper.attachToRecyclerView(recyclerView);

@@ -17,14 +17,17 @@ public class CreaTavoloViewModel extends AndroidViewModel {
 		repository = new RepositoryTavoli(application);
 	}
 	
+	// metodo di creazione tavolo slave
 	public void creaTavolo(String codice, int portate, float menu) {
 		repository.creaTavolo(codice, portate, menu);
 	}
 	
+	// metodo di creazione tavolo master
 	public void creaTavolo(int portate, float menu) {
 		repository.creaTavolo(portate, menu);
 	}
 	
+	// getter parametri costruzione tavolo
 	public List<String> getInfoTavolo() {
 		return repository.getInfoTavolo();
 	}

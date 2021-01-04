@@ -30,6 +30,7 @@ public class OrdiniViewModel extends AndroidViewModel {
 		this.tavolo = tavolo;
 	}
 	
+	// lazy initialization dei livedata
 	public LiveData<List<Ordine>> getPendingOrders() {
 		if (pending == null)
 			pending = repositoryOrdini.getPendingOrders();
@@ -66,28 +67,14 @@ public class OrdiniViewModel extends AndroidViewModel {
 		return tavolo;
 	}
 	
+	// getter callback nearby
 	public PayloadCallback getCallback() {
 		return repositoryOrdini.getPayloadCallback();
 	}
 	
+	// getter callback touch helper
 	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
 		return repositoryOrdini.getRecyclerCallback(context, adapter, tipoLista);
-	}
-	
-	public void sendToMaster(Ordine ordine) {
-		repositoryOrdini.sendToMaster(ordine);
-	}
-	
-	public void markAsNotDelivered(Ordine ordine) {
-		repositoryOrdini.markAsNotDelivered(ordine);
-	}
-	
-	public void retrieveFromMaster(Ordine ordine) {
-		repositoryOrdini.retrieveFromMaster(ordine);
-	}
-	
-	public void markAsDelivered(Ordine ordine) {
-		repositoryOrdini.markAsDelivered(ordine);
 	}
 	
 	// TODO: nuovo viewmodel?
@@ -99,6 +86,7 @@ public class OrdiniViewModel extends AndroidViewModel {
 		return repositoryTavoli.getCostoExtra(tavolo);
 	}
 	
+	// propago la richiesta di checkout alla repository
 	public void checkout() {
 		repositoryOrdini.checkout();
 	}

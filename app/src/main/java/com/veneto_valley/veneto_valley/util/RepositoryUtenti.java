@@ -13,6 +13,7 @@ public class RepositoryUtenti {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
+	// salva un record dello username dell'utente locale nelle shared preference
 	public void initUtente(String username) {
 		preferences.edit().putString("username", username).apply();
 	}

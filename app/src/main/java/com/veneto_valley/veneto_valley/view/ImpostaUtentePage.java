@@ -29,6 +29,7 @@ public class ImpostaUtentePage extends Fragment {
 		
 		button.setOnClickListener(v -> {
 			String username = impostaUsername.getText().toString();
+			// verifico che l'utente abbia compilato l'edittext
 			if (username.trim().isEmpty())
 				Toast.makeText(requireContext(), "Inserisci uno username", Toast.LENGTH_SHORT).show();
 			else {

@@ -14,6 +14,7 @@ public class ListeTabAdapter extends FragmentStateAdapter {
 	@NonNull
 	@Override
 	public Fragment createFragment(int position) {
+		// gestisco l'istanziazione dei fragment discriminando il tipo di view tramite parametro tipolista
 		switch (position) {
 			case 0:
 				return new ListaOrdiniGenericaPage(ListaOrdiniGenericaPage.TipoLista.pending);

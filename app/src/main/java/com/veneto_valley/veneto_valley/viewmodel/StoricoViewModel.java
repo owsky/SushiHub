@@ -21,16 +21,19 @@ public class StoricoViewModel extends AndroidViewModel {
 		repository = new RepositoryTavoli(application);
 	}
 	
+	// lazy initialization della repository
 	public LiveData<List<Tavolo>> getTavoli() {
 		if (tavoli == null)
 			tavoli = repository.getTavoli();
 		return tavoli;
 	}
 	
+	// lazy initialization del livedata
 	public LiveData<List<Ordine>> getOrdini(Tavolo tavolo) {
-		return repository.getOrdini(tavolo);
+		return repository.getOrdiniStorico(tavolo);
 	}
 	
+	// cancellazione tavolo dallo storico
 	public void deleteTable(Tavolo tavolo) {
 		repository.deleteTable(tavolo);
 	}

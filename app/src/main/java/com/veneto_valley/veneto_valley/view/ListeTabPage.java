@@ -39,10 +39,12 @@ public class ListeTabPage extends Fragment {
 		requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
 			@Override
 			public void handleOnBackPressed() {
+				// mostro un dialog alla pressione del tasto back che chiede all'utente come gestire l'input
 				ExitDialog dialog = new ExitDialog();
 				dialog.show(getParentFragmentManager(), getTag());
 			}
 		});
+		// se l'utente è master estraggo il codice del tavolo e avvio il discovering
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (preferences.getBoolean("is_master", false)) {
 			String codice_tavolo = preferences.getString("codice_tavolo", null);
@@ -57,6 +59,7 @@ public class ListeTabPage extends Fragment {
 		setHasOptionsMenu(true);
 		view.findViewById(R.id.fab).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
 		
+		// configurazione delle tab
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
 		viewPager2.setAdapter(new ListeTabAdapter(this));
 		viewPager2.setUserInputEnabled(false);
@@ -88,6 +91,7 @@ public class ListeTabPage extends Fragment {
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		inflater.inflate(R.menu.lista_overflow, menu);
+		// se l'utente non è master, nascondo la lista degli ordini sincronizzati
 		MenuItem item = menu.findItem(R.id.toAllOrders);
 		if (!preferences.getBoolean("is_master", false))
 			item.setVisible(false);
@@ -97,6 +101,7 @@ public class ListeTabPage extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
+			// setto il safearg così da nascondere il bottone prosegui nel fragment generaqr
 			ListeTabPageDirections.ActionListaPiattiFragmentToGeneraQR action = ListeTabPageDirections.actionListaPiattiFragmentToGeneraQR();
 			action.setUnisciti(true);
 			NavHostFragment.findNavController(this).navigate(action);

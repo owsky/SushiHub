@@ -55,6 +55,8 @@ public class UserInputPage extends Fragment {
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
 		
+		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
+		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
 		UserInputPageArgs args = UserInputPageArgs.fromBundle(requireArguments());
 		Ordine ordine;
 		if ((ordine = args.getOrdine()) != null) {
@@ -99,11 +101,14 @@ public class UserInputPage extends Fragment {
 		String descrizione = desc.getText().toString();
 		String prezzoExtra = prezzo.getText().toString();
 		
+		// verifico che i parametri nonnull vengano inseriti
 		if (codicePiatto.trim().isEmpty())
 			Toast.makeText(requireContext(), "Inserisci il codice del piatto", Toast.LENGTH_SHORT).show();
 		else if (qta.getText().toString().isEmpty())
 			Toast.makeText(requireContext(), "Inserisci la quantità", Toast.LENGTH_SHORT).show();
 		else {
+			// istanzio un nuovo ordine tramite lo user input e lo username dell'utente, recuperato
+			// attraverso le shared preferences e lo passo al viewmodel
 			int quantita = Integer.parseInt(qta.getText().toString());
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 			String username = preferences.getString("username", "username");

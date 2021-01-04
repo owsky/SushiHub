@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		
+		// Setup Navigation component
 		navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 		drawer = findViewById(R.id.drawer_layout);
 		NavigationView navigationView = findViewById(R.id.navigation_view);
-		
 		Set<Integer> topLevelDestinations = new HashSet<>();
 		topLevelDestinations.add(R.id.homepageNav);
 		topLevelDestinations.add(R.id.listeTabNav);
@@ -79,12 +79,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		navigationView.setNavigationItemSelectedListener(this);
 		
+		// Controllo permessi
 		for (String permesso : permissionCodes) {
 			if (!(ContextCompat.checkSelfPermission(this, permesso) == PackageManager.PERMISSION_GRANTED)) {
 				requestPermissionLauncher.launch(permissionCodes);
 			}
 		}
+		
+		// Controllo se Bluetooth è abilitato
 		requestBluetoothLauncher.launch(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
+		// Controllo se WiFi è abilitato
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 			Intent enableWifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
@@ -118,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.listeTabNav) {
+			// Se vi è una sessione non terminata naviga verso listeTab, altrimenti homepage
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 			if (preferences.contains("codice_tavolo"))
 				navController.navigate(R.id.listeTabNav);

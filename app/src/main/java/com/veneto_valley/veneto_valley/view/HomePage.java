@@ -28,6 +28,7 @@ public class HomePage extends Fragment {
 		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR));
 		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_impostaTavoloNav));
 		
+		// Se c'è una sessione non conclusa chiedi all'utente se vuole riprenderla
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
 			ResumeDialog dialog = new ResumeDialog();

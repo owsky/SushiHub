@@ -14,7 +14,8 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class StoricoDettagliAdapter extends ListAdapter<Ordine, StoricoDettagliAdapter.StoricoDettagliViewHolder> {
-	
+	// TODO: accorpare a ordiniadapter
+	// callback che consente al listadapter di confrontare gli elementi della lista
 	private static final DiffUtil.ItemCallback<Ordine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ordine>() {
 		@Override
 		public boolean areItemsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {

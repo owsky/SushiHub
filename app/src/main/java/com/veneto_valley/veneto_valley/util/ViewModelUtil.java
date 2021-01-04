@@ -12,6 +12,7 @@ import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
 public class ViewModelUtil {
 	
+	// metodo di costruzione dei viewmodel
 	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> classe) {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
 		String codiceTavolo = preferences.getString("codice_tavolo", null);

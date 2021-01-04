@@ -22,6 +22,7 @@ public class ScanQRPage extends Fragment {
 	}
 	
 	private void scanCode() {
+		// impostazioni activity zxing scanner e avvio
 		IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
 		integrator.setOrientationLocked(true);
 		integrator.setBeepEnabled(false);
@@ -36,6 +37,7 @@ public class ScanQRPage extends Fragment {
 		if (result != null) {
 			String contents = result.getContents();
 			if (contents != null) {
+				// se la lettura è andata a buon fine splitta la stringa in array di stringhe per creare il tavolo tramite viewmodel
 				String[] info = contents.split(";");
 				ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class).creaTavolo(info[0], Integer.parseInt(info[1]), Float.parseFloat(info[2]));
 				NavHostFragment.findNavController(this).navigate(R.id.action_scanQRNav_to_impostaUtentePage);

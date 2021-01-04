@@ -33,10 +33,13 @@ public class GeneraQRPage extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
+		// recupero le informazioni di configurazione
 		CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 		List<String> infoTavolo = viewModel.getInfoTavolo();
 		
+		// joino manualmente le stringhe (String.join richiede API minime 26)
 		dati = String.format("%s;%s;%s", infoTavolo.get(0), infoTavolo.get(1), infoTavolo.get(2));
+		// se il safearg è true nascondi il bottone per garantire il corretto flow dell'applicazione
 		GeneraQRPageArgs args = GeneraQRPageArgs.fromBundle(requireArguments());
 		if (args.getUnisciti()) {
 			view.findViewById(R.id.doneqr).setVisibility(View.INVISIBLE);
@@ -54,6 +57,7 @@ public class GeneraQRPage extends Fragment {
 	}
 	
 	private void generaQR() throws WriterException {
+		// genero al volo il qr tramite le informazioni ottenute dal viewmodel attraverso zxing
 		int qr_size = 177;
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();

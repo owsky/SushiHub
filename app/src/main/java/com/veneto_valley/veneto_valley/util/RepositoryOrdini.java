@@ -46,6 +46,8 @@ public class RepositoryOrdini {
 	}
 	
 	public void insert(Ordine ordine) {
+		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
+		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Ordine vecchioOrdine;
 			if ((vecchioOrdine = ordineDao.contains(Ordine.StatusOrdine.pending, tavolo, ordine.piatto)) != null) {
@@ -68,6 +70,7 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
 	}
 	
+	// lazy initialization dei livedata
 	public LiveData<List<Ordine>> getAllSynchronized() {
 		if (allSynchronized == null) {
 			allSynchronized = ordineDao.getAllSynchronized(tavolo);
@@ -93,16 +96,19 @@ public class RepositoryOrdini {
 		return deliveredOrders;
 	}
 	
+	// TODO: refactor nomi
+	// conferma un ordine pending come da ordinare e lo invia al master se slave
 	public void sendToMaster(Ordine ordine) {
 		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
 		
-		if (preferences.contains("is_master")) {
+		if (!preferences.contains("is_master")) {
 			Connessione.getInstance(true, application, tavolo, getPayloadCallback())
 					.invia(ordine.getBytes());
 		}
 	}
 	
+	// annulla la conferma dell'ordine e notifica il master se slave
 	public void retrieveFromMaster(Ordine ordine) {
 		ordine.status = Ordine.StatusOrdine.pending;
 		update(ordine);
@@ -112,32 +118,42 @@ public class RepositoryOrdini {
 		}
 	}
 	
+	// segna un ordine come arrivato e notifica il master se slave
 	public void markAsDelivered(Ordine ordine) {
 		ordine.status = Ordine.StatusOrdine.delivered;
 		update(ordine);
-		Connessione.getInstance(false, application, tavolo, getPayloadCallback())
-				.invia(ordine.getBytes());
+		if (!preferences.contains("is_master")) {
+			Connessione.getInstance(false, application, tavolo, getPayloadCallback())
+					.invia(ordine.getBytes());
+		}
 	}
 	
+	// segna un ordine come non arrivato e notifica il master se slave
 	public void markAsNotDelivered(Ordine ordine) {
 		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
-		Connessione.getInstance(false, application, tavolo, getPayloadCallback())
-				.invia(ordine.getBytes());
+		if (!preferences.contains("is_master")) {
+			Connessione.getInstance(false, application, tavolo, getPayloadCallback())
+					.invia(ordine.getBytes());
+		}
 	}
 	
+	// metodo che usa il master per rimuovere i dati degli slave dal database durante il checkout
 	public void cleanDatabase() {
 		Executors.newSingleThreadExecutor().execute(ordineDao::deleteSlaves);
 	}
 	
+	// svuota le shared preferences, segna il tavolo corrente come checkedOut e chiude la connessione
 	public void checkout() {
-		cleanDatabase();
+		if (!preferences.contains("is_master"))
+			cleanDatabase();
 		preferences.edit().clear().apply();
 		new RepositoryTavoli(application).checkoutTavolo(tavolo);
 		Connessione.getInstance(preferences.getBoolean("is_master", false),
 				application, tavolo, getPayloadCallback()).closeConnection();
 	}
 	
+	// costruisce la callback nearby
 	public PayloadCallback getPayloadCallback() {
 		return new PayloadCallback() {
 			@Override
@@ -166,6 +182,7 @@ public class RepositoryOrdini {
 		};
 	}
 	
+	// ritorna la callback itemtouch helper
 	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
 		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
 			return makeCallback(context,
@@ -191,6 +208,7 @@ public class RepositoryOrdini {
 					0, R.drawable.ic_send);
 	}
 	
+	// costruisce la callback itemtouch helper
 	private ItemTouchHelper.SimpleCallback makeCallback(Context context, int dragDir2, Consumer<Integer> consumerRight, Consumer<Integer> consumerLeft, int colorRight, int colorLeft, int drawableRight, int drawableLeft) {
 		return new ItemTouchHelper.SimpleCallback(0, dragDir2) {
 			@Override

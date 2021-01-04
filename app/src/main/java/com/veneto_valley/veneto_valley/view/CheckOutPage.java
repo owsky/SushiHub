@@ -30,6 +30,7 @@ public class CheckOutPage extends Fragment {
 		TextView totale = view.findViewById(R.id.checkoutTotale);
 		Button finito = view.findViewById(R.id.checkoutFinito);
 		
+		// calcolo il totale che l'utente dovrà pagare
 		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 		final Locale locale = requireActivity().getResources().getConfiguration().getLocales().get(0);
 		float menu = viewModel.getCostoMenu();
@@ -39,6 +40,7 @@ public class CheckOutPage extends Fragment {
 		float tot = menu + extra;
 		totale.setText(String.format(locale, "Costo totale: %s €", tot));
 		finito.setOnClickListener(v -> {
+			// invoco il checkout tramite il viewmodel
 			viewModel.checkout();
 			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
 		});

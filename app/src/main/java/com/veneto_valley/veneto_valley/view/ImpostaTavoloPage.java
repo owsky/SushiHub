@@ -30,6 +30,7 @@ public class ImpostaTavoloPage extends Fragment {
 		Button finito = view.findViewById(R.id.impostaFinito);
 		
 		finito.setOnClickListener(v -> {
+			// verifico che tutte le edittext siano state compilato dell'utente
 			if (TextUtils.isEmpty(nome.getText()))
 				Toast.makeText(requireContext(), "Inserisci il nome del ristorante", Toast.LENGTH_SHORT).show();
 			else if (TextUtils.isEmpty(costoMenu.getText()))
@@ -37,6 +38,7 @@ public class ImpostaTavoloPage extends Fragment {
 			else if (TextUtils.isEmpty(portate.getText()))
 				Toast.makeText(requireContext(), "Inserisci il numero di portate massime a persona", Toast.LENGTH_SHORT).show();
 			else {
+				// creo un tavolo tramite lo user input attraverso il viewmodel
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 				viewModel.creaTavolo(Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);

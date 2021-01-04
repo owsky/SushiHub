@@ -39,6 +39,7 @@ public class StoricoDettagliPage extends Fragment {
 		StoricoDettagliAdapter adapter = new StoricoDettagliAdapter();
 		recyclerView.setAdapter(adapter);
 		
+		// estraggo dal viewmodel il livedata da osservare
 		tavolo = StoricoDettagliPageArgs.fromBundle(requireArguments()).getTavolo();
 		viewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
 		viewModel.getOrdini(tavolo).observe(getViewLifecycleOwner(), adapter::submitList);
@@ -52,6 +53,7 @@ public class StoricoDettagliPage extends Fragment {
 	
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		// chiedo conferma all'utente per l'eliminazione del tavolo dallo storico
 		if (item.getItemId() == R.id.eliminaTavolo) {
 			ConfirmDialog dialog = new ConfirmDialog(() -> {
 				viewModel.deleteTable(tavolo);
