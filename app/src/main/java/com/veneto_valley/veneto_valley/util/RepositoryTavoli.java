@@ -92,6 +92,7 @@ public class RepositoryTavoli {
 	// creazione tavolo per il master
 	public void creaTavolo(int portate, float menu) {
 		// operazioni sincrone perché necessarie alla view successiva
+		// TODO: implementare future
 		String codice = UUID.randomUUID().toString();
 		preferences.edit().putString("codice_tavolo", codice).putBoolean("is_master", true).apply();
 		Tavolo tavolo = new Tavolo(codice, portate, menu);
