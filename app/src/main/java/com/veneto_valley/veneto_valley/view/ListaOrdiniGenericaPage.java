@@ -14,25 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.AllOrdersViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
 
 import java.util.List;
 
 public class ListaOrdiniGenericaPage extends Fragment {
-	private OrdiniAdapter ordiniAdapter;
-	private ItemTouchHelper.SimpleCallback callback;
-	private LiveData<List<Ordine>> liveDataOrdini;
+	private TipoLista tipoLista;
 	
 	public ListaOrdiniGenericaPage() {
 		super(R.layout.fragment_recyclerview);
 	}
 	
-	public ListaOrdiniGenericaPage(OrdiniAdapter ordiniAdapter, LiveData<List<Ordine>> liveDataOrdini, ItemTouchHelper.SimpleCallback callback) {
+	public ListaOrdiniGenericaPage(TipoLista tipoLista) {
 		super(R.layout.fragment_recyclerview);
-		this.ordiniAdapter = ordiniAdapter;
-		this.callback = callback;
-		this.liveDataOrdini = liveDataOrdini;
+		this.tipoLista = tipoLista;
 	}
 	
 	@Override
@@ -45,26 +41,40 @@ public class ListaOrdiniGenericaPage extends Fragment {
 		if (getArguments() != null) {
 			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
 			if (args.getTipoLista() == TipoLista.allOrders) {
-				AllOrdersViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), AllOrdersViewModel.class);
+				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 				OrdiniAdapter ordiniAdapter = new OrdiniAdapter(true);
 				recyclerView.setAdapter(ordiniAdapter);
-				viewModel.getOrdini().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
-			} else {
+				viewModel.getAllSynchronized().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
+			} else if (args.getTipoLista() == TipoLista.storico) {
 				StoricoViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
 				StoricoAdapter storicoAdapter = new StoricoAdapter();
 				recyclerView.setAdapter(storicoAdapter);
 				viewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 			}
 		} else {
+			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(false);
+			LiveData<List<Ordine>> ordini;
+			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+			if (tipoLista == TipoLista.pending) {
+				ordini = viewModel.getPendingOrders();
+			} else if (tipoLista == TipoLista.confirmed) {
+				ordini = viewModel.getConfirmed();
+			} else {
+				ordini = viewModel.getDelivered();
+			}
 			recyclerView.setAdapter(ordiniAdapter);
+			ItemTouchHelper.SimpleCallback callback = viewModel.getRecyclerCallback(requireContext(), ordiniAdapter, tipoLista);
 			ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
 			itemTouchHelper.attachToRecyclerView(recyclerView);
-			liveDataOrdini.observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
+			ordini.observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 		}
 	}
 	
 	public enum TipoLista {
 		allOrders,
-		storico
+		storico,
+		pending,
+		confirmed,
+		delivered
 	}
 }

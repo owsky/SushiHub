@@ -12,7 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.CheckoutViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
 import java.util.Locale;
 
@@ -30,7 +30,7 @@ public class CheckOutPage extends Fragment {
 		TextView totale = view.findViewById(R.id.checkoutTotale);
 		Button finito = view.findViewById(R.id.checkoutFinito);
 		
-		CheckoutViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CheckoutViewModel.class);
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 		final Locale locale = requireActivity().getResources().getConfiguration().getLocales().get(0);
 		float menu = viewModel.getCostoMenu();
 		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));

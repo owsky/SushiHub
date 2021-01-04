@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,11 +25,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -123,4 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
+	
+	
 }

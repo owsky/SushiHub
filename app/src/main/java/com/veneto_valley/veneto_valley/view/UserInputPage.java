@@ -19,8 +19,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.InitViewModel;
-import com.veneto_valley.veneto_valley.viewmodel.PendingViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
 public class UserInputPage extends Fragment {
 	private EditText codice, desc, qta, prezzo;
@@ -93,7 +92,7 @@ public class UserInputPage extends Fragment {
 	}
 	
 	private boolean salvaOrdine() {
-		PendingViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), PendingViewModel.class);
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 		String codiceTavolo = viewModel.getTavolo();
 		String codicePiatto = codice.getText().toString();
 		Ordine.StatusOrdine status = Ordine.StatusOrdine.pending;

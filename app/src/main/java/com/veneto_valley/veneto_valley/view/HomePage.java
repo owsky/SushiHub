@@ -15,7 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.CheckoutViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
 public class HomePage extends Fragment {
 	
@@ -43,7 +43,7 @@ public class HomePage extends Fragment {
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
 			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment));
 			builder.setNegativeButton("No", (dialog, which) -> {
-				ViewModelUtil.getViewModel(requireActivity(), CheckoutViewModel.class).checkout();
+				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class).checkout();
 				dismiss();
 			});
 			return builder.create();

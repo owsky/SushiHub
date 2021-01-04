@@ -22,12 +22,12 @@ public class ScanQRPage extends Fragment {
 	}
 	
 	private void scanCode() {
-		IntentIntegrator integrator = new IntentIntegrator(getActivity());
-		integrator.setCaptureActivity(CaptureActivity.class);
+		IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+		integrator.setOrientationLocked(true);
 		integrator.setBeepEnabled(false);
 		integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
 		integrator.setPrompt("Scanning QR Code");
-		IntentIntegrator.forSupportFragment(this).initiateScan();
+		integrator.initiateScan();
 	}
 	
 	@Override

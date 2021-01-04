@@ -32,7 +32,9 @@ public class RepositoryTavoli {
 	
 	public LiveData<List<Tavolo>> getTavoli() {
 		if (tavoli == null)
-			tavoli = tavoloDao.getAllButCurrent();
+			//TODO fix query
+//			tavoli = tavoloDao.getAllButCurrent();
+			tavoli = tavoloDao.getAll();
 		return tavoli;
 	}
 	
@@ -52,8 +54,12 @@ public class RepositoryTavoli {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo = tavoloDao.getTavolo(idTavolo);
 			if (tavolo != null) {
-				tavolo.checkedOut = true;
-				tavoloDao.update(tavolo);
+				if (ordineDao.getAllByTable(tavolo.idTavolo).getValue() == null) {
+					tavoloDao.delete(tavolo);
+				}else {
+					tavolo.checkedOut = true;
+					tavoloDao.update(tavolo);
+				}
 			}
 		});
 	}
@@ -67,9 +73,16 @@ public class RepositoryTavoli {
 	
 	public void creaTavolo(String codice, int portate, float menu) {
 		Executors.newSingleThreadExecutor().execute(() -> {
-			Tavolo tavolo = new Tavolo(codice, portate, menu);
-			preferences.edit().putString("codice_tavolo", codice).apply();
-			tavoloDao.insert(tavolo);
+			Tavolo tavolo;
+			if ((tavolo = tavoloDao.getTavolo(codice)) != null) {
+				tavolo.costoMenu = menu;
+				tavolo.maxPiatti = portate;
+				tavoloDao.update(tavolo);
+			} else {
+				tavolo = new Tavolo(codice, portate, menu);
+				preferences.edit().putString("codice_tavolo", codice).apply();
+				tavoloDao.insert(tavolo);
+			}
 		});
 	}
 	
