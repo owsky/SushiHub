@@ -172,22 +172,22 @@ public class RepositoryOrdini {
 					ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
 					integer -> sendToMaster(adapter.getOrdineAt(integer)),
 					integer -> delete(adapter.getOrdineAt(integer)),
-					ContextCompat.getColor(context, R.color.green),
 					ContextCompat.getColor(context, R.color.colorPrimary),
+					ContextCompat.getColor(context, R.color.red),
 					R.drawable.ic_send, R.drawable.ic_delete);
 		} else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.confirmed) {
 			return makeCallback(context,
 					ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
 					integer -> markAsDelivered(adapter.getOrdineAt(integer)),
 					integer -> retrieveFromMaster(adapter.getOrdineAt(integer)),
-					ContextCompat.getColor(context, R.color.design_default_color_primary),
-					ContextCompat.getColor(context, R.color.design_default_color_primary),
+					ContextCompat.getColor(context, R.color.colorPrimary),
+					ContextCompat.getColor(context, R.color.colorPrimary),
 					R.drawable.ic_send, R.drawable.ic_send);
 		} else
 			return makeCallback(context,
 					ItemTouchHelper.LEFT, null,
 					integer -> markAsNotDelivered(adapter.getOrdineAt(integer)),
-					0, ContextCompat.getColor(context, R.color.green),
+					0, ContextCompat.getColor(context, R.color.colorPrimary),
 					0, R.drawable.ic_send);
 	}
 	

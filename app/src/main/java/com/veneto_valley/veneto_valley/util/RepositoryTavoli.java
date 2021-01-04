@@ -87,12 +87,11 @@ public class RepositoryTavoli {
 	}
 	
 	public void creaTavolo(int portate, float menu) {
-		Executors.newSingleThreadExecutor().execute(() -> {
-			String codice = UUID.randomUUID().toString();
-			Tavolo tavolo = new Tavolo(codice, portate, menu);
-			preferences.edit().putString("codice_tavolo", codice).putBoolean("is_master", true).apply();
-			tavoloDao.insert(tavolo);
-		});
+		// operazioni sincrone perché necessarie alla view successiva
+		String codice = UUID.randomUUID().toString();
+		preferences.edit().putString("codice_tavolo", codice).putBoolean("is_master", true).apply();
+		Tavolo tavolo = new Tavolo(codice, portate, menu);
+		tavoloDao.insert(tavolo);
 	}
 	
 	public List<String> getInfoTavolo() {

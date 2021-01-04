@@ -118,7 +118,9 @@
         tools:layout="@layout/fragment_check_out">
         <action
             android:id="@+id/action_checkOutPage_to_homepageFragment"
-            app:destination="@id/homepageNav" />
+            app:destination="@id/homepageNav"
+            app:popUpTo="@id/checkoutNav"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/allOrders"

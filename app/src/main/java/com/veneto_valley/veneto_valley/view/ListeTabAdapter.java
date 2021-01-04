@@ -6,12 +6,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ListeTabAdapter extends FragmentStateAdapter {
-	@NonNull
-	private final Fragment fragment;
 	
 	public ListeTabAdapter(@NonNull Fragment fragment) {
 		super(fragment);
-		this.fragment = fragment;
 	}
 	
 	@NonNull
