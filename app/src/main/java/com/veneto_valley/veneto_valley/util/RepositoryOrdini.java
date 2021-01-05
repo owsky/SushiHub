@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,6 @@ import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
