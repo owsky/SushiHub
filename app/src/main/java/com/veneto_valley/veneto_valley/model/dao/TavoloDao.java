@@ -35,4 +35,6 @@ public interface TavoloDao extends baseDao<Tavolo> {
 	@Query("DELETE FROM tavolo WHERE idTavolo LIKE :idTavolo")
 	int deleteById(int idTavolo);
 	
+	@Query("DELETE FROM tavolo")
+	void deleteAllTables();
 }

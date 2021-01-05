@@ -49,6 +49,7 @@ public class StoricoDettagliPage extends Fragment {
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.storico_overflow, menu);
+		menu.findItem(R.id.eliminaTuttiTavoli).setVisible(false);
 	}
 	
 	@Override

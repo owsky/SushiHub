@@ -1,6 +1,9 @@
 package com.veneto_valley.veneto_valley.view;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import java.util.List;
 
 public class ListaOrdiniGenericaPage extends Fragment {
 	private TipoLista tipoLista;
+	private StoricoViewModel storicoViewModel;
 	
 	public ListaOrdiniGenericaPage() {
 		super(R.layout.fragment_recyclerview);
@@ -42,38 +46,51 @@ public class ListaOrdiniGenericaPage extends Fragment {
 		// utilizzo il safearg/parametro tipolista per costruire la view di riferimento estraendo il viewmodel
 		// corretto e invocando il relativo metodo che ritorna un livedata, che viene poi osservato
 		// dalla view
+		OrdiniViewModel ordiniViewModel;
 		if (getArguments() != null) {
 			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
 			if (args.getTipoLista() == TipoLista.allOrders) {
-				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+				ordiniViewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 				OrdiniAdapter ordiniAdapter = new OrdiniAdapter(OrdiniAdapter.TipoAdapter.sincronizzati);
 				recyclerView.setAdapter(ordiniAdapter);
-				viewModel.getAllSynchronized().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
+				ordiniViewModel.getAllSynchronized().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 			} else if (args.getTipoLista() == TipoLista.storico) {
-				StoricoViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
+				setHasOptionsMenu(true);
+				storicoViewModel = ViewModelUtil.getViewModel(requireActivity(), StoricoViewModel.class);
 				StoricoAdapter storicoAdapter = new StoricoAdapter();
 				recyclerView.setAdapter(storicoAdapter);
-				viewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
+				storicoViewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 			}
 		} else {
 			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(OrdiniAdapter.TipoAdapter.normale);
 			LiveData<List<Ordine>> ordini;
-			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
-			if (tipoLista == TipoLista.pending) {
-				ordini = viewModel.getPendingOrders();
-			} else if (tipoLista == TipoLista.confirmed) {
-				ordini = viewModel.getConfirmed();
-			} else {
-				ordini = viewModel.getDelivered();
-			}
+			ordiniViewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+			ordini = ordiniViewModel.getOrdini(tipoLista);
 			recyclerView.setAdapter(ordiniAdapter);
 			// questa view necessita di user input quindi richiede al viewmodel la creazione della
 			// callback necessaria
-			ItemTouchHelper.SimpleCallback callback = viewModel.getRecyclerCallback(requireContext(), ordiniAdapter, tipoLista);
+			ItemTouchHelper.SimpleCallback callback = ordiniViewModel.getRecyclerCallback(requireContext(), ordiniAdapter, tipoLista);
 			ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
 			itemTouchHelper.attachToRecyclerView(recyclerView);
 			ordini.observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 		}
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
+		if (args.getTipoLista() == TipoLista.storico)
+			inflater.inflate(R.menu.storico_overflow, menu);
+		menu.findItem(R.id.eliminaTavolo).setVisible(false);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		if (item.getItemId() == R.id.eliminaTuttiTavoli) {
+			storicoViewModel.deleteAllTables();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	public enum TipoLista {

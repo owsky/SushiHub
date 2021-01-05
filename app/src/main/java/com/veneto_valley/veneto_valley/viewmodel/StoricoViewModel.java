@@ -37,4 +37,8 @@ public class StoricoViewModel extends AndroidViewModel {
 	public void deleteTable(Tavolo tavolo) {
 		repository.deleteTable(tavolo);
 	}
+	
+	public void deleteAllTables() {
+		repository.deleteAllTables();
+	}
 }

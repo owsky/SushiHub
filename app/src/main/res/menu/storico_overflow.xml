@@ -4,4 +4,7 @@
     <item
         android:id="@+id/eliminaTavolo"
         android:title="@string/elimina_tavolo" />
+    <item
+        android:id="@+id/eliminaTuttiTavoli"
+        android:title="@string/pulisci_storico" />
 </menu>
