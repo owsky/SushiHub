@@ -16,26 +16,24 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
+	private final TipoAdapter tipoAdapter;
 	
-	// callback che consente al listadapter di confrontare gli elementi della lista
-	private static final DiffUtil.ItemCallback<Ordine> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ordine>() {
-		@Override
-		public boolean areItemsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
-			return oldItem.idOrdine == newItem.idOrdine;
-		}
-		
-		@Override
-		public boolean areContentsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
-			return oldItem.piatto.equals(newItem.piatto) &&
-					oldItem.desc.equals(newItem.desc) &&
-					oldItem.quantita == newItem.quantita;
-		}
-	};
-	private final boolean isAllOrders;
-	
-	public OrdiniAdapter(boolean isAllOrders) {
-		super(DIFF_CALLBACK);
-		this.isAllOrders = isAllOrders;
+	public OrdiniAdapter(TipoAdapter tipoAdapter) {
+		// callback che consente al listadapter di confrontare gli elementi della lista
+		super(new DiffUtil.ItemCallback<Ordine>() {
+			@Override
+			public boolean areItemsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
+				return oldItem.idOrdine == newItem.idOrdine;
+			}
+			
+			@Override
+			public boolean areContentsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
+				return oldItem.piatto.equals(newItem.piatto) &&
+						oldItem.desc.equals(newItem.desc) &&
+						oldItem.quantita == newItem.quantita;
+			}
+		});
+		this.tipoAdapter = tipoAdapter;
 	}
 	
 	@NonNull
@@ -51,17 +49,20 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		Ordine currentOrdine = getItem(position);
 		holder.codice.setText(String.valueOf(currentOrdine.piatto));
 		String desc = currentOrdine.desc;
-		// se isAllOrders è true costruisce il viewholder degli ordini sincronizzati
-		if (isAllOrders) {
+		// modifico le opzioni di visibilità del viewholder in base alla view
+		if (tipoAdapter == TipoAdapter.sincronizzati) {
 			holder.utente.setText(currentOrdine.utente);
 			holder.utente.setVisibility(View.VISIBLE);
 			holder.descrizione.setVisibility(View.GONE);
-		} else if (desc != null)
+		} else if (tipoAdapter == TipoAdapter.storico) {
+			holder.quantita.setVisibility(View.GONE);
+		}
+		if (desc != null)
 			holder.descrizione.setText(desc);
 		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
 		// se lo status dell'ordine è pending, crea un click listener che consente di navigare alla
 		// view userinput con safearg l'ordine da modificare
-		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending)) {
+		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending) && tipoAdapter == TipoAdapter.normale) {
 			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 			action.setOrdine(currentOrdine);
 			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
@@ -82,5 +83,11 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			quantita = itemView.findViewById(R.id.piattoQuantita);
 			utente = itemView.findViewById(R.id.piattoUtente);
 		}
+	}
+	
+	public enum TipoAdapter {
+		normale,
+		storico,
+		sincronizzati
 	}
 }

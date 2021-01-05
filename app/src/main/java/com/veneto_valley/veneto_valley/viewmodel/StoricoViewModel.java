@@ -24,7 +24,7 @@ public class StoricoViewModel extends AndroidViewModel {
 	// lazy initialization della repository
 	public LiveData<List<Tavolo>> getTavoli() {
 		if (tavoli == null)
-			tavoli = repository.getTavoli();
+			tavoli = repository.getTavoliStorico();
 		return tavoli;
 	}
 	

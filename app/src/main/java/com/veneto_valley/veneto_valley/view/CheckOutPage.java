@@ -32,7 +32,7 @@ public class CheckOutPage extends Fragment {
 		
 		// calcolo il totale che l'utente dovrà pagare
 		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
-		final Locale locale = requireActivity().getResources().getConfiguration().getLocales().get(0);
+		final Locale locale = requireActivity().getResources().getConfiguration().locale;
 		float menu = viewModel.getCostoMenu();
 		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));
 		float extra = viewModel.getCostoExtra();
@@ -41,7 +41,7 @@ public class CheckOutPage extends Fragment {
 		totale.setText(String.format(locale, "Costo totale: %s €", tot));
 		finito.setOnClickListener(v -> {
 			// invoco il checkout tramite il viewmodel
-			viewModel.checkout();
+			viewModel.checkout(requireActivity());
 			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
 		});
 	}

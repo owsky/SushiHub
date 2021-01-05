@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
@@ -25,7 +26,7 @@ public class HomePage extends Fragment {
 	
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageFragment_to_scanQR));
+		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_scanQRNav));
 		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_impostaTavoloNav));
 		
 		// Se c'è una sessione non conclusa chiedi all'utente se vuole riprenderla
@@ -42,9 +43,9 @@ public class HomePage extends Fragment {
 		public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
-			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageFragment_to_listaPiattiFragment));
+			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageNav_to_listeTabNav));
 			builder.setNegativeButton("No", (dialog, which) -> {
-				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class).checkout();
+				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class).checkout(requireActivity());
 				dismiss();
 			});
 			return builder.create();

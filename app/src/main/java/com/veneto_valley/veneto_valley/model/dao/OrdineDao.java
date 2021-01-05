@@ -19,14 +19,17 @@ public interface OrdineDao extends baseDao<Ordine> {
 	@Query("SELECT SUM(prezzo) FROM Ordine WHERE tavolo = :tavolo AND NOT receivedFromSlave")
 	float getTotaleExtra(String tavolo);
 	
-	@Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND NOT receivedFromSlave")
+	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND NOT receivedFromSlave")
 	LiveData<List<Ordine>> getAllbyStatus(Ordine.StatusOrdine status, String tavolo);
 	
 	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND receivedFromSlave")
 	LiveData<List<Ordine>> getAllSynchronized(String tavolo);
 	
-	@Query("SELECT * FROM Ordine WHERE status LIKE :status AND tavolo = :tavolo AND piatto = :piatto AND NOT receivedFromSlave")
+	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND piatto = :piatto AND NOT receivedFromSlave")
 	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto);
+	
+	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND piatto = :piatto AND utente = :utente AND receivedFromSlave")
+	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto, String utente);
 	
 	@Query("DELETE FROM Ordine WHERE tavolo = :tavolo")
 	void deleteByTable(String tavolo);

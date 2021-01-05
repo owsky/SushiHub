@@ -11,7 +11,6 @@ import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.dao.TavoloDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
-import com.veneto_valley.veneto_valley.model.entities.Utente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class RepositoryTavoli {
 	private final OrdineDao ordineDao;
 	private final TavoloDao tavoloDao;
 	private final SharedPreferences preferences;
-	private LiveData<List<Tavolo>> tavoli = null;
+	private LiveData<List<Tavolo>> tavoliStorico = null;
 	
 	public RepositoryTavoli(Application application) {
 		tavoloDao = AppDatabase.getInstance(application).tavoloDao();
@@ -30,12 +29,10 @@ public class RepositoryTavoli {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public LiveData<List<Tavolo>> getTavoli() {
-		if (tavoli == null)
-			//TODO fix query
-//			tavoli = tavoloDao.getAllButCurrent();
-			tavoli = tavoloDao.getAll();
-		return tavoli;
+	public LiveData<List<Tavolo>> getTavoliStorico() {
+		if (tavoliStorico == null)
+			tavoliStorico = tavoloDao.getAllButCurrent();
+		return tavoliStorico;
 	}
 	
 	// costruisce al volo un livedata per lo storico
@@ -56,7 +53,7 @@ public class RepositoryTavoli {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo = tavoloDao.getTavolo(idTavolo);
 			if (tavolo != null) {
-				if (ordineDao.getAllByTable(tavolo.idTavolo).getValue() == null) {
+				if (ordineDao.getAllByTable(tavolo.idTavolo) == null) {
 					tavoloDao.delete(tavolo);
 				}else {
 					tavolo.checkedOut = true;

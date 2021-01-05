@@ -30,7 +30,6 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
-	private final String tavolo;
 	private final Application application;
 	private final SharedPreferences preferences;
 	private LiveData<List<Ordine>> pendingOrders = null;
@@ -38,14 +37,13 @@ public class RepositoryOrdini {
 	private LiveData<List<Ordine>> deliveredOrders = null;
 	private LiveData<List<Ordine>> allSynchronized = null;
 	
-	public RepositoryOrdini(Application application, String tavolo) {
+	public RepositoryOrdini(Application application) {
 		this.application = application;
-		this.tavolo = tavolo;
 		ordineDao = AppDatabase.getInstance(application).ordineDao();
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public void insert(Ordine ordine) {
+	public void insert(Ordine ordine, String tavolo) {
 		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
 		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
 		Executors.newSingleThreadExecutor().execute(() -> {
@@ -71,69 +69,68 @@ public class RepositoryOrdini {
 	}
 	
 	// lazy initialization dei livedata
-	public LiveData<List<Ordine>> getAllSynchronized() {
+	public LiveData<List<Ordine>> getAllSynchronized(String tavolo) {
 		if (allSynchronized == null) {
 			allSynchronized = ordineDao.getAllSynchronized(tavolo);
 		}
 		return allSynchronized;
 	}
 	
-	public LiveData<List<Ordine>> getPendingOrders() {
+	public LiveData<List<Ordine>> getPendingOrders(String tavolo) {
 		if (pendingOrders == null)
 			pendingOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.pending, tavolo);
 		return pendingOrders;
 	}
 	
-	public LiveData<List<Ordine>> getConfirmedOrders() {
+	public LiveData<List<Ordine>> getConfirmedOrders(String tavolo) {
 		if (confirmedOrders == null)
 			confirmedOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.confirmed, tavolo);
 		return confirmedOrders;
 	}
 	
-	public LiveData<List<Ordine>> getDeliveredOrders() {
+	public LiveData<List<Ordine>> getDeliveredOrders(String tavolo) {
 		if (deliveredOrders == null)
 			deliveredOrders = ordineDao.getAllbyStatus(Ordine.StatusOrdine.delivered, tavolo);
 		return deliveredOrders;
 	}
 	
-	// TODO: refactor nomi
 	// conferma un ordine pending come da ordinare e lo invia al master se slave
-	public void sendToMaster(Ordine ordine) {
+	public void confermaOrdine(Ordine ordine, String tavolo) {
 		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
 		
 		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(true, application, tavolo, getPayloadCallback())
+			Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
 					.invia(ordine.getBytes());
 		}
 	}
 	
 	// annulla la conferma dell'ordine e notifica il master se slave
-	public void retrieveFromMaster(Ordine ordine) {
+	public void annullaConfermaOrdine(Ordine ordine, String tavolo) {
 		ordine.status = Ordine.StatusOrdine.pending;
 		update(ordine);
 		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(true, application, tavolo, getPayloadCallback())
+			Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
 					.invia(ordine.getBytes());
 		}
 	}
 	
 	// segna un ordine come arrivato e notifica il master se slave
-	public void markAsDelivered(Ordine ordine) {
+	public void notificaArrivato(Ordine ordine, String tavolo) {
 		ordine.status = Ordine.StatusOrdine.delivered;
 		update(ordine);
 		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(false, application, tavolo, getPayloadCallback())
+			Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
 					.invia(ordine.getBytes());
 		}
 	}
 	
 	// segna un ordine come non arrivato e notifica il master se slave
-	public void markAsNotDelivered(Ordine ordine) {
+	public void annullaArrivato(Ordine ordine, String tavolo) {
 		ordine.status = Ordine.StatusOrdine.confirmed;
 		update(ordine);
 		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(false, application, tavolo, getPayloadCallback())
+			Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
 					.invia(ordine.getBytes());
 		}
 	}
@@ -144,50 +141,55 @@ public class RepositoryOrdini {
 	}
 	
 	// svuota le shared preferences, segna il tavolo corrente come checkedOut e chiude la connessione
-	public void checkout() {
+	public void checkout(String tavolo) {
 		if (!preferences.contains("is_master"))
 			cleanDatabase();
 		preferences.edit().clear().apply();
-		new RepositoryTavoli(application).checkoutTavolo(tavolo);
 		Connessione.getInstance(preferences.getBoolean("is_master", false),
-				application, tavolo, getPayloadCallback()).closeConnection();
+				application, tavolo, getPayloadCallback(tavolo)).closeConnection();
 	}
 	
 	// costruisce la callback nearby
-	public PayloadCallback getPayloadCallback() {
+	public PayloadCallback getPayloadCallback(String tavolo) {
 		return new PayloadCallback() {
 			@Override
 			public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
 				final byte[] receivedBytes = payload.asBytes();
 				Executors.newSingleThreadExecutor().execute(() -> {
-					Ordine ordine = Ordine.getFromBytes(receivedBytes);
-					
-					if (ordine.status.equals(Ordine.StatusOrdine.confirmed)) {
-						ordineDao.insert(ordine);
-					} else if (ordine.status.equals(Ordine.StatusOrdine.pending)) {
-						ordineDao.delete(ordine);
+					Ordine fromSlave = Ordine.getFromBytes(receivedBytes);
+					Ordine ordine;
+					// se l'ordine ricevuto dallo slave corrisponde ad un ordine già presente nel
+					// db del master, riconosce l'input dello slave tramite lo status
+					if ((ordine = ordineDao.contains(fromSlave.status, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente)) != null) {
+						if (fromSlave.status == Ordine.StatusOrdine.pending)
+							ordineDao.delete(ordine);
+						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
+							ordine.quantita += fromSlave.quantita;
+							ordineDao.insert(ordine);
+						}
+						else
+							ordineDao.update(ordine);
 					} else {
-						ordineDao.update(ordine);
+						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
+						// i vincoli di unicità del database e lo aggiunge
+						ordine = new Ordine(tavolo, fromSlave.piatto, fromSlave.quantita,
+								fromSlave.status, fromSlave.utente, true);
+						ordineDao.insert(ordine);
 					}
 				});
 			}
 			
 			@Override
-			public void onPayloadTransferUpdate(@NonNull String s,
-			                                    @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-//			if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
-//				// Do something with is here...
-//			}
-			}
+			public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {}
 		};
 	}
 	
 	// ritorna la callback itemtouch helper
-	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
+	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista, String tavolo) {
 		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
 			return makeCallback(context,
 					ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
-					integer -> sendToMaster(adapter.getOrdineAt(integer)),
+					integer -> confermaOrdine(adapter.getOrdineAt(integer), tavolo),
 					integer -> delete(adapter.getOrdineAt(integer)),
 					ContextCompat.getColor(context, R.color.colorPrimary),
 					ContextCompat.getColor(context, R.color.red),
@@ -195,15 +197,15 @@ public class RepositoryOrdini {
 		} else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.confirmed) {
 			return makeCallback(context,
 					ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
-					integer -> markAsDelivered(adapter.getOrdineAt(integer)),
-					integer -> retrieveFromMaster(adapter.getOrdineAt(integer)),
+					integer -> notificaArrivato(adapter.getOrdineAt(integer), tavolo),
+					integer -> annullaConfermaOrdine(adapter.getOrdineAt(integer), tavolo),
 					ContextCompat.getColor(context, R.color.colorPrimary),
 					ContextCompat.getColor(context, R.color.colorPrimary),
 					R.drawable.ic_send, R.drawable.ic_send);
 		} else
 			return makeCallback(context,
 					ItemTouchHelper.LEFT, null,
-					integer -> markAsNotDelivered(adapter.getOrdineAt(integer)),
+					integer -> annullaArrivato(adapter.getOrdineAt(integer), tavolo),
 					0, ContextCompat.getColor(context, R.color.colorPrimary),
 					0, R.drawable.ic_send);
 	}

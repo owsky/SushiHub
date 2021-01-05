@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class ListaOrdiniGenericaPage extends Fragment {
 			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
 			if (args.getTipoLista() == TipoLista.allOrders) {
 				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
-				OrdiniAdapter ordiniAdapter = new OrdiniAdapter(true);
+				OrdiniAdapter ordiniAdapter = new OrdiniAdapter(OrdiniAdapter.TipoAdapter.sincronizzati);
 				recyclerView.setAdapter(ordiniAdapter);
 				viewModel.getAllSynchronized().observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 			} else if (args.getTipoLista() == TipoLista.storico) {
@@ -55,7 +56,7 @@ public class ListaOrdiniGenericaPage extends Fragment {
 				viewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 			}
 		} else {
-			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(false);
+			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(OrdiniAdapter.TipoAdapter.normale);
 			LiveData<List<Ordine>> ordini;
 			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 			if (tipoLista == TipoLista.pending) {

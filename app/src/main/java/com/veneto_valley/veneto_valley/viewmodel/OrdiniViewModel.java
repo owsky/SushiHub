@@ -6,12 +6,14 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
@@ -25,7 +27,7 @@ public class OrdiniViewModel extends AndroidViewModel {
 	
 	public OrdiniViewModel(@NonNull Application application, String tavolo) {
 		super(application);
-		repositoryOrdini = new RepositoryOrdini(application, tavolo);
+		repositoryOrdini = new RepositoryOrdini(application);
 		repositoryTavoli = new RepositoryTavoli(application);
 		this.tavolo = tavolo;
 	}
@@ -33,30 +35,30 @@ public class OrdiniViewModel extends AndroidViewModel {
 	// lazy initialization dei livedata
 	public LiveData<List<Ordine>> getPendingOrders() {
 		if (pending == null)
-			pending = repositoryOrdini.getPendingOrders();
+			pending = repositoryOrdini.getPendingOrders(tavolo);
 		return pending;
 	}
 	
 	public LiveData<List<Ordine>> getConfirmed() {
 		if (confirmed == null)
-			confirmed = repositoryOrdini.getConfirmedOrders();
+			confirmed = repositoryOrdini.getConfirmedOrders(tavolo);
 		return confirmed;
 	}
 	
 	public LiveData<List<Ordine>> getDelivered() {
 		if (delivered == null)
-			delivered = repositoryOrdini.getDeliveredOrders();
+			delivered = repositoryOrdini.getDeliveredOrders(tavolo);
 		return delivered;
 	}
 	
 	public LiveData<List<Ordine>> getAllSynchronized() {
 		if (allOrders == null)
-			allOrders = repositoryOrdini.getAllSynchronized();
+			allOrders = repositoryOrdini.getAllSynchronized(tavolo);
 		return allOrders;
 	}
 	
 	public void insert(Ordine ordine) {
-		repositoryOrdini.insert(ordine);
+		repositoryOrdini.insert(ordine, tavolo);
 	}
 	
 	public void delete(Ordine ordine) {
@@ -69,15 +71,14 @@ public class OrdiniViewModel extends AndroidViewModel {
 	
 	// getter callback nearby
 	public PayloadCallback getCallback() {
-		return repositoryOrdini.getPayloadCallback();
+		return repositoryOrdini.getPayloadCallback(tavolo);
 	}
 	
 	// getter callback touch helper
 	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
-		return repositoryOrdini.getRecyclerCallback(context, adapter, tipoLista);
+		return repositoryOrdini.getRecyclerCallback(context, adapter, tipoLista, tavolo);
 	}
 	
-	// TODO: nuovo viewmodel?
 	public float getCostoMenu() {
 		return repositoryTavoli.getCostoMenu(tavolo);
 	}
@@ -87,7 +88,9 @@ public class OrdiniViewModel extends AndroidViewModel {
 	}
 	
 	// propago la richiesta di checkout alla repository
-	public void checkout() {
-		repositoryOrdini.checkout();
+	public void checkout(ViewModelStoreOwner viewModelStoreOwner) {
+		repositoryOrdini.checkout(tavolo);
+		repositoryTavoli.checkoutTavolo(tavolo);
+		ViewModelUtil.clearViewModels(viewModelStoreOwner);
 	}
 }
