@@ -3,6 +3,7 @@ package com.veneto_valley.veneto_valley.view;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,8 +38,8 @@ public class GeneraQRPage extends Fragment {
 		CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 		List<String> infoTavolo = viewModel.getInfoTavolo();
 		
-		// joino manualmente le stringhe (String.join richiede API minime 26)
-		dati = String.format("%s;%s;%s", infoTavolo.get(0), infoTavolo.get(1), infoTavolo.get(2));
+		// unisco i parametri di costruzione del tavolo in un'unica stringa da codificare in QR
+		dati = TextUtils.join(";", infoTavolo);
 		// se il safearg è true nascondi il bottone per garantire il corretto flow dell'applicazione
 		GeneraQRPageArgs args = GeneraQRPageArgs.fromBundle(requireArguments());
 		if (args.getUnisciti()) {
