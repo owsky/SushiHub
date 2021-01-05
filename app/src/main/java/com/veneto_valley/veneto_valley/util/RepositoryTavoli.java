@@ -56,14 +56,8 @@ public class RepositoryTavoli {
 	public void checkoutTavolo(String idTavolo) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo = tavoloDao.getTavolo(idTavolo);
-			if (tavolo != null) {
-				if (ordineDao.getAllByTable(tavolo.idTavolo) == null) {
-					tavoloDao.delete(tavolo);
-				}else {
-					tavolo.checkedOut = true;
-					tavoloDao.update(tavolo);
-				}
-			}
+			tavolo.checkedOut = true;
+			tavoloDao.update(tavolo);
 		});
 	}
 	
@@ -116,5 +110,9 @@ public class RepositoryTavoli {
 			e.printStackTrace();
 		}
 		return info;
+	}
+	
+	public void deleteAllTables() {
+		Executors.newSingleThreadExecutor().execute(tavoloDao::deleteAllTables);
 	}
 }
