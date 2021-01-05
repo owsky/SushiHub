@@ -32,6 +32,15 @@ public class OrdiniViewModel extends AndroidViewModel {
 		this.tavolo = tavolo;
 	}
 	
+	public LiveData<List<Ordine>> getOrdini(ListaOrdiniGenericaPage.TipoLista tipoLista) {
+		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.pending)
+			return getPendingOrders();
+		else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.confirmed)
+			return getConfirmed();
+		else
+			return getDelivered();
+	}
+	
 	// lazy initialization dei livedata
 	public LiveData<List<Ordine>> getPendingOrders() {
 		if (pending == null)

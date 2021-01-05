@@ -17,6 +17,6 @@ public class OrdiniUtente {
 			entityColumn = "utente"
 	)
 	public List<Ordine> ordini;
-	
+	// TODO fix affinity
 	
 }
