@@ -10,7 +10,7 @@ import com.veneto_valley.veneto_valley.model.AppDatabase;
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
 import com.veneto_valley.veneto_valley.model.dao.UtenteDao;
 
-
+//TODO: Proposta: lo rimuoviamo?
 @Entity
 public class Utente {
 	@PrimaryKey(autoGenerate = true)
