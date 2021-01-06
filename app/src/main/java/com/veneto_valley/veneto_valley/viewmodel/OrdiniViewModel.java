@@ -37,8 +37,10 @@ public class OrdiniViewModel extends AndroidViewModel {
 			return getPendingOrders();
 		else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.confirmed)
 			return getConfirmed();
-		else
+		else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.delivered)
 			return getDelivered();
+		else
+			return getAllSynchronized();
 	}
 	
 	// lazy initialization dei livedata

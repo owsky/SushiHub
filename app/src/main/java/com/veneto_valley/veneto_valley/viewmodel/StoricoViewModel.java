@@ -8,37 +8,39 @@ import androidx.lifecycle.LiveData;
 
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
+import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
+import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 
 import java.util.List;
 
 public class StoricoViewModel extends AndroidViewModel {
-	private final RepositoryTavoli repository;
+	private final RepositoryTavoli repositoryTavoli;
 	private LiveData<List<Tavolo>> tavoli = null;
 	
 	public StoricoViewModel(@NonNull Application application) {
 		super(application);
-		repository = new RepositoryTavoli(application);
+		repositoryTavoli = new RepositoryTavoli(application);
 	}
 	
 	// lazy initialization della repository
 	public LiveData<List<Tavolo>> getTavoli() {
 		if (tavoli == null)
-			tavoli = repository.getTavoliStorico();
+			tavoli = repositoryTavoli.getTavoliStorico();
 		return tavoli;
 	}
 	
 	// lazy initialization del livedata
 	public LiveData<List<Ordine>> getOrdini(Tavolo tavolo) {
-		return repository.getOrdiniStorico(tavolo);
+		return repositoryTavoli.getOrdiniStorico(tavolo);
 	}
 	
 	// cancellazione tavolo dallo storico
 	public void deleteTable(Tavolo tavolo) {
-		repository.deleteTable(tavolo);
+		repositoryTavoli.deleteTable(tavolo);
 	}
 	
 	public void deleteAllTables() {
-		repository.deleteAllTables();
+		repositoryTavoli.deleteAllTables();
 	}
 }

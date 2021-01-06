@@ -2,6 +2,7 @@ package com.veneto_valley.veneto_valley.view;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		// Controllo se Bluetooth è abilitato
 		requestBluetoothLauncher.launch(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
 		// Controllo se WiFi è abilitato
-		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 			Intent enableWifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
 			if (!wifiManager.isWifiEnabled())
