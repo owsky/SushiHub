@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
-apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 30
@@ -44,10 +45,6 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.1'
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.android.gms:play-services-nearby:17.0.0'
 
     // Room components
     implementation "androidx.room:room-runtime:$room_version"
@@ -77,7 +74,10 @@ dependencies {
      di definire solo la versione del BoM e di lasciare ad esso la definizione delle versioni
      delle altre librerie
      */
+
+    // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database'
