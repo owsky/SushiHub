@@ -28,11 +28,10 @@ public abstract class AppDatabase extends RoomDatabase {
 		if (dbInstance == null) {
 			//TODO: Rimuovere fallback
 			dbInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "Veneto_Valley-Db")
-					.allowMainThreadQueries()
-					.fallbackToDestructiveMigration()
+					.allowMainThreadQueries() //TODO: Provare a rimuovere
+					.fallbackToDestructiveMigration()  //TODO: Rimuovere
 					.build();
-			//TODO: Rimuovere clear
-//            dbInstance.clearAllTables();
+			//TODO: dbInstance.clearAllTables();
 		}
 		return dbInstance;
 	}
