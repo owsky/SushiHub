@@ -21,21 +21,4 @@ public class Utente {
 	public Utente(@NonNull String username) {
 		this.username = username;
 	}
-	
-	public static Utente getUser(@NonNull String idUtente, Application application) {
-		UtenteDao utenteDao = AppDatabase.getInstance(application).utenteDao();
-		Utente u = utenteDao.getUtente(idUtente);
-		if (u == null) {
-			Utente tmp = new Utente(idUtente);
-			utenteDao.insert(tmp);
-			u = utenteDao.getUtente(idUtente);
-		}
-		return u;
-	}
-	
-	public static void deleteAllButCurrentUser(Application application) {
-		UtenteDao utenteDao = AppDatabase.getInstance(application).utenteDao();
-		OrdineDao ordineDao = AppDatabase.getInstance(application).ordineDao();
-		
-	}
 }
