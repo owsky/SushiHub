@@ -1,23 +1,16 @@
 package com.veneto_valley.veneto_valley.model.entities;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
 
-//TODO: Proposta: rimuoviamo dal db locale?
-@Entity
 public class Ristorante {
-	@PrimaryKey
-	@NonNull
+	@NotNull
 	public String idRistorante;
 	public String nome;
 	public String indirizzo;
 	public String localita;
 
-	@Ignore
 	public Ristorante(String nome) {
 		this.nome = nome;
 	}
