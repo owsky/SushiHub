@@ -56,8 +56,10 @@ public class RepositoryTavoli {
 	public void checkoutTavolo(String idTavolo) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo = tavoloDao.getTavolo(idTavolo);
-			tavolo.checkedOut = true;
-			tavoloDao.update(tavolo);
+			if (tavolo != null) {
+				tavolo.checkedOut = true;
+				tavoloDao.update(tavolo);
+			}
 		});
 	}
 	
