@@ -9,19 +9,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 import com.veneto_valley.veneto_valley.viewmodel.StoricoViewModel;
-
-import java.util.List;
 
 public class ListaOrdiniGenericaPage extends Fragment {
 	private TipoLista tipoLista;
@@ -68,10 +63,12 @@ public class ListaOrdiniGenericaPage extends Fragment {
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
-		if (args.getTipoLista() == TipoLista.storico)
-			inflater.inflate(R.menu.storico_overflow, menu);
-		menu.findItem(R.id.eliminaTavolo).setVisible(false);
+		if (getArguments() != null) {
+			ListaOrdiniGenericaPageArgs args = ListaOrdiniGenericaPageArgs.fromBundle(getArguments());
+			if (args.getTipoLista() == TipoLista.storico)
+				inflater.inflate(R.menu.storico_overflow, menu);
+			menu.findItem(R.id.eliminaTavolo).setVisible(false);
+		}
 	}
 	
 	@Override
