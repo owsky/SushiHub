@@ -57,7 +57,12 @@ public class ListeTabPage extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
-		view.findViewById(R.id.fab).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment));
+		view.findViewById(R.id.fab).setOnClickListener(v -> {
+			if (preferences.contains("codice_ristorante"))
+				Navigation.findNavController(v).navigate(R.id.action_listeTabNav_to_aggiuntaOrdineMenu);
+			else
+				Navigation.findNavController(v).navigate(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment);
+		});
 		
 		// configurazione delle tab
 		ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);

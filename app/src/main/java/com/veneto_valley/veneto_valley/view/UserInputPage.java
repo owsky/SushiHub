@@ -43,6 +43,7 @@ public class UserInputPage extends Fragment {
 			}
 		});
 	}
+	// TODO refactor codice + nuovo safearg
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -33,7 +33,7 @@ public class ImpostaTavoloPage extends Fragment {
 		
 		portate.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		finito.setOnClickListener(v -> {
-			// verifico che tutte le edittext siano state compilato dell'utente
+			// verifico che tutte le edittext siano state compilate dell'utente
 			if (TextUtils.isEmpty(nome.getText()))
 				Toast.makeText(requireContext(), "Inserisci il nome del ristorante", Toast.LENGTH_SHORT).show();
 			else if (TextUtils.isEmpty(costoMenu.getText()))
@@ -43,7 +43,16 @@ public class ImpostaTavoloPage extends Fragment {
 			else {
 				// creo un tavolo tramite lo user input attraverso il viewmodel
 				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
-				viewModel.creaTavolo(Integer.parseInt(portate.getText().toString()), Float.parseFloat(costoMenu.getText().toString()));
+				ImpostaTavoloPageArgs args;
+				int maxPiatti = Integer.parseInt(portate.getText().toString());
+				float costo = Float.parseFloat(costoMenu.getText().toString());
+				String idRistorante = null;
+				if (getArguments() != null) {
+					args = ImpostaTavoloPageArgs.fromBundle(getArguments());
+					idRistorante = args.getIdRistorante();
+					viewModel.creaTavolo(idRistorante, maxPiatti, costo);
+				}
+				viewModel.creaTavolo(idRistorante, maxPiatti, costo);
 				Misc.hideKeyboard(requireActivity());
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}

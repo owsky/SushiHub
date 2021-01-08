@@ -22,8 +22,8 @@ public interface OrdineDao extends baseDao<Ordine> {
 	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND NOT receivedFromSlave")
 	LiveData<List<Ordine>> getAllbyStatus(Ordine.StatusOrdine status, String tavolo);
 	
-	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND receivedFromSlave")
-	LiveData<List<Ordine>> getAllSynchronized(String tavolo);
+	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND status = :status")
+	LiveData<List<Ordine>> getAllSynchronized(String tavolo, Ordine.StatusOrdine status);
 	
 	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND piatto = :piatto AND NOT receivedFromSlave")
 	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto);
