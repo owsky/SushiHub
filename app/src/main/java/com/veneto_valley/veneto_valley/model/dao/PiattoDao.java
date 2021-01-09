@@ -17,7 +17,7 @@ public interface PiattoDao extends baseDao<Piatto> {
 	@Query("SELECT * FROM piatto WHERE idPiatto IN (:idPiatti)")
 	List<Piatto> loadAllByIds(int[] idPiatti);
 	
-	@Query("SELECT * FROM piatto WHERE nomePiatto LIKE :nomePiatto  LIMIT 1")
+	@Query("SELECT * FROM piatto WHERE nome LIKE :nomePiatto  LIMIT 1")
 	Piatto findByName(String nomePiatto);
 	
 	@Query("DELETE FROM piatto WHERE idPiatto LIKE :idPiatto")

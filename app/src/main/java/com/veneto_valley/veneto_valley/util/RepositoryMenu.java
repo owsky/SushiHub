@@ -9,30 +9,38 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Repo;
+import com.veneto_valley.veneto_valley.model.entities.Categoria;
+import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Ristorante;
 
 import java.util.ArrayList;
 
-public class RepositoryRistorante {
+public class RepositoryMenu {
 
+    private ArrayList<Categoria> categorieArrayList;
     private LinearLayout linLay = null;
-    private ArrayList<Ristorante> arrayList = null;
 
-    public ValueEventListener RistoranteFirebaseListener = new ValueEventListener() {
+    public ValueEventListener MenuFirebaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Log.w("FBTest", snapshot.getKey());
             for (DataSnapshot d: snapshot.getChildren()){
-                Ristorante tmp = d.getValue(Ristorante.class);
-                // Escludo l'id dalla sync quindi devo settarlo a mano
-                tmp.idRistorante = d.getKey();
+                String s = d.getKey();
+                Log.w("FBTest", s);
                 TextView tv = new TextView(linLay.getContext());
-                String s = tmp.toString();
                 tv.setText(s);
                 linLay.addView(tv);
-                if (arrayList != null) {
-                    arrayList.add(tmp);
+                Categoria tmpCat = new Categoria(s);
+
+                for (DataSnapshot p: d.getChildren()){
+                    Piatto tmpPiatto = p.getValue(Piatto.class);
+                    // Escludo l'id dalla sync quindi devo settarlo a mano
+                    tmpPiatto.idPiatto = p.getKey();
+                    tmpCat.piatti.add(tmpPiatto);
                 }
+
+                categorieArrayList.add(tmpCat);
+
             }
         }
 
@@ -42,8 +50,9 @@ public class RepositoryRistorante {
         }
     };
 
-    public RepositoryRistorante(LinearLayout linLay, ArrayList<Ristorante> arrayList) {
+    public RepositoryMenu(LinearLayout linLay, ArrayList<Categoria> categorieArrayList) {
+        linLay.removeAllViews();
+        this.categorieArrayList = categorieArrayList;
         this.linLay = linLay;
-        this.arrayList = arrayList;
     }
 }
