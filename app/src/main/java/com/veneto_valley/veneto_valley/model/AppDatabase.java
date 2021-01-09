@@ -15,7 +15,7 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 
-@Database(entities = {Ordine.class, Piatto.class, Tavolo.class,}, exportSchema = false, version = 1)
+@Database(entities = {Ordine.class, Piatto.class, Tavolo.class,}, exportSchema = false, version = 2)
 @TypeConverters({TimestampConverter.class, StatusEnumConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 	private static AppDatabase dbInstance = null;

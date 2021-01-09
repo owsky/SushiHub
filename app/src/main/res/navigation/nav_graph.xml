@@ -27,6 +27,11 @@
             app:destination="@id/generaQRNav"
             app:popUpTo="@id/impostaTavoloNav"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="idRistorante"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/scanQRNav"
@@ -48,6 +53,11 @@
             android:defaultValue="@null"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine"
             app:nullable="true" />
+        <argument
+            android:name="codicePiatto"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/listeTabNav"
@@ -67,6 +77,9 @@
         <action
             android:id="@+id/action_listeTabNav_to_allOrders"
             app:destination="@id/allOrders" />
+        <action
+            android:id="@+id/action_listeTabNav_to_aggiuntaOrdineMenu"
+            app:destination="@id/aggiuntaOrdineNav" />
     </fragment>
     <fragment
         android:id="@+id/checkoutNav"
@@ -134,10 +147,37 @@
             android:id="@+id/action_homepageNav_to_scanQRNav"
             app:destination="@id/scanQRNav" />
         <action
-            android:id="@+id/action_homepageNav_to_impostaTavoloNav"
-            app:destination="@id/impostaTavoloNav" />
+            android:id="@+id/action_nonConvHomeNav_to_appModePage"
+            app:destination="@id/appModeNav" />
+    </fragment>
+    <fragment
+        android:id="@+id/appModeNav"
+        android:name="com.veneto_valley.veneto_valley.view.AppModePage"
+        android:label="fragment_app_mode_page"
+        tools:layout="@layout/fragment_app_mode_page" >
         <action
-            android:id="@+id/action_homepageNav_to_listeTabNav"
-            app:destination="@id/listeTabNav" />
+            android:id="@+id/action_appModePage_to_listaRistorantiNav"
+            app:destination="@id/listaRistorantiNav" />
+        <action
+            android:id="@+id/action_appModeNav_to_impostaTavoloNav"
+            app:destination="@id/impostaTavoloNav" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaRistorantiNav"
+        android:name="com.veneto_valley.veneto_valley.view.ListaRistoranti"
+        android:label="Ristoranti"
+        tools:layout="@layout/fragment_lista_ristoranti">
+        <action
+            android:id="@+id/action_listaRistorantiNav_to_impostaTavoloNav"
+            app:destination="@id/impostaTavoloNav" />
+    </fragment>
+    <fragment
+        android:id="@+id/aggiuntaOrdineNav"
+        android:name="com.veneto_valley.veneto_valley.view.AggiuntaOrdineMenu"
+        android:label="Menu"
+        tools:layout="@layout/fragment_aggiunta_ordine_menu">
+        <action
+            android:id="@+id/action_aggiuntaOrdineNav_to_userInputNav"
+            app:destination="@id/userInputNav" />
     </fragment>
 </navigation>

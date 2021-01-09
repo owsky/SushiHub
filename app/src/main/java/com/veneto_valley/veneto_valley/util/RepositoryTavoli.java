@@ -25,7 +25,6 @@ public class RepositoryTavoli {
 	private final TavoloDao tavoloDao;
 	private final SharedPreferences preferences;
 	private LiveData<List<Tavolo>> tavoliStorico = null;
-	private Future<Tavolo> future;
 	
 	public RepositoryTavoli(Application application) {
 		tavoloDao = AppDatabase.getInstance(application).tavoloDao();
@@ -71,7 +70,7 @@ public class RepositoryTavoli {
 	}
 	
 	// creazione tavolo per gli slave
-	public void creaTavolo(String codice, int portate, float menu) {
+	public void creaTavolo(String idRistorante, String codice, int portate, float menu) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo;
 			if ((tavolo = tavoloDao.getTavolo(codice)) != null) {
@@ -80,36 +79,34 @@ public class RepositoryTavoli {
 				tavoloDao.update(tavolo);
 			} else {
 				tavolo = new Tavolo(codice, portate, menu);
-				preferences.edit().putString("codice_tavolo", codice).apply();
+				preferences.edit().putString("codice_tavolo", codice)
+						.putString("codice_ristorante", idRistorante).apply();
 				tavoloDao.insert(tavolo);
 			}
 		});
 	}
 	
 	// creazione tavolo per il master
-	public void creaTavolo(int portate, float menu) {
-		future = Executors.newSingleThreadExecutor().submit(() -> {
-			String codice = UUID.randomUUID().toString();
-			preferences.edit().putString("codice_tavolo", codice).putBoolean("is_master", true).apply();
-			Tavolo tavolo = new Tavolo(codice, portate, menu);
-			tavoloDao.insert(tavolo);
-			return tavolo;
-		});
+	public void creaTavolo(String idRistorante, int portate, float menu) {
+		String codice = UUID.randomUUID().toString();
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString("codice_tavolo", codice).putBoolean("is_master", true);
+		if (idRistorante != null)
+			editor.putString("codice_ristorante", idRistorante);
+		editor.apply();
+		Tavolo tavolo = new Tavolo(codice, portate, menu);
+		tavoloDao.insert(tavolo);
 	}
 	
 	// ritorna i parametri di costruzione del tavolo
 	public List<String> getInfoTavolo() {
-		Tavolo current;
+		Tavolo current = tavoloDao.getTavolo(preferences.getString("codice_tavolo", null));
 		List<String> info = new ArrayList<>();
-		try {
-			current = future.get();
+		if (current != null) {
 			info.add(current.idTavolo);
 			info.add(Integer.toString(current.maxPiatti));
 			info.add(Float.toString(current.costoMenu));
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			info.add(current.ristorante);
 		}
 		return info;
 	}

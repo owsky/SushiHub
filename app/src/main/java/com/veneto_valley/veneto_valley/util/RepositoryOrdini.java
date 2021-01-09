@@ -71,7 +71,7 @@ public class RepositoryOrdini {
 	// lazy initialization dei livedata
 	public LiveData<List<Ordine>> getAllSynchronized(String tavolo) {
 		if (allSynchronized == null) {
-			allSynchronized = ordineDao.getAllSynchronized(tavolo);
+			allSynchronized = ordineDao.getAllSynchronized(tavolo, Ordine.StatusOrdine.confirmed);
 		}
 		return allSynchronized;
 	}

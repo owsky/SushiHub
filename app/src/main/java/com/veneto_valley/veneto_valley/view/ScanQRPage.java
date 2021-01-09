@@ -26,7 +26,12 @@ public class ScanQRPage extends Fragment {
 				// se la lettura è andata a buon fine splitta la stringa in array di stringhe per creare il tavolo tramite viewmodel
 				if (contents != null) {
 					String[] info = TextUtils.split(contents, ";");
-					ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class).creaTavolo(info[0], Integer.parseInt(info[1]), Float.parseFloat(info[2]));
+					String codiceTavolo = info[0];
+					int portate = Integer.parseInt(info[1]);
+					float costoMenu = Float.parseFloat(info[2]);
+					String codiceRistorante = info[3];
+					ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class)
+							.creaTavolo(codiceRistorante, codiceTavolo, portate, costoMenu);
 					NavHostFragment.findNavController(ScanQRPage.this).navigate(R.id.action_scanQRNav_to_impostaUtentePage);
 				} else {
 					NavHostFragment.findNavController(ScanQRPage.this).navigateUp();

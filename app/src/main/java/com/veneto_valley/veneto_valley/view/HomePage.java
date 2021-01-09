@@ -27,9 +27,10 @@ public class HomePage extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		view.findViewById(R.id.btnUnisciti).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_scanQRNav));
-		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_homepageNav_to_impostaTavoloNav));
+		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_nonConvHomeNav_to_appModePage));
 		
 		// Se c'è una sessione non conclusa chiedi all'utente se vuole riprenderla
+		// TODO: controllo data
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
 			ResumeDialog dialog = new ResumeDialog();
@@ -43,7 +44,7 @@ public class HomePage extends Fragment {
 		public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
-			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.action_homepageNav_to_listeTabNav));
+			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.listeTabNav));
 			builder.setNegativeButton("No", (dialog, which) -> {
 				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class).checkout(requireActivity());
 				dismiss();
