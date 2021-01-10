@@ -1,0 +1,1048 @@
+{
+   "array":{
+      "type":"Restaurant Menu",
+      "restaurant-info":{
+         "id":"0",
+         "name":"Mirai",
+         "address":"Cannaregio, 146, 30121 Venezia VE",
+         "logo":"",
+         "site-url":"",
+         "location-img":"",
+         "restaurant-url":""
+      },
+      "categorys":[
+         {
+            "id":"1",
+            "name":"URAMAKI A LA CARTE",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"1",
+                  "name":"KANI",
+                  "position":1,
+                  "description":"Granchio e cetriolo",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+                  
+               },
+               {
+                  "id":"2",
+                  "name":"MIRAI",
+                  "position":2,
+                  "description":"Creazione dello chef",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+                  
+               },
+               {
+                  "id":"3",
+                  "name":"TEMPURA IKA",
+                  "position":3,
+                  "description":"Calamaro e salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+                  
+               },
+               {
+                  "id":"4",
+                  "name":"TEMPURA DI PESCE",
+                  "position":4,
+                  "description":"Tempura di pesce",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+                  
+               },
+               {
+                  "id":"5",
+                  "name":"CALIFORNIA",
+                  "position":5,
+                  "description":"Surimi,cetriolo e avocado",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"6",
+                  "name":"SPICY SHAKE",
+                  "position":6,
+                  "description":"Salmone piccante",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"7",
+                  "name":"SPICY MAGURO",
+                  "position":7,
+                  "description":"Tonno piccante",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"8",
+                  "name":"SPICY AMAEBI",
+                  "position":8,
+                  "description":"Gambero crudo piccante",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               
+               {
+                  "id":"9",
+                  "name":"SHAKE KAWA",
+                  "position":9,
+                  "description":"Salmone croccante e creamcheese",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               
+               {
+                  "id":"10",
+                  "name":"EBITEN",
+                  "position":10,
+                  "description":"Tempura di gambero",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"11",
+                  "name":"EBITEN CON SALMONE",
+                  "position":11,
+                  "description":"Gambero fritto con salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"12",
+                  "name":"UNAGI",
+                  "position":12,
+                  "description":"Anguilla in agrodolce",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"13",
+                  "name":"AFFUMICATO",
+                  "position":13,
+                  "description":"Tempura di salmone con salmone affumicato",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"14",
+                  "name":"TEMPURA DI VERDURE",
+                  "position":14,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"15",
+                  "name":"VEGETARIANO",
+                  "position":15,
+                  "description":"Frutta e verdura",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"16",
+                  "name":"EBITEN YU",
+                  "position":16,
+                  "description":"Riso integrale, tempura di gambero, kiwi giallo",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"2",
+            "name":"MAKI A LA CARTE",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"30",
+                  "name":"TEKKAMAKI",
+                  "position":1,
+                  "description":"Tonno",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               
+               },
+               {
+                  "id":"31",
+                  "name":"TEKKAMAKI PHILADELPHIA",
+                  "position":2,
+                  "description":"Tonno",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"32",
+                  "name":"SHAKEMAKI",
+                  "position":3,
+                  "description":"Salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"33",
+                  "name":"SHAKEMAKI PHILADELPHIA",
+                  "position":4,
+                  "description":"Salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"34",
+                  "name":"EBIMAKI",
+                  "position":5,
+                  "description":"Gambero cotto",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"35",
+                  "name":"EBIMAKI PHILADELPHIA",
+                  "position":6,
+                  "description":"Gambero cotto",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"36",
+                  "name":"KAPPAMAKI",
+                  "position":6,
+                  "description":"Cetriolo",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"37",
+                  "name":"AVOCADOMAKI",
+                  "position":7,
+                  "description":"Avocado",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"38",
+                  "name":"UREBOSHI – 8 FETTE",
+                  "position":8,
+                  "description":"Prugna giapponese",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+               
+            ]
+         },
+         {
+            "id":"3",
+            "name":"SASHIMI",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"14",
+                  "name":"AMAEBI",
+                  "position":1,
+                  "description":"Gambero",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"21",
+                  "name":"MAGURO",
+                  "position":2,
+                  "description":"tonno",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"22",
+                  "name":"SHAKE",
+                  "position":3,
+                  "description":"salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"23",
+                  "name":"SHIROMI",
+                  "position":4,
+                  "description":"pesce bianco",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"24",
+                  "name":"IKA",
+                  "position":5,
+                  "description":"calamaro",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+
+            ]
+         },
+         {
+            "id":"4",
+            "name":"NIGIRI",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"35",
+                  "name":"MAGURO",
+                  "position":1,
+                  "description":"Tonno",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"36",
+                  "name":"SHAKE",
+                  "position":2,
+                  "description":"Salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"37",
+                  "name":"AMAEBI",
+                  "position":3,
+                  "description":"Gambero crudo",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"38",
+                  "name":"EBI",
+                  "position":4,
+                  "description":"Gambero cotto",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"39",
+                  "name":"SHIROMI",
+                  "position":5,
+                  "description":"Pesce bianco",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"40",
+                  "name":"IKURA",
+                  "position":6,
+                  "description":"Uova di salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"41",
+                  "name":"MASAGO",
+                  "position":7,
+                  "description":"Uova di flyfish",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"42",
+                  "name":"UNAGI",
+                  "position":8,
+                  "description":"Anguilla in agrodolce",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         }, 
+         {
+            "id":"5",
+            "name":"TEMAKI",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"35",
+                  "name":"MAGURO",
+                  "position":1,
+                  "description":"Tonno",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"36",
+                  "name":"SHAKE",
+                  "position":2,
+                  "description":"Salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"37",
+                  "name":"AMAEBI",
+                  "position":3,
+                  "description":"Gambero crudo",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"40",
+                  "name":"IKURA",
+                  "position":4,
+                  "description":"Uova di salmone",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"10",
+                  "name":"EBITEN",
+                  "position":5,
+                  "description":"Tempura di gambero",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"6",
+            "name":"INSALATE",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"49",
+                  "name":"KANI SALAD",
+                  "position":1,
+                  "description":"Insalata di granchio",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"50",
+                  "name":"WAKAME SALAD",
+                  "position":2,
+                  "description":"Insalata di alghe",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"51",
+                  "name":"MIRAI SALAD",
+                  "position":3,
+                  "description":"Insalata di alghe con gambero crudo e granchio",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"52",
+                  "name":"SASHIMI SALAD",
+                  "position":4,
+                  "description":"Insalata con carpaccio di pesce misto",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"53",
+                  "name":"MIDORI SALAD",
+                  "position":5,
+                  "description":"Insalata verde e frutta",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"55",
+                  "name":"SPICY TUNA SALAD",
+                  "position":6,
+                  "description":"Insalata con pezzetti di tonno piccante",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"56",
+                  "name":"SPICY SALMON SALAD",
+                  "position":7,
+                  "description":"Insalata con pezzetti di salmone piccante",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },              
+               {
+                  "id":"58",
+                  "name":"SPICY AMAEBI SALAD",
+                  "position":8,
+                  "description":"Insalata con gamberi piccanti",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"59",
+                  "name":"GOHAN",
+                  "position":9,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"60",
+                  "name":"MISO SHIRO",
+                  "position":10,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"61",
+                  "name":"AVOCADO",
+                  "position":11,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"62",
+                  "name":"EDAMAME",
+                  "position":12,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"7",
+            "name":"VEGETARIANO",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"81",
+                  "name":"MAKI MIX VEGETARIANO",
+                  "position":1,
+                  "description":"10 uramaki , 8 maki",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               
+               },
+               {
+                  "id":"83",
+                  "name":"URAMAKI TEMPURA DI VERDURA GIAPPONESE",
+                  "position":2,
+                  "description":"10 pezzi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"84",
+                  "name":"URAMAKI CON FRUTTA O VERDURA",
+                  "position":3,
+                  "description":"10 pezzi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"85",
+                  "name":"KAPPAMAKI",
+                  "position":4,
+                  "description":"cetriolo 8 pezzi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"86",
+                  "name":"UMEBOSHI",
+                  "position":5,
+                  "description":"Prugna giapponese 8 pezzi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"87",
+                  "name":"AVOCADOMAKI",
+                  "position":6,
+                  "description":"Avocado 8 pezzi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"88",
+                  "name":"TEMPURA DI VERDURA MISTA",
+                  "position":7,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"89",
+                  "name":"TEMAKI TEMPURA VERDURA",
+                  "position":8,
+                  "description":"Cono d’alga",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"90",
+                  "name":"GOHAN",
+                  "position":9,
+                  "description":"Riso bianco",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"91",
+                  "name":"MISO SHIRO",
+                  "position":10,
+                  "description":"Zuppa giapponese",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"92",
+                  "name":"EDAMAME",
+                  "position":11,
+                  "description":"Fagioli di soia",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"8",
+            "name":"ANTIPASTI FREDDI",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"97",
+                  "name":"ANTIPASTO MIX MIRAI",
+                  "position":1,
+                  "description":"Creazione Sushiman",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"96",
+                  "name":"TARTARE DI SALMONE",
+                  "position":2,
+                  "description":"Salmone con lime giapponese e/o salsa wasabi",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"95",
+                  "name":"TARTARE DI TONNO",
+                  "position":3,
+                  "description":"Tonno con uova di salmone, olio tartufato e lime",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"94",
+                  "name":"TARTARE DI GAMBERO",
+                  "position":4,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"93",
+                  "name":"TRIS DI TARTARE",
+                  "position":5,
+                  "description":"Salmone, tonno e pesce bianco",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"92",
+                  "name":"TAI MAKI",
+                  "position":6,
+                  "description":"Rotolino di alghe, salmone, gambero e riccio di mare con olio tartufato e lime giapponese",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"91",
+                  "name":"AMAEBI MARINATI",
+                  "position":7,
+                  "description":"Gamberi crudi marinati",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },              
+               {
+                  "id":"90",
+                  "name":"CARPACCIO MIX DI PESCE",
+                  "position":8,
+                  "description":"Cono di alga nori con riso, salmone, avocado",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"91",
+                  "name":"CARPACCIO DI TONNO",
+                  "position":9,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"92",
+                  "name":"CARPACCIO DI SALMONE",
+                  "position":10,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"9",
+            "name":"TEMPURA E ANTIPASTI CALDI",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"100",
+                  "name":"MANZO TERIYAKY",
+                  "position":1,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"101",
+                  "name":"TEMPURA MIX",
+                  "position":2,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"102",
+                  "name":"TEMPURA DI PESCE",
+                  "position":3,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"103",
+                  "name":"TEMPURA DI GAMBERI",
+                  "position":4,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"104",
+                  "name":"TEMPURA DI CALAMARO",
+                  "position":5,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"105",
+                  "name":"TEMPURA DI VERDURA",
+                  "position":6,
+                  "description":"",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"106",
+                  "name":"SHIN G",
+                  "position":7,
+                  "description":"RAVIOLI DI GAMBERO",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },              
+               {
+                  "id":"107",
+                  "name":"SHIN",
+                  "position":8,
+                  "description":"RAVIOLI DI BRANZINO",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"108",
+                  "name":"DESIDERIO",
+                  "position":9,
+                  "description":"ROTOLINO FRITTO CON SALMONE E BRIE",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"109",
+                  "name":"FUTOMAKI MIRAI",
+                  "position":10,
+                  "description":"ROTOLINO PASTELLATO CON SALMONE, PESCE BIANCO E PHILADELPHIA",
+                  "price":"0.0",
+                  "images":[
+
+                  ]
+               }
+            ]
+         },
+         {
+            "id":"22",
+            "name":"Bevande",
+            "position":"0",
+            "menu-items":[
+               {
+                  "id":"235",
+                  "name":"Acqua 5cl",
+                  "position":1,
+                  "description":"",
+                  "price":"1.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"236",
+                  "name":"Bibite alla spina",
+                  "position":2,
+                  "description":"coca cola, fanta, sprite",
+                  "price":"2.0",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"237",
+                  "name":"Asashi 33cl",
+                  "position":3,
+                  "description":"Birra giapponese",
+                  "price":"3.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"238",
+                  "name":"Asashi 50cl",
+                  "position":4,
+                  "description":"Birra giapponese",
+                  "price":"4.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"239",
+                  "name":"Kirin 33cl",
+                  "position":5,
+                  "description":"Birra giapponese",
+                  "price":"3.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"240",
+                  "name":"Kirin 50cl",
+                  "position":6,
+                  "description":"Birra giapponese",
+                  "price":"4.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"241",
+                  "name":"Sapporo 50cl",
+                  "position":7,
+                  "description":"Birra giapponese",
+                  "price":"4.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"242",
+                  "name":"Sapporo 60cl",
+                  "position":8,
+                  "description":"Birra giapponese",
+                  "price":"6.50",
+                  "images":[
+
+                  ]
+               },
+               {
+                  "id":"243",
+                  "name":"Singha 33cl",
+                  "position":9,
+                  "description":"Birra thai",
+                  "price":"3.50",
+                  "images":[
+
+                  ]
+               }
+            ]
+         }
+         
+         
+      ]
+   }
+}
