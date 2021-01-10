@@ -6,8 +6,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Categoria;
+import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Ristorante;
+import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import com.veneto_valley.veneto_valley.util.RepositoryMenu;
 import com.veneto_valley.veneto_valley.util.RepositoryRistorante;
 import com.veneto_valley.veneto_valley.viewmodel.MenuViewModel;
@@ -144,5 +146,13 @@ public class FirebaseTest extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void sendOrdineToFirebase(Tavolo tavolo, Ordine ordine){
+        // Ottengo un istanza del db
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // Punto la reference al "Branch" del json che mi interessa
+        DatabaseReference mDatabase = database.getReference("ordini");
+        mDatabase.child(tavolo.ristorante).child(String.valueOf(ordine.idOrdine)).setValue(ordine);
     }
 }
