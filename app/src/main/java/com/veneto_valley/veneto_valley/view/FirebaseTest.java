@@ -1,6 +1,7 @@
 package com.veneto_valley.veneto_valley.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,6 +11,7 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Ristorante;
 import com.veneto_valley.veneto_valley.util.RepositoryMenu;
 import com.veneto_valley.veneto_valley.util.RepositoryRistorante;
+import com.veneto_valley.veneto_valley.viewmodel.MenuViewModel;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseTest extends AppCompatActivity {
 
-    ArrayList<Ristorante> ristorantiArrayList = new ArrayList<>();
-    ArrayList<Categoria> categorieArrayList = new ArrayList<>();
+    //ArrayList<Ristorante> ristorantiArrayList = new ArrayList<>();
+    //ArrayList<Categoria> categorieArrayList = new ArrayList<>();
     Button loadRes = null;
     Button loadCat = null;
     Spinner spinnerRes = null;
@@ -51,20 +54,28 @@ public class FirebaseTest extends AppCompatActivity {
 
         spinnerRes = (Spinner) findViewById(R.id.spinnerRes);
 
+        //LiveData<List<Ristorante>> ristoranti = rr.getRistoranti();
+        MenuViewModel m = new MenuViewModel(this.getApplication(), linLay);
+        ArrayList<Ristorante> ristoranti = m.getRistoranti();
+        ArrayList<Categoria> categorie = m.getCategoria();
+        RepositoryRistorante rr = m.getRepoRistorante();
+        RepositoryMenu rm = m.getRepoMenu();
         //Creating the ArrayAdapter instance having the country list
-        ristorantiArrayList.add(new Ristorante("","Nessun Ristorante Selezionato","",""));
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,ristorantiArrayList);
+        ristoranti.add(new Ristorante("","Nessun Ristorante Selezionato","",""));
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,ristoranti);
+        //dovrebbe funzionare
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinnerRes.setAdapter(aa);
 
         spinnerCat = (Spinner) findViewById(R.id.spinnerMen);
         spinnerCat.setEnabled(false);
-
+        //RepositoryMenu rm = new RepositoryMenu(linLay);
+        //LiveData<List<Categoria>> categorie = rm.getCategoria();
 
         //Creating the ArrayAdapter instance having the country list
-        categorieArrayList.add(new Categoria("Nessuna Categoria Selezionata"));
-        ArrayAdapter aaMenu = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categorieArrayList);
+        categorie.add(new Categoria("Nessuna Categoria Selezionata"));
+        ArrayAdapter aaMenu = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categorie);
         aaMenu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinnerCat.setAdapter(aaMenu);
@@ -75,15 +86,16 @@ public class FirebaseTest extends AppCompatActivity {
         DatabaseReference mDatabase = database.getReference("ristoranti");
 
         // Creo una repositoryRistorante
-        RepositoryRistorante rr = new RepositoryRistorante(linLay,ristorantiArrayList);
+
         // Applico il listener della repo alla mia reference nel db
+
         mDatabase.addListenerForSingleValueEvent(rr.RistoranteFirebaseListener);
 
         spinnerRes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), ristorantiArrayList.get(position).toString(), Toast.LENGTH_LONG).show();
-                Log.w("FBTest", ristorantiArrayList.get(position).toString());
+                Toast.makeText(getApplicationContext(), ristoranti.get(position).toString(), Toast.LENGTH_LONG).show();
+                Log.w("FBTest", ristoranti.get(position).toString());
                 resElemSelected = position;
                 if (position > 0) {
                     loadRes.setEnabled(true);
@@ -103,8 +115,8 @@ public class FirebaseTest extends AppCompatActivity {
         spinnerCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), categorieArrayList.get(position).toString(), Toast.LENGTH_LONG).show();
-                Log.w("FBTest", categorieArrayList.get(position).toString());
+                Toast.makeText(getApplicationContext(), categorie.get(position).toString(), Toast.LENGTH_LONG).show();
+                Log.w("FBTest", categorie.get(position).toString());
                 menElemSelected = position;
                 if (position > 0) {
                     loadCat.setEnabled(true);
@@ -120,17 +132,17 @@ public class FirebaseTest extends AppCompatActivity {
         });
 
         ((Button) findViewById(R.id.loadResBtn)).setOnClickListener( v -> {
-            Log.w("FBTest","Loading menu for item " + resElemSelected + " (" + ristorantiArrayList.get(resElemSelected).idRistorante + ")");
+            Log.w("FBTest","Loading menu for item " + resElemSelected + " (" + ristoranti.get(resElemSelected).idRistorante + ")");
             //TODO: Caricare menu
-            DatabaseReference mMenu = database.getReference("menu").child(ristorantiArrayList.get(resElemSelected).idRistorante);
-            RepositoryMenu rm = new RepositoryMenu(linLay,categorieArrayList);
+            DatabaseReference mMenu = database.getReference("menu").child(ristoranti.get(resElemSelected).idRistorante);
+
             mMenu.addListenerForSingleValueEvent(rm.MenuFirebaseListener);
         });
 
         ((Button) findViewById(R.id.loadMenBtn)).setOnClickListener(v -> {
-            Log.w("FBTest","Loading category for item " + menElemSelected + " (" + categorieArrayList.get(menElemSelected).nomeCategoria + ")");
+            Log.w("FBTest","Loading category for item " + menElemSelected + " (" + categorie.get(menElemSelected).nomeCategoria + ")");
             linLay.removeAllViews();
-            for (Piatto p: categorieArrayList.get(menElemSelected).piatti){
+            for (Piatto p: categorie.get(menElemSelected).piatti){
                 TextView tv = new TextView(linLay.getContext());
                 tv.setText(p.toString());
                 linLay.addView(tv);

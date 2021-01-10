@@ -5,6 +5,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,16 +16,19 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Ristorante;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RepositoryMenu {
 
-    private ArrayList<Categoria> categorieArrayList;
     private LinearLayout linLay = null;
+    //private MutableLiveData<List<Categoria>> categoria = new MutableLiveData<>();
+    private ArrayList<Categoria> categoria = new ArrayList<>();
 
     public ValueEventListener MenuFirebaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.w("FBTest", snapshot.getKey());
+            linLay.removeAllViews();
             for (DataSnapshot d: snapshot.getChildren()){
                 String s = d.getKey();
                 Log.w("FBTest", s);
@@ -31,15 +36,15 @@ public class RepositoryMenu {
                 tv.setText(s);
                 linLay.addView(tv);
                 Categoria tmpCat = new Categoria(s);
+                categoria.add(tmpCat);
 
                 for (DataSnapshot p: d.getChildren()){
                     Piatto tmpPiatto = p.getValue(Piatto.class);
-                    // Escludo l'id dalla sync quindi devo settarlo a mano
                     tmpPiatto.idPiatto = p.getKey();
-                    tmpCat.piatti.add(tmpPiatto);
+                    int index = categoria.indexOf(tmpCat);
+                    categoria.get(index).piatti.add(tmpPiatto);
+                    // Escludo l'id dalla sync quindi devo settarlo a mano
                 }
-
-                categorieArrayList.add(tmpCat);
 
             }
         }
@@ -50,9 +55,11 @@ public class RepositoryMenu {
         }
     };
 
-    public RepositoryMenu(LinearLayout linLay, ArrayList<Categoria> categorieArrayList) {
-        linLay.removeAllViews();
-        this.categorieArrayList = categorieArrayList;
+    public RepositoryMenu(LinearLayout linLay) {
+
         this.linLay = linLay;
+    }
+    public ArrayList<Categoria> getCategoria(){
+        return categoria;
     }
 }
