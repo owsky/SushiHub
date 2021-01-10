@@ -1,7 +1,6 @@
 package com.veneto_valley.veneto_valley.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,10 +21,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FirebaseTest extends AppCompatActivity {
 
@@ -94,7 +91,6 @@ public class FirebaseTest extends AppCompatActivity {
         spinnerRes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), ristoranti.get(position).toString(), Toast.LENGTH_LONG).show();
                 Log.w("FBTest", ristoranti.get(position).toString());
                 resElemSelected = position;
                 if (position > 0) {
@@ -115,7 +111,6 @@ public class FirebaseTest extends AppCompatActivity {
         spinnerCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), categorie.get(position).toString(), Toast.LENGTH_LONG).show();
                 Log.w("FBTest", categorie.get(position).toString());
                 menElemSelected = position;
                 if (position > 0) {
