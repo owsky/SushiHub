@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -35,6 +37,8 @@ public class ImpostaTavoloPage extends Fragment {
 			Ristorante r;
 			if ((r = args.getRistorante()) != null) {
 				viewModel.creaTavolo(r.idRistorante, r.maxPortate, r.costoMenu);
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+				preferences.edit().putString("codice_ristorante", r.idRistorante).apply();
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
 		}
@@ -59,7 +63,6 @@ public class ImpostaTavoloPage extends Fragment {
 				Toast.makeText(requireContext(), "Inserisci il numero di portate massime a persona", Toast.LENGTH_SHORT).show();
 			else {
 				// creo un tavolo tramite lo user input attraverso il viewmodel
-				
 				int maxPiatti = Integer.parseInt(portate.getText().toString());
 				float costo = Float.parseFloat(costoMenu.getText().toString());
 				viewModel.creaTavolo(null, maxPiatti, costo);

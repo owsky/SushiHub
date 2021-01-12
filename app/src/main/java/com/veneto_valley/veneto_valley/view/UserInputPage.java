@@ -43,7 +43,7 @@ public class UserInputPage extends Fragment {
 			}
 		});
 	}
-	// TODO refactor codice + nuovo safearg
+	// TODO refactor codice
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class UserInputPage extends Fragment {
 		prezzo = view.findViewById(R.id.addPrezzo);
 		prezzoTextView = view.findViewById(R.id.prezzoTextView);
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
-		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
+		Button salvaNuovo = view.findViewById(R.id.salva);
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
 		

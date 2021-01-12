@@ -45,11 +45,11 @@ public class ListaRistorantiAdapter extends ListAdapter<Ristorante, ListaRistora
 		Ristorante curr = getItem(position);
 		holder.ristorante.setText(curr.nome);
 		holder.indirizzo.setText(curr.indirizzo);
-		holder.itemView.setOnClickListener(v -> {
+		
 		ListaRistorantiDirections.ActionListaRistorantiNavToImpostaTavoloNav action =
-				ListaRistorantiDirections.actionListaRistorantiNavToImpostaTavoloNav(curr);
+				ListaRistorantiDirections.actionListaRistorantiNavToImpostaTavoloNav();
+		action.setRistorante(curr);
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
-		});
 	}
 	
 	public static class RistoranteViewHolder extends RecyclerView.ViewHolder {

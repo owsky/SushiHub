@@ -11,6 +11,7 @@ import com.veneto_valley.veneto_valley.model.entities.Ristorante;
 import com.veneto_valley.veneto_valley.util.RepositoryMenu;
 import com.veneto_valley.veneto_valley.util.RepositoryRistorante;
 import com.veneto_valley.veneto_valley.view.ListaRistorantiAdapter;
+import com.veneto_valley.veneto_valley.view.MenuAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,9 @@ public class MenuViewModel extends AndroidViewModel {
             repositoryRistorante = new RepositoryRistorante(adapter);
         return repositoryRistorante.getRistoranti();
     }
-    public List<Categoria> getCategoria(){
+    public List<Categoria> getCategoria(MenuAdapter adapter, String idRistorante){
         if (repositoryMenu == null)
-            repositoryMenu = new RepositoryMenu();
+            repositoryMenu = new RepositoryMenu(adapter, idRistorante);
         return repositoryMenu.getCategoria();
     }
 }

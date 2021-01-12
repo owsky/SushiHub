@@ -12,19 +12,20 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.model.entities.Piatto;
 
-public class MenuAdapter extends ListAdapter<String, MenuAdapter.MenuViewHolder> {
+public class MenuAdapter extends ListAdapter<Piatto, MenuAdapter.MenuViewHolder> {
 	
 	public MenuAdapter() {
-		super(new DiffUtil.ItemCallback<String>() {
+		super(new DiffUtil.ItemCallback<Piatto>() {
 			@Override
-			public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-				return oldItem.equals(newItem);
+			public boolean areItemsTheSame(@NonNull Piatto oldItem, @NonNull Piatto newItem) {
+				return oldItem.idPiatto.equals(newItem.idPiatto);
 			}
 			
 			@Override
-			public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-				return oldItem.equals(newItem);
+			public boolean areContentsTheSame(@NonNull Piatto oldItem, @NonNull Piatto newItem) {
+				return oldItem.nome.equals(newItem.nome);
 			}
 		});
 	}
@@ -38,10 +39,10 @@ public class MenuAdapter extends ListAdapter<String, MenuAdapter.MenuViewHolder>
 	
 	@Override
 	public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-		holder.nomePiatto.setText(getItem(position));
-		AggiuntaOrdineMenuDirections.ActionAggiuntaOrdineNavToUserInputNav action =
-				AggiuntaOrdineMenuDirections.actionAggiuntaOrdineNavToUserInputNav();
-		action.setCodicePiatto(getItem(position));
+		holder.nomePiatto.setText(getItem(position).nome);
+		MenuAggiuntaOrdineDirections.ActionAggiuntaOrdineNavToUserInputMenu action =
+				MenuAggiuntaOrdineDirections.actionAggiuntaOrdineNavToUserInputMenu();
+		action.setPiatto(getItem(position));
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
 	

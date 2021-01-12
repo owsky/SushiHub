@@ -30,7 +30,8 @@
         <argument
             android:name="ristorante"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Ristorante"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/scanQRNav"
@@ -52,11 +53,6 @@
             android:defaultValue="@null"
             app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine"
             app:nullable="true" />
-        <argument
-            android:name="codicePiatto"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/listeTabNav"
@@ -79,6 +75,9 @@
         <action
             android:id="@+id/action_listeTabNav_to_aggiuntaOrdineMenu"
             app:destination="@id/aggiuntaOrdineNav" />
+        <action
+            android:id="@+id/action_listeTabNav_to_userInputMenu"
+            app:destination="@id/userInputMenu" />
     </fragment>
     <fragment
         android:id="@+id/checkoutNav"
@@ -172,11 +171,31 @@
     </fragment>
     <fragment
         android:id="@+id/aggiuntaOrdineNav"
-        android:name="com.veneto_valley.veneto_valley.view.AggiuntaOrdineMenu"
+        android:name="com.veneto_valley.veneto_valley.view.MenuAggiuntaOrdine"
         android:label="Menu"
         tools:layout="@layout/fragment_aggiunta_ordine_menu">
         <action
-            android:id="@+id/action_aggiuntaOrdineNav_to_userInputNav"
-            app:destination="@id/userInputNav" />
+            android:id="@+id/action_aggiuntaOrdineNav_to_userInputMenu"
+            app:destination="@id/userInputMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInputMenu"
+        android:name="com.veneto_valley.veneto_valley.view.UserInputMenuPage"
+        android:label="UserInputMenu" >
+        <argument
+            android:name="ordine"
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="piatto"
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Piatto"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_userInputMenu_to_listeTabNav"
+            app:destination="@id/listeTabNav"
+            app:popUpTo="@id/userInputMenu"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
