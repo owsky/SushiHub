@@ -46,9 +46,7 @@ public class RepositoryOrdini {
 	public void insert(Ordine ordine) {
 		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
 		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
-		Executors.newSingleThreadExecutor().execute(() -> {
-			ordineDao.insert(ordine);
-		});
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.insert(ordine));
 	}
 	
 	public void update(Ordine ordine) {
@@ -157,8 +155,7 @@ public class RepositoryOrdini {
 						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
 							ordine.quantita += fromSlave.quantita;
 							ordineDao.insert(ordine);
-						}
-						else
+						} else
 							ordineDao.update(ordine);
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
@@ -171,7 +168,8 @@ public class RepositoryOrdini {
 			}
 			
 			@Override
-			public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {}
+			public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
+			}
 		};
 	}
 	

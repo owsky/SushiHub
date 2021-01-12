@@ -22,8 +22,8 @@ import java.util.List;
 public class OrdiniViewModel extends AndroidViewModel {
 	private final RepositoryOrdini repositoryOrdini;
 	private final RepositoryTavoli repositoryTavoli;
-	private LiveData<List<Ordine>> pending = null, confirmed = null, delivered = null, allOrders = null;
 	private final String tavolo;
+	private LiveData<List<Ordine>> pending = null, confirmed = null, delivered = null, allOrders = null;
 	
 	public OrdiniViewModel(@NonNull Application application, String tavolo) {
 		super(application);

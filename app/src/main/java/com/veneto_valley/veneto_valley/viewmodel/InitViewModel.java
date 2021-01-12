@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.veneto_valley.veneto_valley.util.RepositoryUtenti;
 
 public class InitViewModel extends AndroidViewModel {
-	RepositoryUtenti repositoryUtenti;
+	final RepositoryUtenti repositoryUtenti;
 	
 	public InitViewModel(@NonNull Application application) {
 		super(application);

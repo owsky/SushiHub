@@ -36,4 +36,5 @@
     <string name="sushi_icon">Sushi icon</string>
     <string name="pulisci_storico">Pulisci storico</string>
     <string name="nome">Nome</string>
+    <string name="nome_ristorante">Nome ristorante</string>
 </resources>

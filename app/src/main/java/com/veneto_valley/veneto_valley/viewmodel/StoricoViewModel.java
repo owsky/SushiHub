@@ -8,9 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
-import com.veneto_valley.veneto_valley.util.RepositoryOrdini;
 import com.veneto_valley.veneto_valley.util.RepositoryTavoli;
-import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 
 import java.util.List;
 

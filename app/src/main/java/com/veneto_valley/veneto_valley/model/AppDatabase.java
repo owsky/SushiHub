@@ -37,5 +37,5 @@ public abstract class AppDatabase extends RoomDatabase {
 	public abstract PiattoDao piattoDao();
 	
 	public abstract TavoloDao tavoloDao();
-
+	
 }

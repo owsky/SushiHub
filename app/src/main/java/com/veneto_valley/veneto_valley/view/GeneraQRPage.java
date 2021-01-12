@@ -37,7 +37,7 @@ public class GeneraQRPage extends Fragment {
 		// recupero le informazioni di configurazione
 		CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
 		List<String> infoTavolo = viewModel.getInfoTavolo();
-
+		
 		// unisco i parametri di costruzione del tavolo in un'unica stringa da codificare in QR
 		dati = TextUtils.join(";", infoTavolo);
 		// se il safearg è true nascondi il bottone per garantire il corretto flow dell'applicazione

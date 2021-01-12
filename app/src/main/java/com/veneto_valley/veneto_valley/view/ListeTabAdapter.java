@@ -2,7 +2,6 @@ package com.veneto_valley.veneto_valley.view;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ListeTabAdapter extends FragmentStateAdapter {

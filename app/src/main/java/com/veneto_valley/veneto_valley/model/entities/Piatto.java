@@ -14,11 +14,23 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @Entity
 @IgnoreExtraProperties
 public class Piatto implements Parcelable {
+	@Exclude
+	public static final Parcelable.Creator<Piatto> CREATOR = new Parcelable.Creator<Piatto>() {
+		
+		@Override
+		public Piatto createFromParcel(Parcel source) {
+			return new Piatto(source);
+		}
+		
+		@Override
+		public Piatto[] newArray(int size) {
+			return new Piatto[size];
+		}
+	};
 	@PrimaryKey
 	@NonNull
 	@Exclude
 	public String idPiatto;
-	
 	public String nome;
 	// TODO: rimuovere descrizione
 	public String descrizione;
@@ -29,15 +41,9 @@ public class Piatto implements Parcelable {
 		this.nome = nome;
 		this.descrizione = descrizione;
 	}
-
-	@NonNull
-	@Override
-	public String toString() {
-		return this.idPiatto + " - " + this.nome;
-	}
-
+	
 	@Ignore
-	public Piatto(){
+	public Piatto() {
 		// Default constructor required for calls to DataSnapshot.getValue(User.class)
 	}
 	
@@ -46,6 +52,12 @@ public class Piatto implements Parcelable {
 		nome = in.readString();
 		descrizione = in.readString();
 		prezzo = in.readFloat();
+	}
+	
+	@NonNull
+	@Override
+	public String toString() {
+		return this.idPiatto + " - " + this.nome;
 	}
 	
 	@Override
@@ -61,19 +73,5 @@ public class Piatto implements Parcelable {
 		dest.writeString(descrizione);
 		dest.writeFloat(prezzo);
 	}
-	
-	@Exclude
-	public static final Parcelable.Creator<Piatto> CREATOR = new Parcelable.Creator<Piatto>() {
-		
-		@Override
-		public Piatto createFromParcel(Parcel source) {
-			return new Piatto(source);
-		}
-		
-		@Override
-		public Piatto[] newArray(int size) {
-			return new Piatto[size];
-		}
-	};
 	
 }

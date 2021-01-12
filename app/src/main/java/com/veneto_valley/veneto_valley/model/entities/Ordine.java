@@ -45,8 +45,10 @@ public class Ordine implements Parcelable {
 	public String piatto;
 	@Exclude
 	public String utente;
+	
 	@Ignore
-	public Ordine(){}
+	public Ordine() {
+	}
 	
 	//TODO: Implementare test
 	public Ordine(String tavolo, String piatto, int quantita, StatusOrdine status, String utente, boolean receivedFromSlave) {
@@ -57,7 +59,7 @@ public class Ordine implements Parcelable {
 		this.utente = utente;
 		this.receivedFromSlave = receivedFromSlave;
 	}
-
+	
 	protected Ordine(Parcel in) {
 		status = StatusOrdine.valueOf(in.readString());
 		quantita = in.readInt();
@@ -66,13 +68,13 @@ public class Ordine implements Parcelable {
 		piatto = in.readString();
 		utente = in.readString();
 	}
-
+	
 	@Exclude
 	public static Ordine getFromBytes(byte[] ordine) {
 		Parcel parcel = ParcelableUtil.unmarshall(ordine);
 		return new Ordine(parcel);
 	}
-
+	
 	@Exclude
 	public byte[] getBytes() {
 		return ParcelableUtil.marshall(this);
@@ -94,7 +96,7 @@ public class Ordine implements Parcelable {
 		dest.writeString(piatto);
 		dest.writeString(utente);
 	}
-
+	
 	public enum StatusOrdine {
 		pending,
 		confirmed,

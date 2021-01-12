@@ -26,7 +26,7 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 		@Override
 		public boolean areContentsTheSame(@NonNull Tavolo oldItem, @NonNull Tavolo newItem) {
 			return oldItem.dataCreazione.equals(newItem.dataCreazione) &&
-					oldItem.ristorante == newItem.ristorante &&
+					oldItem.ristorante.equals(newItem.ristorante) &&
 					oldItem.costoMenu == newItem.costoMenu;
 		}
 	};
@@ -46,7 +46,7 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 	public void onBindViewHolder(@NonNull TavoloViewHolder holder, int position) {
 		Tavolo tavolo = getItem(position);
 //		holder.ristorante.setText(tavolo.nome);
-		holder.ristorante.setText("Nome ristorante");
+		holder.ristorante.setText(R.string.nome_ristorante);
 		holder.data.setText(tavolo.dataCreazione.toString());
 		
 		// crea un click listener che naviga verso la view con i dettagli delle ordinazioni, passando
