@@ -47,8 +47,7 @@ public class ListaRistorantiAdapter extends ListAdapter<Ristorante, ListaRistora
 		holder.indirizzo.setText(curr.indirizzo);
 		holder.itemView.setOnClickListener(v -> {
 		ListaRistorantiDirections.ActionListaRistorantiNavToImpostaTavoloNav action =
-				ListaRistorantiDirections.actionListaRistorantiNavToImpostaTavoloNav();
-		action.setIdRistorante(curr.idRistorante);
+				ListaRistorantiDirections.actionListaRistorantiNavToImpostaTavoloNav(curr);
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 		});
 	}

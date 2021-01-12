@@ -14,13 +14,30 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.model.entities.Ristorante;
 import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
 
 public class ImpostaTavoloPage extends Fragment {
+	private CreaTavoloViewModel viewModel;
+	
 	public ImpostaTavoloPage() {
 		super(R.layout.fragment_imposta_tavolo);
+	}
+	
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
+		if (getArguments() != null) {
+			ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(getArguments());
+			Ristorante r;
+			if ((r = args.getRistorante()) != null) {
+				viewModel.creaTavolo(r.idRistorante, 0, 0);
+			}
+		}
+		
 	}
 	
 	@Override
@@ -42,17 +59,10 @@ public class ImpostaTavoloPage extends Fragment {
 				Toast.makeText(requireContext(), "Inserisci il numero di portate massime a persona", Toast.LENGTH_SHORT).show();
 			else {
 				// creo un tavolo tramite lo user input attraverso il viewmodel
-				CreaTavoloViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class);
-				ImpostaTavoloPageArgs args;
+				
 				int maxPiatti = Integer.parseInt(portate.getText().toString());
 				float costo = Float.parseFloat(costoMenu.getText().toString());
-				String idRistorante = null;
-				if (getArguments() != null) {
-					args = ImpostaTavoloPageArgs.fromBundle(getArguments());
-					idRistorante = args.getIdRistorante();
-					viewModel.creaTavolo(idRistorante, maxPiatti, costo);
-				}
-				viewModel.creaTavolo(idRistorante, maxPiatti, costo);
+				viewModel.creaTavolo(null, maxPiatti, costo);
 				Misc.hideKeyboard(requireActivity());
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
