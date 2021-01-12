@@ -29,7 +29,6 @@ public class HomePage extends Fragment {
 		view.findViewById(R.id.btnCrea).setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_nonConvHomeNav_to_appModePage));
 		
 		// Se c'è una sessione non conclusa chiedi all'utente se vuole riprenderla
-		// TODO: controllo data
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
 			ResumeDialog dialog = new ResumeDialog();
