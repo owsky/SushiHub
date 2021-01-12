@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,7 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.veneto_valley.veneto_valley.R;
+import com.veneto_valley.veneto_valley.model.entities.Ristorante;
+import com.veneto_valley.veneto_valley.util.ViewModelUtil;
+import com.veneto_valley.veneto_valley.viewmodel.MenuViewModel;
+
+import java.util.List;
 
 public class ListaRistoranti extends Fragment {
 	
@@ -21,9 +33,15 @@ public class ListaRistoranti extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerViewRistoranti);
+		
+		MenuViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), MenuViewModel.class);
+		ListaRistorantiAdapter adapter = new ListaRistorantiAdapter();
+		List<Ristorante> ristoranti = viewModel.getRistoranti(adapter);
+		adapter.submitList(ristoranti);
+		
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		recyclerView.setHasFixedSize(true);
-		recyclerView.setAdapter(new ListaRistorantiAdapter());
-		// TODO: observe livedata ristoranti
+		recyclerView.setAdapter(adapter);
+		
 	}
 }
