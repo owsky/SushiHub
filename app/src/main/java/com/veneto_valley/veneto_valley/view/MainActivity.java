@@ -35,6 +35,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+	private static final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
 	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 		if (!bluetoothAdapter.isEnabled()) {
@@ -47,11 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	});
 	private final ActivityResultLauncher<Intent> requestWifiLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 	});
+	private final String[] permissionCodes = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
 	private DrawerLayout drawer;
 	private NavController navController;
 	private AppBarConfiguration appBarConfiguration;
-	private final String[] permissionCodes = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
-	private static final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

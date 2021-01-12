@@ -15,10 +15,7 @@ import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class RepositoryTavoli {
 	private final OrdineDao ordineDao;
