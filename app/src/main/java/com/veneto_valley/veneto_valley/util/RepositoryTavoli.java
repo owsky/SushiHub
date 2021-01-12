@@ -94,7 +94,7 @@ public class RepositoryTavoli {
 		if (idRistorante != null)
 			editor.putString("codice_ristorante", idRistorante);
 		editor.apply();
-		Tavolo tavolo = new Tavolo(codice, portate, menu);
+		Tavolo tavolo = new Tavolo(codice, portate, menu, idRistorante);
 		tavoloDao.insert(tavolo);
 	}
 	

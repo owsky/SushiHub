@@ -34,10 +34,10 @@ public class ImpostaTavoloPage extends Fragment {
 			ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(getArguments());
 			Ristorante r;
 			if ((r = args.getRistorante()) != null) {
-				viewModel.creaTavolo(r.idRistorante, 0, 0);
+				viewModel.creaTavolo(r.idRistorante, r.maxPortate, r.costoMenu);
+				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
 		}
-		
 	}
 	
 	@Override
