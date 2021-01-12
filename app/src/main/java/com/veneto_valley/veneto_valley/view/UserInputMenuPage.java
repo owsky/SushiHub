@@ -2,12 +2,6 @@ package com.veneto_valley.veneto_valley.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,14 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
-
-import org.w3c.dom.Text;
 
 import static android.view.View.GONE;
 
@@ -47,7 +43,9 @@ public class UserInputMenuPage extends Fragment {
 				Ordine ordine = args.getOrdine();
 				nomePiatto.setText(ordine.desc);
 				codice.setText(ordine.piatto);
-				qta.setText(ordine.quantita);
+				TextView qtaText = view.findViewById(R.id.quantita);
+				qtaText.setVisibility(GONE);
+				qta.setVisibility(View.GONE);
 				
 			} else if (args.getPiatto() != null) {
 				Piatto piatto = args.getPiatto();
@@ -68,9 +66,13 @@ public class UserInputMenuPage extends Fragment {
 				String utente = preferences.getString("username", null);
 				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 				String cod = codice.getText().toString();
-				Ordine ordine = new Ordine(tavolo, cod, quantita, Ordine.StatusOrdine.pending, utente, false);
-				ordine.desc = nomePiatto.getText().toString();
-				viewModel.insert(ordine);
+				
+				for (int i = 0; i < quantita; ++i) {
+					// TODO: spostare for giù di layer
+					Ordine ordine = new Ordine(tavolo, cod, quantita, Ordine.StatusOrdine.pending, utente, false);
+					ordine.desc = nomePiatto.getText().toString();
+					viewModel.insert(ordine);
+				}
 				NavHostFragment.findNavController(this).navigate(R.id.action_userInputMenu_to_listeTabNav);
 			}
 		});

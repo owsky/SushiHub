@@ -48,17 +48,15 @@ public class StoricoDettagliAdapter extends ListAdapter<Ordine, StoricoDettagliA
 		String desc = currentOrdine.desc;
 		if (desc != null)
 			holder.descrizione.setText(desc);
-		holder.quantita.setVisibility(View.GONE);
 	}
 	
 	public static class StoricoDettagliViewHolder extends RecyclerView.ViewHolder {
-		private final TextView codice, descrizione, quantita;
+		private final TextView codice, descrizione;
 		
 		public StoricoDettagliViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
-			quantita = itemView.findViewById(R.id.piattoQuantita);
 		}
 	}
 }

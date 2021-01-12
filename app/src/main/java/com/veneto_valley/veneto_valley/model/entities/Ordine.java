@@ -31,6 +31,7 @@ public class Ordine implements Parcelable {
 	public long idOrdine;
 	@Exclude
 	public StatusOrdine status;
+	// TODO rimuovere quantità
 	public int quantita;
 	public String desc;
 	@Exclude

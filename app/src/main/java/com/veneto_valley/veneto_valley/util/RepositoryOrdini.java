@@ -43,20 +43,11 @@ public class RepositoryOrdini {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public void insert(Ordine ordine, String tavolo) {
+	public void insert(Ordine ordine) {
 		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
 		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
 		Executors.newSingleThreadExecutor().execute(() -> {
-			Ordine vecchioOrdine;
-			if ((vecchioOrdine = ordineDao.contains(Ordine.StatusOrdine.pending, tavolo, ordine.piatto)) != null) {
-				vecchioOrdine.quantita += ordine.quantita;
-				if (!(ordine.desc == null))
-					vecchioOrdine.desc = ordine.desc;
-				vecchioOrdine.prezzo = ordine.prezzo;
-				update(vecchioOrdine);
-			} else {
-				ordineDao.insert(ordine);
-			}
+			ordineDao.insert(ordine);
 		});
 	}
 	

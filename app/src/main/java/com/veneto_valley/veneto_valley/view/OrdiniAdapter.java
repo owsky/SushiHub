@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +18,9 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 
 public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingViewHolder> {
 	private final ListaOrdiniGenericaPage.TipoLista tipoLista;
+	private final boolean isConv;
 	
-	public OrdiniAdapter(ListaOrdiniGenericaPage.TipoLista tipoLista) {
+	public OrdiniAdapter(ListaOrdiniGenericaPage.TipoLista tipoLista, boolean isConv) {
 		// callback che consente al listadapter di confrontare gli elementi della lista
 		super(new DiffUtil.ItemCallback<Ordine>() {
 			@Override
@@ -33,6 +35,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			}
 		});
 		this.tipoLista = tipoLista;
+		this.isConv = isConv;
 	}
 	
 	@NonNull
@@ -49,22 +52,25 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		holder.codice.setText(String.valueOf(currentOrdine.piatto));
 		String desc = currentOrdine.desc;
 		// modifico le opzioni di visibilità del viewholder in base alla view
-		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.confirmed) {
+		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.allOrders) {
 			holder.utente.setText(currentOrdine.utente);
 			holder.utente.setVisibility(View.VISIBLE);
 			holder.descrizione.setVisibility(View.GONE);
-		} else if (tipoLista == ListaOrdiniGenericaPage.TipoLista.storico) {
-			holder.quantita.setVisibility(View.GONE);
 		}
 		if (desc != null)
 			holder.descrizione.setText(desc);
-		holder.quantita.setText(String.valueOf(currentOrdine.quantita));
 		// se lo status dell'ordine è pending, crea un click listener che consente di navigare alla
 		// view userinput con safearg l'ordine da modificare
-		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending) && tipoLista != ListaOrdiniGenericaPage.TipoLista.allOrders && tipoLista != ListaOrdiniGenericaPage.TipoLista.storico) {
-			ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
-			action.setOrdine(currentOrdine);
-			holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
+		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending) && tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
+			if (isConv) {
+				ListeTabPageDirections.ActionListeTabNavToUserInputMenu action = ListeTabPageDirections.actionListeTabNavToUserInputMenu();
+				action.setOrdine(currentOrdine);
+				holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
+			} else {
+				ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
+				action.setOrdine(currentOrdine);
+				holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
+			}
 		}
 	}
 	
@@ -73,13 +79,12 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 	}
 	
 	public static class PendingViewHolder extends RecyclerView.ViewHolder {
-		private final TextView codice, descrizione, quantita, utente;
+		private final TextView codice, descrizione, utente;
 		
 		public PendingViewHolder(@NonNull View itemView) {
 			super(itemView);
 			codice = itemView.findViewById(R.id.piattoCodice);
 			descrizione = itemView.findViewById(R.id.piattoDesc);
-			quantita = itemView.findViewById(R.id.piattoQuantita);
 			utente = itemView.findViewById(R.id.piattoUtente);
 		}
 	}

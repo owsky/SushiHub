@@ -54,7 +54,7 @@ public class UserInputPage extends Fragment {
 		prezzo = view.findViewById(R.id.addPrezzo);
 		prezzoTextView = view.findViewById(R.id.prezzoTextView);
 		Button salvaEsci = view.findViewById(R.id.salvaEsci);
-		Button salvaNuovo = view.findViewById(R.id.salva);
+		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
 		
@@ -65,7 +65,9 @@ public class UserInputPage extends Fragment {
 		if ((ordine = args.getOrdine()) != null) {
 			codice.setText(ordine.piatto);
 			desc.setText(ordine.desc);
-			qta.setText(String.valueOf(ordine.quantita));
+			qta.setVisibility(View.GONE);
+			TextView qtaText = view.findViewById(R.id.qta);
+			qtaText.setVisibility(View.GONE);
 			prezzo.setText(String.valueOf(ordine.prezzo));
 			salvaEsci.setVisibility(View.GONE);
 			salvaNuovo.setText(R.string.salva);
@@ -121,17 +123,18 @@ public class UserInputPage extends Fragment {
 			int quantita = Integer.parseInt(qta.getText().toString());
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 			String username = preferences.getString("username", "username");
-			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, username, false);
-			if (!descrizione.trim().isEmpty())
-				ordine.desc = descrizione;
 			
-			if (!prezzoExtra.isEmpty())
-				ordine.prezzo = Float.parseFloat(prezzoExtra);
-			
-			if (!isExtra)
-				ordine.prezzo = 0;
-			
-			viewModel.insert(ordine);
+			for (int i = 0; i < quantita; ++i) {
+				// TODO: insert multiplo
+				Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, username, false);
+				if (!descrizione.trim().isEmpty())
+					ordine.desc = descrizione;
+				if (!prezzoExtra.isEmpty())
+					ordine.prezzo = Float.parseFloat(prezzoExtra);
+				if (!isExtra)
+					ordine.prezzo = 0;
+				viewModel.insert(ordine);
+			}
 			return true;
 		}
 		return false;

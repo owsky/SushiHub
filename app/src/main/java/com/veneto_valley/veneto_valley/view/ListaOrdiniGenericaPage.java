@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,7 +53,8 @@ public class ListaOrdiniGenericaPage extends Fragment {
 			storicoViewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 		} else {
 			OrdiniViewModel ordiniViewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
-			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(tipoLista);
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(tipoLista, preferences.contains("codice_ristorante"));
 			recyclerView.setAdapter(ordiniAdapter);
 			ordiniViewModel.getOrdini(tipoLista).observe(getViewLifecycleOwner(), ordiniAdapter::submitList);
 			if (tipoLista == TipoLista.pending || tipoLista == TipoLista.delivered || tipoLista == TipoLista.confirmed) {

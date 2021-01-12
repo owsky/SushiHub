@@ -31,9 +31,9 @@
         android:maxLength="2"
         android:maxLines="1"
         android:nextFocusDown="@id/addDesc"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/qta"
         app:layout_constraintStart_toEndOf="@+id/addCodice"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/qta"
         tools:ignore="Autofill,LabelFor" />
 
     <EditText
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/qta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"

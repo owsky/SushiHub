@@ -31,25 +31,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/piattoQuantita"
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:maxLength="2"
-                android:maxLines="1"
-                android:padding="10dp"
-                android:text="Qta"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/piattoCodice"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/piattoDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:padding="10dp"
@@ -57,7 +41,7 @@
                 android:text="Descrizione"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/piattoQuantita"
+                app:layout_constraintStart_toEndOf="@+id/piattoCodice"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -74,7 +58,6 @@
                 android:textSize="24sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/piattoQuantita"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -36,7 +36,7 @@ public class StoricoDettagliPage extends Fragment {
 		RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-		OrdiniAdapter adapter = new OrdiniAdapter(ListaOrdiniGenericaPage.TipoLista.storico);
+		OrdiniAdapter adapter = new OrdiniAdapter(ListaOrdiniGenericaPage.TipoLista.storico, false);
 		recyclerView.setAdapter(adapter);
 		
 		// estraggo dal viewmodel il livedata da osservare

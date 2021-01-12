@@ -69,7 +69,7 @@ public class OrdiniViewModel extends AndroidViewModel {
 	}
 	
 	public void insert(Ordine ordine) {
-		repositoryOrdini.insert(ordine, tavolo);
+		repositoryOrdini.insert(ordine);
 	}
 	
 	public void delete(Ordine ordine) {
