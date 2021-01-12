@@ -54,7 +54,7 @@ public class FirebaseTest extends AppCompatActivity {
         spinnerRes = (Spinner) findViewById(R.id.spinnerRes);
 
         //LiveData<List<Ristorante>> ristoranti = rr.getRistoranti();
-        MenuViewModel m = new MenuViewModel(this.getApplication(), linLay);
+        MenuViewModel m = new MenuViewModel(this.getApplication());
         ArrayList<Ristorante> ristoranti = m.getRistoranti();
         ArrayList<Categoria> categorie = m.getCategoria();
         RepositoryRistorante rr = m.getRepoRistorante();

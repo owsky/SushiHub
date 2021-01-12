@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class MenuViewModel extends AndroidViewModel {
     RepositoryRistorante r;
     RepositoryMenu m;
-    public MenuViewModel(@NonNull Application application, LinearLayout linlay) {
+    public MenuViewModel(@NonNull Application application) {
         super(application);
-        r = new RepositoryRistorante(linlay);
-        m = new RepositoryMenu(linlay);
+        r = new RepositoryRistorante();
+        m = new RepositoryMenu();
     }
     public ArrayList<Ristorante> getRistoranti() {
         return r.getRistoranti();

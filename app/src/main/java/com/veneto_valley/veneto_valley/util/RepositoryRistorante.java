@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class RepositoryRistorante {
 
-    private LinearLayout linLay = null;
     private ArrayList<Ristorante> ristoranti = new ArrayList<>();
 
     public ValueEventListener RistoranteFirebaseListener = new ValueEventListener() {
@@ -26,12 +25,7 @@ public class RepositoryRistorante {
                 Ristorante tmp = d.getValue(Ristorante.class);
                 // Escludo l'id dalla sync quindi devo settarlo a mano
                 tmp.idRistorante = d.getKey();
-                TextView tv = new TextView(linLay.getContext());
-                String s = tmp.toString();
-                tv.setText(s);
-                linLay.addView(tv);
                 ristoranti.add(tmp);
-
             }
         }
 
@@ -41,8 +35,7 @@ public class RepositoryRistorante {
         }
     };
 
-    public RepositoryRistorante(LinearLayout linLay) {
-        this.linLay = linLay;
+    public RepositoryRistorante() {
     }
     public ArrayList<Ristorante> getRistoranti(){
         return ristoranti;

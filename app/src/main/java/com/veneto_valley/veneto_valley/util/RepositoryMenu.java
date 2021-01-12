@@ -18,20 +18,15 @@ import java.util.ArrayList;
 
 public class RepositoryMenu {
 
-    private LinearLayout linLay = null;
     private ArrayList<Categoria> categoria = new ArrayList<>();
 
     public ValueEventListener MenuFirebaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.w("FBTest", snapshot.getKey());
-            linLay.removeAllViews();
             for (DataSnapshot d: snapshot.getChildren()){
                 String s = d.getKey();
                 Log.w("FBTest", s);
-                TextView tv = new TextView(linLay.getContext());
-                tv.setText(s);
-                linLay.addView(tv);
                 Categoria tmpCat = new Categoria(s);
                 categoria.add(tmpCat);
 
@@ -52,9 +47,7 @@ public class RepositoryMenu {
         }
     };
 
-    public RepositoryMenu(LinearLayout linLay) {
-
-        this.linLay = linLay;
+    public RepositoryMenu() {
     }
     public ArrayList<Categoria> getCategoria(){
         return categoria;
