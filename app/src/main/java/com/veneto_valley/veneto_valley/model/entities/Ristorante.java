@@ -18,6 +18,8 @@ public class Ristorante implements Parcelable {
     public String nome;
     public String indirizzo;
     public String localita;
+    public float costoMenu;
+    public int maxPortate;
 
     public Ristorante() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
