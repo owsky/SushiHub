@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Piatto;
@@ -67,6 +69,11 @@ public class UserInputMenuPage extends Fragment {
 				ordine.desc = nomePiatto.getText().toString();
 				ordine.prezzo = piatto.prezzo;
 				viewModel.insert(ordine, quantita);
+				Snackbar.make(requireActivity().findViewById(android.R.id.content),
+						"Annullare l'operazione?", BaseTransientBottomBar.LENGTH_LONG)
+						.setAction("Undo", vi -> viewModel.undoInsert())
+						.setAnchorView(requireActivity().findViewById(R.id.salvaEsci))
+						.show();
 				NavHostFragment.findNavController(this).navigate(R.id.action_userInputMenu_to_listeTabNav);
 			}
 		});
