@@ -204,7 +204,7 @@ public class RepositoryOrdini {
 					ItemTouchHelper.LEFT, null,
 					integer -> annullaArrivato(adapter.getOrdineAt(integer), tavolo),
 					0, ContextCompat.getColor(context, R.color.colorPrimary),
-					0, R.drawable.ic_send);
+					0, R.drawable.ic_send_rev);
 	}
 	
 	// costruisce la callback itemtouch helper
