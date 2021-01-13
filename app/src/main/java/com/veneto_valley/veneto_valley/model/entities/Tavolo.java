@@ -91,7 +91,7 @@ public class Tavolo implements Parcelable {
 		Tavolo t = (Tavolo) obj;
 		
 		// Compare the data members and return accordingly
-		return this.idTavolo.equals(t.idTavolo); //TODO: Ampliare Confronto
+		return this.idTavolo.equals(t.idTavolo);
 	}
 	
 	@Override
