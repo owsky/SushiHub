@@ -21,6 +21,9 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import static android.view.View.GONE;
 
 public class UserInputMenuPage extends Fragment {
@@ -34,6 +37,7 @@ public class UserInputMenuPage extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		TextView nomePiatto = view.findViewById(R.id.nomePiattoDyn);
 		TextView codice = view.findViewById(R.id.codice);
+		TextView prezzo = view.findViewById(R.id.prezzo);
 		EditText qta = view.findViewById(R.id.addQuantita);
 		qta.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		
@@ -41,6 +45,10 @@ public class UserInputMenuPage extends Fragment {
 		Piatto piatto = args.getPiatto();
 		nomePiatto.setText(piatto.nome);
 		codice.setText(piatto.idPiatto);
+		DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance());
+		df.setMaximumFractionDigits(340);
+		String prezzoFormattato = df.format(piatto.prezzo) + " €";
+		prezzo.setText(prezzoFormattato);
 		qta.setText("1");
 		
 		Button salva = view.findViewById(R.id.salva);
