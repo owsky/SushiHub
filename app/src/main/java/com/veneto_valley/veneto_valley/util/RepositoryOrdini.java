@@ -45,8 +45,6 @@ public class RepositoryOrdini {
 	}
 	
 	public void insert(Ordine[] ordini) {
-		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
-		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
 		Executors.newSingleThreadExecutor().execute(() -> ordineDao.insertAll(ordini));
 	}
 	
@@ -55,7 +53,11 @@ public class RepositoryOrdini {
 	}
 	
 	public void delete(Ordine ordine) {
-		Executors.newSingleThreadExecutor().execute(() -> ordineDao.delete(ordine));
+		Executors.newSingleThreadScheduledExecutor().execute(() -> ordineDao.delete(ordine));
+	}
+	
+	public void delete(Ordine[] ordini) {
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.deleteAll(ordini));
 	}
 	
 	// lazy initialization dei livedata

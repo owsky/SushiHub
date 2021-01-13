@@ -2,6 +2,7 @@ package com.veneto_valley.veneto_valley.model.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -11,8 +12,6 @@ import java.util.List;
 
 @Dao
 public interface OrdineDao extends baseDao<Ordine> {
-	@Query("SELECT * FROM Ordine")
-	LiveData<List<Ordine>> getAll();
 	
 	@Query("SELECT * FROM Ordine WHERE tavolo = :codiceTavolo")
 	LiveData<List<Ordine>> getAllByTable(String codiceTavolo);
@@ -26,9 +25,6 @@ public interface OrdineDao extends baseDao<Ordine> {
 	@Query("SELECT * FROM Ordine WHERE tavolo = :tavolo AND status = :status")
 	LiveData<List<Ordine>> getAllSynchronized(String tavolo, Ordine.StatusOrdine status);
 	
-	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND piatto = :piatto AND NOT receivedFromSlave")
-	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto);
-	
 	@Query("SELECT * FROM Ordine WHERE status = :status AND tavolo = :tavolo AND piatto = :piatto AND utente = :utente AND receivedFromSlave")
 	Ordine contains(Ordine.StatusOrdine status, String tavolo, String piatto, String utente);
 	
@@ -40,4 +36,7 @@ public interface OrdineDao extends baseDao<Ordine> {
 	
 	@Insert
 	void insertAll(Ordine... obj);
+	
+	@Delete
+	void deleteAll(Ordine... ord);
 }

@@ -17,6 +17,7 @@ import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class OrdiniViewModel extends AndroidViewModel {
@@ -68,12 +69,20 @@ public class OrdiniViewModel extends AndroidViewModel {
 		return allOrders;
 	}
 	
+	private Ordine[] ordini;
 	public void insert(Ordine ordine, int quantita) {
-		Ordine[] ordini = new Ordine[quantita];
+		ordini = new Ordine[quantita];
 		for (int i = 0; i < quantita; ++i) {
-			ordini[i] = ordine;
+			Ordine nuovo = new Ordine(ordine.tavolo, ordine.piatto, ordine.status, ordine.utente, ordine.receivedFromSlave);
+			nuovo.prezzo = ordine.prezzo;
+			nuovo.desc = ordine.desc;
+			ordini[i] = nuovo;
 		}
 		repositoryOrdini.insert(ordini);
+	}
+	
+	public void undoInsert() {
+		repositoryOrdini.delete(ordini);
 	}
 	
 	public String getTavolo() {

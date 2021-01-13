@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
@@ -59,6 +61,7 @@ public class UserInputPage extends Fragment {
 		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
+		
 		
 		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
 		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
@@ -129,6 +132,9 @@ public class UserInputPage extends Fragment {
 			if (!prezzoExtra.trim().isEmpty())
 				ordine.prezzo = Float.parseFloat(prezzoExtra);
 			viewModel.insert(ordine, Integer.parseInt(qta.getText().toString()));
+			Snackbar.make(requireActivity().findViewById(android.R.id.content),
+					"Annullare l'operazione?", BaseTransientBottomBar.LENGTH_LONG)
+					.setAction("Undo", v -> viewModel.undoInsert()).show();
 			return true;
 		}
 		return false;
