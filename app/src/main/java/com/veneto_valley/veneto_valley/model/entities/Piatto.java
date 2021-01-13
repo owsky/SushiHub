@@ -32,14 +32,11 @@ public class Piatto implements Parcelable {
 	@Exclude
 	public String idPiatto;
 	public String nome;
-	// TODO: rimuovere descrizione
-	public String descrizione;
 	public float prezzo;
 	
-	public Piatto(@NonNull String idPiatto, String nome, String descrizione) {
+	public Piatto(@NonNull String idPiatto, String nome) {
 		this.idPiatto = idPiatto;
 		this.nome = nome;
-		this.descrizione = descrizione;
 	}
 	
 	@Ignore
@@ -50,7 +47,6 @@ public class Piatto implements Parcelable {
 	protected Piatto(Parcel in) {
 		idPiatto = in.readString();
 		nome = in.readString();
-		descrizione = in.readString();
 		prezzo = in.readFloat();
 	}
 	
@@ -70,7 +66,6 @@ public class Piatto implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(idPiatto);
 		dest.writeString(nome);
-		dest.writeString(descrizione);
 		dest.writeFloat(prezzo);
 	}
 	
