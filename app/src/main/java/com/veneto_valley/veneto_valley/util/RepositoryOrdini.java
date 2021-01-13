@@ -203,13 +203,13 @@ public class RepositoryOrdini {
 					integer -> annullaConfermaOrdine(adapter.getOrdineAt(integer), tavolo),
 					ContextCompat.getColor(context, R.color.colorPrimary),
 					ContextCompat.getColor(context, R.color.colorPrimary),
-					R.drawable.ic_send, R.drawable.ic_send);
+					R.drawable.ic_send, R.drawable.ic_send_rev);
 		} else
 			return makeCallback(context,
 					ItemTouchHelper.LEFT, null,
 					integer -> annullaArrivato(adapter.getOrdineAt(integer), tavolo),
 					0, ContextCompat.getColor(context, R.color.colorPrimary),
-					0, R.drawable.ic_send);
+					0, R.drawable.ic_send_rev);
 	}
 	
 	// costruisce la callback itemtouch helper
