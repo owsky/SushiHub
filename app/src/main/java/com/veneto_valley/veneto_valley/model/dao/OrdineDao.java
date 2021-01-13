@@ -38,5 +38,8 @@ public interface OrdineDao extends baseDao<Ordine> {
 	void insertAll(Ordine... obj);
 	
 	@Delete
-	void deleteAll(Ordine... ord);
+	int deleteAll(Ordine... ord);
+
+	@Query("DELETE FROM Ordine WHERE idOrdine in (:idOrdine)")
+	int deleteAllById(long[] idOrdine);
 }
