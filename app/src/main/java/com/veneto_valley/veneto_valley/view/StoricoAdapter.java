@@ -51,7 +51,8 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 		
 		// crea un click listener che naviga verso la view con i dettagli delle ordinazioni, passando
 		// un safearg con il tavolo selezionato
-		ListaOrdiniGenericaPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action = ListaOrdiniGenericaPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);
+		ListaOrdiniGenericaPageDirections.ActionStoricoOrdiniPage2ToStoricoDettagliPage action =
+				ListaOrdiniGenericaPageDirections.actionStoricoOrdiniPage2ToStoricoDettagliPage(tavolo);
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
 	

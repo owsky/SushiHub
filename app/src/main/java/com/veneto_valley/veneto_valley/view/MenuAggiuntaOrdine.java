@@ -44,12 +44,14 @@ public class MenuAggiuntaOrdine extends Fragment {
 		menu.setAdapter(menuAdapter);
 		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		MenuViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), MenuViewModel.class, preferences.getString("codice_tavolo", null));
+		MenuViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), MenuViewModel.class,
+				preferences.getString("codice_tavolo", null));
 		String idRistorante = preferences.getString("codice_ristorante", null);
 		
 		// inizializzazione spinner categorie
 		Spinner spinner = view.findViewById(R.id.spinnerCategorie);
-		categorieAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, viewModel.getCategoria(menuAdapter, idRistorante));
+		categorieAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item,
+				viewModel.getCategoria(menuAdapter, idRistorante));
 		categorieAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(categorieAdapter);
 		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -61,7 +63,7 @@ public class MenuAggiuntaOrdine extends Fragment {
 			
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-			// noop
+				// noop
 			}
 		});
 	}

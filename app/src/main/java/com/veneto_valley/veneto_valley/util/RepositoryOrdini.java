@@ -23,7 +23,6 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -34,10 +33,11 @@ public class RepositoryOrdini {
 	private final OrdineDao ordineDao;
 	private final Application application;
 	private final SharedPreferences preferences;
-	private LiveData<List<Ordine>> pendingOrders = null;
-	private LiveData<List<Ordine>> confirmedOrders = null;
-	private LiveData<List<Ordine>> deliveredOrders = null;
-	private LiveData<List<Ordine>> allSynchronized = null;
+	private LiveData<List<Ordine>> pendingOrders = null,
+			confirmedOrders = null,
+			deliveredOrders = null,
+			allSynchronized = null;
+	private long[] lastInserted = new long[99];
 	
 	public RepositoryOrdini(Application application) {
 		this.application = application;
@@ -45,7 +45,6 @@ public class RepositoryOrdini {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	private long[] lastInserted = new long[99];
 	public void insert(Ordine ordine, int qta) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Ordine[] ordini = new Ordine[qta];
@@ -94,43 +93,49 @@ public class RepositoryOrdini {
 	
 	// conferma un ordine pending come da ordinare e lo invia al master se slave
 	public void confermaOrdine(Ordine ordine, String tavolo) {
-		ordine.status = Ordine.StatusOrdine.confirmed;
-		update(ordine);
+		Executors.newSingleThreadScheduledExecutor().execute(() -> {
+			ordine.status = Ordine.StatusOrdine.confirmed;
+			update(ordine);
+			
+			if (!preferences.contains("is_master"))
+				Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
+						.invia(ordine.getBytes());
+		});
 		
-		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
-					.invia(ordine.getBytes());
-		}
 	}
 	
 	// annulla la conferma dell'ordine e notifica il master se slave
 	public void annullaConfermaOrdine(Ordine ordine, String tavolo) {
-		ordine.status = Ordine.StatusOrdine.pending;
-		update(ordine);
-		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
-					.invia(ordine.getBytes());
-		}
+		Executors.newSingleThreadScheduledExecutor().execute(() -> {
+			ordine.status = Ordine.StatusOrdine.pending;
+			update(ordine);
+			
+			if (!preferences.contains("is_master"))
+				Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
+						.invia(ordine.getBytes());
+		});
 	}
 	
 	// segna un ordine come arrivato e notifica il master se slave
 	public void notificaArrivato(Ordine ordine, String tavolo) {
-		ordine.status = Ordine.StatusOrdine.delivered;
-		update(ordine);
-		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
-					.invia(ordine.getBytes());
-		}
+		Executors.newSingleThreadScheduledExecutor().execute(() -> {
+			ordine.status = Ordine.StatusOrdine.delivered;
+			update(ordine);
+			if (!preferences.contains("is_master"))
+				Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
+						.invia(ordine.getBytes());
+		});
 	}
 	
 	// segna un ordine come non arrivato e notifica il master se slave
 	public void annullaArrivato(Ordine ordine, String tavolo) {
-		ordine.status = Ordine.StatusOrdine.confirmed;
-		update(ordine);
-		if (!preferences.contains("is_master")) {
-			Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
-					.invia(ordine.getBytes());
-		}
+		Executors.newSingleThreadScheduledExecutor().execute(() -> {
+			ordine.status = Ordine.StatusOrdine.confirmed;
+			update(ordine);
+			if (!preferences.contains("is_master"))
+				Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
+						.invia(ordine.getBytes());
+		});
 	}
 	
 	// metodo che usa il master per rimuovere i dati degli slave dal database durante il checkout
@@ -138,9 +143,9 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadExecutor().execute(ordineDao::deleteSlaves);
 	}
 	
-	// svuota le shared preferences, segna il tavolo corrente come checkedOut e chiude la connessione
+	// svuota le shared preference, rimuove gli ordini degli slave se master e chiude la connessione
 	public void checkout(String tavolo) {
-		if (!preferences.contains("is_master"))
+		if (preferences.contains("is_master"))
 			cleanDatabase();
 		preferences.edit().clear().apply();
 		Connessione.getInstance(preferences.getBoolean("is_master", false),

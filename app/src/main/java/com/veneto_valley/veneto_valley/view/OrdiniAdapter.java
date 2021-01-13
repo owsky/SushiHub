@@ -59,9 +59,10 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			holder.descrizione.setText(desc);
 		// se lo status dell'ordine è pending, crea un click listener che consente di navigare alla
 		// view userinput con safearg l'ordine da modificare
-		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending) && tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
+		if (tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
 			if (!isConv) {
-				ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
+				ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action =
+						ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 				action.setOrdine(currentOrdine);
 				holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 			}

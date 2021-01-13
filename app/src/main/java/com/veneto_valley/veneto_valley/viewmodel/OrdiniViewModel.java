@@ -17,7 +17,6 @@ import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class OrdiniViewModel extends AndroidViewModel {
@@ -87,7 +86,8 @@ public class OrdiniViewModel extends AndroidViewModel {
 	}
 	
 	// getter callback touch helper
-	public ItemTouchHelper.SimpleCallback getRecyclerCallback(Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
+	public ItemTouchHelper.SimpleCallback getRecyclerCallback(
+			Context context, OrdiniAdapter adapter, ListaOrdiniGenericaPage.TipoLista tipoLista) {
 		return repositoryOrdini.getRecyclerCallback(context, adapter, tipoLista, tavolo);
 	}
 	

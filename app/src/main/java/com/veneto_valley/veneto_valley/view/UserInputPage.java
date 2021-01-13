@@ -25,9 +25,6 @@ import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserInputPage extends Fragment {
 	private EditText codice, desc, qta, prezzo;
 	private TextView prezzoTextView;
@@ -64,7 +61,7 @@ public class UserInputPage extends Fragment {
 		
 		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
 		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
-		Ordine ordine  = UserInputPageArgs.fromBundle(requireArguments()).getOrdine();
+		Ordine ordine = UserInputPageArgs.fromBundle(requireArguments()).getOrdine();
 		if (ordine != null) {
 			codice.setText(ordine.piatto);
 			desc.setText(ordine.desc);
@@ -109,7 +106,8 @@ public class UserInputPage extends Fragment {
 	
 	private boolean salvaOrdine(Ordine o) {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
+				OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 		String codiceTavolo = viewModel.getTavolo();
 		String codicePiatto = codice.getText().toString();
 		Ordine.StatusOrdine status = Ordine.StatusOrdine.pending;

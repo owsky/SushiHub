@@ -36,9 +36,11 @@ public class CheckOutPage extends Fragment {
 		
 		// calcolo il totale che l'utente dovrà pagare
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
+				OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 		final Locale locale = requireActivity().getResources().getConfiguration().locale;
 		float menu = viewModel.getCostoMenu();
+		// pretty printing dei numeri
 		DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance());
 		df.setMaximumFractionDigits(340);
 		costoMenu.setText(String.format(locale, "Costo Menu: %s €", df.format(menu)));

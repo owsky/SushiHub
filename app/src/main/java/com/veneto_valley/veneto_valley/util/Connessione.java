@@ -1,7 +1,6 @@
 package com.veneto_valley.veneto_valley.util;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -74,22 +73,13 @@ public class Connessione {
 			
 			@Override
 			public void onConnectionResult(@NonNull String endPointId, @NonNull ConnectionResolution connectionResolution) {
-				switch (connectionResolution.getStatus().getStatusCode()) {
-					case ConnectionsStatusCodes.STATUS_OK:
-						//siamo connessi possiamo iniziare a prendere i dati
-						strendPointId = endPointId;
-						Toast.makeText(application, "siamo connessi", Toast.LENGTH_LONG).show();
-						synchronized (lock) {
-							connesso = true;
-							lock.notify();
-						}
-						break;
-					case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-						Toast.makeText(application, "cn rif", Toast.LENGTH_LONG).show();
-						break;
-					case ConnectionsStatusCodes.STATUS_ERROR:
-						Toast.makeText(application, "cn err", Toast.LENGTH_LONG).show();
-						break;
+				if (connectionResolution.getStatus().getStatusCode() == ConnectionsStatusCodes.STATUS_OK) {
+					//siamo connessi possiamo iniziare a prendere i dati
+					strendPointId = endPointId;
+					synchronized (lock) {
+						connesso = true;
+						lock.notify();
+					}
 				}
 			}
 			
@@ -103,10 +93,7 @@ public class Connessione {
 	
 	private void sendPayLoad(final String endPointId, byte[] oggetto) {
 		Payload bytesPayload = Payload.fromBytes(oggetto);
-		Nearby.getConnectionsClient(application).sendPayload(endPointId, bytesPayload)
-				.addOnSuccessListener(aVoid -> Toast.makeText(application, "inviato",
-						Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(application,
-				"errore", Toast.LENGTH_LONG).show());
+		Nearby.getConnectionsClient(application).sendPayload(endPointId, bytesPayload);
 	}
 	
 	private void startDiscovery() {
@@ -127,23 +114,11 @@ public class Connessione {
 									
 									@Override
 									public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution connectionResolution) {
-										switch (connectionResolution.getStatus().getStatusCode()) {
-											case ConnectionsStatusCodes.STATUS_OK:
-												Toast.makeText(application, "connessi",
-														Toast.LENGTH_LONG).show();
-												synchronized (lock) {
-													connesso = true;
-													lock.notify();
-												}
-												break;
-											case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-												Toast.makeText(application, "cn rif",
-														Toast.LENGTH_LONG).show();
-												break;
-											case ConnectionsStatusCodes.STATUS_ERROR:
-												Toast.makeText(application, "cn err",
-														Toast.LENGTH_LONG).show();
-												break;
+										if (connectionResolution.getStatus().getStatusCode() == ConnectionsStatusCodes.STATUS_OK) {
+											synchronized (lock) {
+												connesso = true;
+												lock.notify();
+											}
 										}
 									}
 									

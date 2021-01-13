@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.ArrayList;
-
 // Firebase entity
 @IgnoreExtraProperties
 public class Ristorante implements Parcelable {
@@ -31,17 +29,9 @@ public class Ristorante implements Parcelable {
 	public String indirizzo;
 	public String localita;
 	public float costoMenu;
-	public int maxPortate;
 	
 	public Ristorante() {
 		// Default constructor required for calls to DataSnapshot.getValue(User.class)
-	}
-	
-	public Ristorante(String idRistorante, String nome, String indirizzo, String localita) {
-		this.idRistorante = idRistorante;
-		this.nome = nome;
-		this.indirizzo = indirizzo;
-		this.localita = localita;
 	}
 	
 	protected Ristorante(Parcel in) {
@@ -49,13 +39,7 @@ public class Ristorante implements Parcelable {
 		nome = in.readString();
 		indirizzo = in.readString();
 		localita = in.readString();
-	}
-	
-	public static ArrayList<Ristorante> getRistoranti() {
-		ArrayList<Ristorante> ristoranteArrayList = new ArrayList<>();
-		ristoranteArrayList.add(new Ristorante("GiappoTV", "SanShi Treviso", "Via dalle palle 12", "Treviso (TV)"));
-		ristoranteArrayList.add(new Ristorante("GiappoPD", "Sushiko Padova", "Via dalle palle 11", "Padova (PD)"));
-		return ristoranteArrayList;
+		costoMenu = in.readFloat();
 	}
 	
 	@NonNull
@@ -75,6 +59,7 @@ public class Ristorante implements Parcelable {
 		dest.writeString(nome);
 		dest.writeString(indirizzo);
 		dest.writeString(localita);
+		dest.writeFloat(costoMenu);
 	}
 }
 

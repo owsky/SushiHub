@@ -39,7 +39,7 @@ public class ListeTabPage extends Fragment {
 		requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
 			@Override
 			public void handleOnBackPressed() {
-				// mostro un dialog alla pressione del tasto back che chiede all'utente come gestire l'input
+				// mostro un dialog alla pressione del tasto back che chiede all'utente come gestire l'evento
 				ExitDialog dialog = new ExitDialog();
 				dialog.show(getParentFragmentManager(), getTag());
 			}
@@ -107,11 +107,13 @@ public class ListeTabPage extends Fragment {
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.mostraQR) {
 			// setto il safearg così da nascondere il bottone prosegui nel fragment generaqr
-			ListeTabPageDirections.ActionListaPiattiFragmentToGeneraQR action = ListeTabPageDirections.actionListaPiattiFragmentToGeneraQR();
+			ListeTabPageDirections.ActionListaPiattiFragmentToGeneraQR action =
+					ListeTabPageDirections.actionListaPiattiFragmentToGeneraQR();
 			action.setUnisciti(true);
 			NavHostFragment.findNavController(this).navigate(action);
 		} else if (item.getItemId() == R.id.toAllOrders) {
-			ListeTabPageDirections.ActionListeTabNavToAllOrders action = ListeTabPageDirections.actionListeTabNavToAllOrders(ListaOrdiniGenericaPage.TipoLista.allOrders);
+			ListeTabPageDirections.ActionListeTabNavToAllOrders action =
+					ListeTabPageDirections.actionListeTabNavToAllOrders(ListaOrdiniGenericaPage.TipoLista.allOrders);
 			NavHostFragment.findNavController(this).navigate(action);
 		} else if (item.getItemId() == R.id.toCheckout) {
 			NavHostFragment.findNavController(this).navigate(R.id.action_listaPiattiFragment_to_checkOutPage2);

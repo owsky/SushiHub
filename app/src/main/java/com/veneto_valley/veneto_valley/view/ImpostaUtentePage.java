@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -14,8 +16,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.Misc;
-import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.InitViewModel;
 
 public class ImpostaUtentePage extends Fragment {
 	
@@ -37,7 +37,8 @@ public class ImpostaUtentePage extends Fragment {
 			if (username.trim().isEmpty())
 				Toast.makeText(requireContext(), "Inserisci uno username", Toast.LENGTH_SHORT).show();
 			else {
-				ViewModelUtil.getViewModel(requireActivity(), InitViewModel.class).initUtente(username);
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+				preferences.edit().putString("username", username).apply();
 				Misc.hideKeyboard(requireActivity());
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaUtentePage_to_listeTabNav);
 			}

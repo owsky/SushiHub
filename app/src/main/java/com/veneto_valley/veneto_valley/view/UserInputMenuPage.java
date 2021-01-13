@@ -26,8 +26,6 @@ import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import static android.view.View.GONE;
-
 public class UserInputMenuPage extends Fragment {
 	
 	public UserInputMenuPage() {
@@ -72,7 +70,7 @@ public class UserInputMenuPage extends Fragment {
 				Snackbar.make(requireActivity().findViewById(android.R.id.content),
 						"Annullare l'operazione?", BaseTransientBottomBar.LENGTH_LONG)
 						.setAction("Undo", vi -> viewModel.undoInsert())
-						.setAnchorView(requireActivity().findViewById(R.id.salvaEsci))
+						.setAnchorView(requireActivity().findViewById(R.id.salva))
 						.show();
 				NavHostFragment.findNavController(this).navigate(R.id.action_userInputMenu_to_listeTabNav);
 			}

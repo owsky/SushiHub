@@ -12,18 +12,18 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Piatto implements Parcelable {
 	@Exclude
 	public static final Parcelable.Creator<Piatto> CREATOR = new Parcelable.Creator<Piatto>() {
-
+		
 		@Override
 		public Piatto createFromParcel(Parcel source) {
 			return new Piatto(source);
 		}
-
+		
 		@Override
 		public Piatto[] newArray(int size) {
 			return new Piatto[size];
 		}
 	};
-
+	
 	@Exclude
 	public String idPiatto;
 	public String nome;

@@ -21,9 +21,11 @@ public class ScanQRPage extends Fragment {
 	
 	private final ActivityResultLauncher<Intent> scanIntent = registerForActivityResult(
 			new ActivityResultContracts.StartActivityForResult(), result -> {
-				IntentResult res = IntentIntegrator.parseActivityResult(REQUEST_CODE, result.getResultCode(), result.getData());
+				IntentResult res = IntentIntegrator.parseActivityResult(REQUEST_CODE,
+						result.getResultCode(), result.getData());
 				String contents = res.getContents();
-				// se la lettura è andata a buon fine splitta la stringa in array di stringhe per creare il tavolo tramite viewmodel
+				// se la lettura è andata a buon fine splitta la stringa in array di stringhe per
+				// creare il tavolo tramite viewmodel
 				if (contents != null) {
 					String[] info = TextUtils.split(contents, ";");
 					String codiceTavolo = info[0];
@@ -31,7 +33,8 @@ public class ScanQRPage extends Fragment {
 					String codiceRistorante = info[2];
 					ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class)
 							.creaTavolo(codiceRistorante, codiceTavolo, costoMenu);
-					NavHostFragment.findNavController(ScanQRPage.this).navigate(R.id.action_scanQRNav_to_impostaUtentePage);
+					NavHostFragment.findNavController(ScanQRPage.this)
+							.navigate(R.id.action_scanQRNav_to_impostaUtentePage);
 				} else {
 					NavHostFragment.findNavController(ScanQRPage.this).navigateUp();
 				}

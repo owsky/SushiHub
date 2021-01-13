@@ -47,6 +47,7 @@ public class Ordine implements Parcelable {
 	@Ignore
 	public Ordine() {
 	}
+	
 	public Ordine(String tavolo, String piatto, StatusOrdine status, String utente, boolean receivedFromSlave) {
 		this.tavolo = tavolo;
 		this.piatto = piatto;

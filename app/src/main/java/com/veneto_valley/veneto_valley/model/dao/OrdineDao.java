@@ -2,7 +2,6 @@ package com.veneto_valley.veneto_valley.model.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -36,7 +35,7 @@ public interface OrdineDao extends baseDao<Ordine> {
 	
 	@Insert
 	long[] insertAll(Ordine... obj);
-
+	
 	@Query("DELETE FROM Ordine WHERE idOrdine in (:idOrdine)")
 	void deleteAllById(long[] idOrdine);
 }

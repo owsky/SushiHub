@@ -62,7 +62,6 @@ public class GeneraQRPage extends Fragment {
 		int qr_size = 177;
 		ImageView imageView = requireView().findViewById(R.id.qr_code);
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		
 		BitMatrix bitMatrix = qrCodeWriter.encode(dati, BarcodeFormat.QR_CODE, qr_size, qr_size);
 		Bitmap bitmap = Bitmap.createBitmap(qr_size, qr_size, Bitmap.Config.RGB_565);
 		

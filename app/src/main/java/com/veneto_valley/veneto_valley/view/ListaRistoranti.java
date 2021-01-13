@@ -35,6 +35,5 @@ public class ListaRistoranti extends Fragment {
 		recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
-		
 	}
 }

@@ -25,7 +25,8 @@ public class MyViewModelFactory extends ViewModelProvider.AndroidViewModelFactor
 	public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 		if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
 			try {
-				return modelClass.getConstructor(application.getClass(), String.class).newInstance(application, tavolo);
+				return modelClass.getConstructor(application.getClass(), String.class)
+						.newInstance(application, tavolo);
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {

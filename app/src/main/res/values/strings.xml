@@ -6,11 +6,9 @@
     <string name="totale">Totale:</string>
     <string name="costo_menu">Costo Menu:</string>
     <string name="costo_extra">Costo Extra:</string>
-    <string name="benvenuto_in_sushihub">Benvenuto in SushiHub</string>
     <string name="vuoi_creare_un_tavolo_o_unirti_ad_uno_gi_esistente">Vuoi creare un tavolo o unirti ad uno già esistente?</string>
     <string name="unisciti">Unisciti</string>
     <string name="crea">Crea</string>
-    <string name="portate_massime_a_persona">Portate massime a persona</string>
     <string name="icona_pi">Icona più</string>
     <string name="codice">Codice</string>
     <string name="quantit">Quantità</string>
@@ -30,7 +28,6 @@
     <string name="share">Share</string>
     <string name="elimina_tavolo">Elimina tavolo</string>
     <string name="extra">Extra</string>
-    <string name="ristorante">Ristorante</string>
     <string name="nome_del_ristorante">Nome del ristorante</string>
     <string name="qual_il_tuo_nome">Qual è il tuo nome?</string>
     <string name="sushi_icon">Sushi icon</string>
@@ -38,6 +35,4 @@
     <string name="nome">Nome</string>
     <string name="nome_ristorante">Nome ristorante</string>
     <string name="conv_greeting">Ti trovi presso un ristorante convenzionato?</string>
-    <string name="ristorante_convenzionato">Ristorante&#10;convenzionato</string>
-    <string name="ristorante_non_convenzionato">Ristorante non&#10;convenzionato</string>
 </resources>

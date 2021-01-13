@@ -14,10 +14,11 @@ import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.view.MenuAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RepositoryMenu {
 	
-	private final ArrayList<Categoria> categoria;
+	private final List<Categoria> categoria;
 	
 	public RepositoryMenu(MenuAdapter adapter, String idRistorante) {
 		categoria = new ArrayList<>();
@@ -28,10 +29,8 @@ public class RepositoryMenu {
 		reference.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
-				Log.w("FBTest", snapshot.getKey());
 				for (DataSnapshot d : snapshot.getChildren()) {
 					String s = d.getKey();
-					Log.w("FBTest", s);
 					Categoria tmpCat = new Categoria(s);
 					categoria.add(tmpCat);
 					
@@ -56,7 +55,7 @@ public class RepositoryMenu {
 		});
 	}
 	
-	public ArrayList<Categoria> getCategoria() {
+	public List<Categoria> getCategoria() {
 		return categoria;
 	}
 }

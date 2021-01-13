@@ -36,18 +36,21 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	private static final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
-	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-		if (!bluetoothAdapter.isEnabled()) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("SushiHub necessita del Bluetooth per funzionare. Vuoi abilitarlo?")
-					.setPositiveButton("OK", (dialog, which) -> bluetoothAdapter.enable())
-					.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss())
-					.create().show();
-		}
-	});
-	private final ActivityResultLauncher<Intent> requestWifiLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-	});
+	private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
+			new ActivityResultContracts.RequestMultiplePermissions(), Map::values);
+	private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(
+			new ActivityResultContracts.StartActivityForResult(), result -> {
+				if (!bluetoothAdapter.isEnabled()) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(this);
+					builder.setMessage("SushiHub necessita del Bluetooth per funzionare. Vuoi abilitarlo?")
+							.setPositiveButton("OK", (dialog, which) -> bluetoothAdapter.enable())
+							.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss())
+							.create().show();
+				}
+			});
+	private final ActivityResultLauncher<Intent> requestWifiLauncher =
+			registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+			});
 	private final String[] permissionCodes = {"android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
 	private DrawerLayout drawer;
 	private NavController navController;
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 		navigationView.setNavigationItemSelectedListener(this);
 		
-		// Controllo permessi
+		// Controllo i permessi
 		for (String permesso : permissionCodes) {
 			if (!(ContextCompat.checkSelfPermission(this, permesso) == PackageManager.PERMISSION_GRANTED)) {
 				requestPermissionLauncher.launch(permissionCodes);
@@ -83,7 +86,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		requestBluetoothLauncher.launch(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
 		// Controllo se WiFi è abilitato
 		WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+		// Da Android Q non è più possibile abilitare il WiFi e non è prevista la richiesta esplicita
+		// all'utente. Grazie Google
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+			// Apro un pannello delle impostazioni che mostra solamente un toggle per il WiFi
 			Intent enableWifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
 			if (!wifiManager.isWifiEnabled())
 				requestWifiLauncher.launch(enableWifiIntent);
@@ -94,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	
 	@Override
 	public boolean onSupportNavigateUp() {
+		// Questo è l'unico modo per personalizzare il navigate up all'interno di un fragment specifico
 		int destination = Objects.requireNonNull(navController.getCurrentDestination()).getId();
-		if (destination == R.id.userInputNav) {
+		if (destination == R.id.userInputNav || destination == R.id.userInputMenu) {
 			CancelDialog dialog = new CancelDialog();
 			dialog.show(getSupportFragmentManager(), null);
 			return true;
@@ -114,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+		// Specifico manualmente la navigazione del drawer così da poter modificare il comportamento
+		// a seconda dello status dell'app
 		if (item.getItemId() == R.id.listeTabNav) {
 			// Se vi è una sessione non terminata naviga verso listeTab, altrimenti homepage
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
