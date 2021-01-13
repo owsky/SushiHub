@@ -37,4 +37,7 @@
     <string name="pulisci_storico">Pulisci storico</string>
     <string name="nome">Nome</string>
     <string name="nome_ristorante">Nome ristorante</string>
+    <string name="conv_greeting">Ti trovi presso un ristorante convenzionato?</string>
+    <string name="ristorante_convenzionato">Ristorante&#10;convenzionato</string>
+    <string name="ristorante_non_convenzionato">Ristorante non&#10;convenzionato</string>
 </resources>

@@ -7,7 +7,7 @@
     tools:context=".view.HomePage">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -27,32 +27,34 @@
         android:id="@+id/btnUnisciti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp"
         android:layout_marginBottom="16dp"
+        android:maxLines="2"
         android:text="@string/unisciti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCrea" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnCrea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
         android:layout_marginBottom="16dp"
+        android:maxLines="2"
         android:text="@string/crea"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnUnisciti"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="125dp"
         android:layout_marginBottom="80dp"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintBottom_toTopOf="@+id/greeting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

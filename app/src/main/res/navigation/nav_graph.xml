@@ -149,7 +149,7 @@
         android:id="@+id/appModeNav"
         android:name="com.veneto_valley.veneto_valley.view.AppModePage"
         android:label="Seleziona la modalità"
-        tools:layout="@layout/fragment_app_mode_page">
+        tools:layout="@layout/fragment_homepage">
         <action
             android:id="@+id/action_appModePage_to_listaRistorantiNav"
             app:destination="@id/listaRistorantiNav" />
