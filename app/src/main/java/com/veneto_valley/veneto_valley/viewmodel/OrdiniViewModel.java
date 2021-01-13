@@ -69,20 +69,12 @@ public class OrdiniViewModel extends AndroidViewModel {
 		return allOrders;
 	}
 	
-	private Ordine[] ordini;
 	public void insert(Ordine ordine, int quantita) {
-		ordini = new Ordine[quantita];
-		for (int i = 0; i < quantita; ++i) {
-			Ordine nuovo = new Ordine(ordine.tavolo, ordine.piatto, ordine.status, ordine.utente, ordine.receivedFromSlave);
-			nuovo.prezzo = ordine.prezzo;
-			nuovo.desc = ordine.desc;
-			ordini[i] = nuovo;
-		}
-		repositoryOrdini.insert(ordini);
+		repositoryOrdini.insert(ordine, quantita);
 	}
 	
 	public void undoInsert() {
-		repositoryOrdini.delete(ordini);
+		repositoryOrdini.delete();
 	}
 	
 	public String getTavolo() {

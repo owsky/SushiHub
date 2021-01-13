@@ -7,6 +7,7 @@
     tools:context=".view.ListeTabPage">
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         app:layout_constraintBottom_toBottomOf="@+id/tabLayout" />
@@ -34,15 +35,14 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="end|bottom"
         android:clickable="true"
+        android:contentDescription="@string/icona_pi"
         android:focusable="true"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        android:contentDescription="@string/icona_pi"
-        android:layout_marginRight="16dp" />
+        app:srcCompat="@drawable/ic_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
