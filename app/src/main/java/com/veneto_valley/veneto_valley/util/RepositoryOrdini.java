@@ -23,6 +23,7 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -43,10 +44,10 @@ public class RepositoryOrdini {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public void insert(Ordine ordine) {
+	public void insert(Ordine[] ordini) {
 		// se il codice del nuovo ordine corrisponde ad un altro ordine già presente con status pending
 		// aggiorna l'ordine precedente con le nuove informazioni, se presenti, e somma le quantità
-		Executors.newSingleThreadExecutor().execute(() -> ordineDao.insert(ordine));
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.insertAll(ordini));
 	}
 	
 	public void update(Ordine ordine) {
@@ -153,14 +154,13 @@ public class RepositoryOrdini {
 						if (fromSlave.status == Ordine.StatusOrdine.pending)
 							ordineDao.delete(ordine);
 						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
-							ordine.quantita += fromSlave.quantita;
 							ordineDao.insert(ordine);
 						} else
 							ordineDao.update(ordine);
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
 						// i vincoli di unicità del database e lo aggiunge
-						ordine = new Ordine(tavolo, fromSlave.piatto, fromSlave.quantita,
+						ordine = new Ordine(tavolo, fromSlave.piatto,
 								fromSlave.status, fromSlave.utente, true);
 						ordineDao.insert(ordine);
 					}

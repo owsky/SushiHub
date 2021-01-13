@@ -48,7 +48,7 @@ public class ListeTabPage extends Fragment {
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (preferences.getBoolean("is_master", false)) {
 			String codice_tavolo = preferences.getString("codice_tavolo", null);
-			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, codice_tavolo);
 			Connessione.getInstance(false, requireActivity().getApplication(), codice_tavolo, viewModel.getCallback());
 		}
 	}

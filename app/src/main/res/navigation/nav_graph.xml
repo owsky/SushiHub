@@ -75,9 +75,6 @@
         <action
             android:id="@+id/action_listeTabNav_to_aggiuntaOrdineMenu"
             app:destination="@id/aggiuntaOrdineNav" />
-        <action
-            android:id="@+id/action_listeTabNav_to_userInputMenu"
-            app:destination="@id/userInputMenu" />
     </fragment>
     <fragment
         android:id="@+id/checkoutNav"
@@ -151,8 +148,8 @@
     <fragment
         android:id="@+id/appModeNav"
         android:name="com.veneto_valley.veneto_valley.view.AppModePage"
-        android:label="fragment_app_mode_page"
-        tools:layout="@layout/fragment_app_mode_page" >
+        android:label="Seleziona la modalità"
+        tools:layout="@layout/fragment_app_mode_page">
         <action
             android:id="@+id/action_appModePage_to_listaRistorantiNav"
             app:destination="@id/listaRistorantiNav" />
@@ -183,15 +180,8 @@
         android:name="com.veneto_valley.veneto_valley.view.UserInputMenuPage"
         android:label="UserInputMenu" >
         <argument
-            android:name="ordine"
-            app:argType="com.veneto_valley.veneto_valley.model.entities.Ordine"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
             android:name="piatto"
-            app:argType="com.veneto_valley.veneto_valley.model.entities.Piatto"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.veneto_valley.veneto_valley.model.entities.Piatto" />
         <action
             android:id="@+id/action_userInputMenu_to_listeTabNav"
             app:destination="@id/listeTabNav"

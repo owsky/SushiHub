@@ -37,23 +37,11 @@ public class UserInputMenuPage extends Fragment {
 		EditText qta = view.findViewById(R.id.addQuantita);
 		qta.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		
-		if (getArguments() != null) {
-			UserInputMenuPageArgs args = UserInputMenuPageArgs.fromBundle(getArguments());
-			if (args.getOrdine() != null) {
-				Ordine ordine = args.getOrdine();
-				nomePiatto.setText(ordine.desc);
-				codice.setText(ordine.piatto);
-				TextView qtaText = view.findViewById(R.id.quantita);
-				qtaText.setVisibility(GONE);
-				qta.setVisibility(View.GONE);
-				
-			} else if (args.getPiatto() != null) {
-				Piatto piatto = args.getPiatto();
-				nomePiatto.setText(piatto.nome);
-				codice.setText(piatto.idPiatto);
-				qta.setText("1");
-			}
-		}
+		UserInputMenuPageArgs args = UserInputMenuPageArgs.fromBundle(requireArguments());
+		Piatto piatto = args.getPiatto();
+		nomePiatto.setText(piatto.nome);
+		codice.setText(piatto.idPiatto);
+		qta.setText("1");
 		
 		Button salva = view.findViewById(R.id.salva);
 		salva.setOnClickListener(v -> {
@@ -64,15 +52,12 @@ public class UserInputMenuPage extends Fragment {
 				String tavolo = preferences.getString("codice_tavolo", null);
 				int quantita = Integer.parseInt(qta.getText().toString());
 				String utente = preferences.getString("username", null);
-				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+				OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, tavolo);
 				String cod = codice.getText().toString();
 				
-				for (int i = 0; i < quantita; ++i) {
-					// TODO: spostare for giù di layer
-					Ordine ordine = new Ordine(tavolo, cod, quantita, Ordine.StatusOrdine.pending, utente, false);
-					ordine.desc = nomePiatto.getText().toString();
-					viewModel.insert(ordine);
-				}
+				Ordine ordine = new Ordine(tavolo, cod, Ordine.StatusOrdine.pending, utente, false);
+				ordine.desc = nomePiatto.getText().toString();
+				viewModel.insert(ordine, quantita);
 				NavHostFragment.findNavController(this).navigate(R.id.action_userInputMenu_to_listeTabNav);
 			}
 		});

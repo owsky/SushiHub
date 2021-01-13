@@ -1,6 +1,8 @@
 package com.veneto_valley.veneto_valley.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,7 +33,8 @@ public class CheckOutPage extends Fragment {
 		Button finito = view.findViewById(R.id.checkoutFinito);
 		
 		// calcolo il totale che l'utente dovrà pagare
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 		final Locale locale = requireActivity().getResources().getConfiguration().locale;
 		float menu = viewModel.getCostoMenu();
 		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));

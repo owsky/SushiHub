@@ -68,8 +68,12 @@ public class OrdiniViewModel extends AndroidViewModel {
 		return allOrders;
 	}
 	
-	public void insert(Ordine ordine) {
-		repositoryOrdini.insert(ordine);
+	public void insert(Ordine ordine, int quantita) {
+		Ordine[] ordini = new Ordine[quantita];
+		for (int i = 0; i < quantita; ++i) {
+			ordini[i] = ordine;
+		}
+		repositoryOrdini.insert(ordini);
 	}
 	
 	public void delete(Ordine ordine) {

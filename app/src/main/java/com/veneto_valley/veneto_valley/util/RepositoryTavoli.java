@@ -67,43 +67,46 @@ public class RepositoryTavoli {
 	}
 	
 	// creazione tavolo per gli slave
-	public void creaTavolo(String idRistorante, String codice, int portate, float menu) {
+	public void creaTavolo(String idRistorante, String codice, float menu) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo;
+			SharedPreferences.Editor editor = preferences.edit();
 			if ((tavolo = tavoloDao.getTavolo(codice)) != null) {
 				tavolo.costoMenu = menu;
-				tavolo.maxPiatti = portate;
 				tavoloDao.update(tavolo);
 			} else {
-				tavolo = new Tavolo(codice, portate, menu);
-				preferences.edit().putString("codice_tavolo", codice)
-						.putString("codice_ristorante", idRistorante).apply();
+				tavolo = new Tavolo(codice, menu);
+				
+				if (idRistorante != null)
+					editor.putString("codice_ristorante", idRistorante);
 				tavoloDao.insert(tavolo);
 			}
+			editor.putString("codice_tavolo", codice);
+			editor.apply();
 		});
 	}
 	
 	// creazione tavolo per il master
-	public void creaTavolo(String idRistorante, int portate, float menu) {
+	public void creaTavolo(String idRistorante, float menu) {
 		String codice = UUID.randomUUID().toString();
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString("codice_tavolo", codice).putBoolean("is_master", true);
 		if (idRistorante != null)
 			editor.putString("codice_ristorante", idRistorante);
 		editor.apply();
-		Tavolo tavolo = new Tavolo(codice, portate, menu, idRistorante);
+		Tavolo tavolo = new Tavolo(codice, menu, idRistorante);
 		tavoloDao.insert(tavolo);
 	}
 	
 	// ritorna i parametri di costruzione del tavolo
 	public List<String> getInfoTavolo() {
 		Tavolo current = tavoloDao.getTavolo(preferences.getString("codice_tavolo", null));
+		String idRistorante = preferences.getString("codice_ristorante", null);
 		List<String> info = new ArrayList<>();
 		if (current != null) {
 			info.add(current.idTavolo);
-			info.add(Integer.toString(current.maxPiatti));
 			info.add(Float.toString(current.costoMenu));
-			info.add(current.ristorante);
+			info.add(idRistorante);
 		}
 		return info;
 	}

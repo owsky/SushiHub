@@ -14,14 +14,12 @@ public class ViewModelUtil {
 	
 	// metodi di costruzione dei viewmodel
 	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> classe) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-		String codiceTavolo = preferences.getString("codice_tavolo", null);
-		if (codiceTavolo != null) {
-			MyViewModelFactory factory = new MyViewModelFactory(activity.getApplication(), codiceTavolo);
-			return new ViewModelProvider((ViewModelStoreOwner) activity, factory).get(classe);
-		} else {
-			return new ViewModelProvider((ViewModelStoreOwner) activity).get(classe);
-		}
+		return new ViewModelProvider((ViewModelStoreOwner) activity).get(classe);
+	}
+	
+	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> classe, String parameter) {
+		MyViewModelFactory factory = new MyViewModelFactory(activity.getApplication(), parameter);
+		return new ViewModelProvider((ViewModelStoreOwner) activity, factory).get(classe);
 	}
 	
 	public static void clearViewModels(ViewModelStoreOwner viewModelStoreOwner) {

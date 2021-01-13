@@ -29,8 +29,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			
 			@Override
 			public boolean areContentsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
-				return oldItem.piatto.equals(newItem.piatto) &&
-						oldItem.quantita == newItem.quantita;
+				return oldItem.piatto.equals(newItem.piatto);
 			}
 		});
 		this.tipoLista = tipoLista;
@@ -61,11 +60,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 		// se lo status dell'ordine è pending, crea un click listener che consente di navigare alla
 		// view userinput con safearg l'ordine da modificare
 		if (currentOrdine.status.equals(Ordine.StatusOrdine.pending) && tipoLista == ListaOrdiniGenericaPage.TipoLista.pending) {
-			if (isConv) {
-				ListeTabPageDirections.ActionListeTabNavToUserInputMenu action = ListeTabPageDirections.actionListeTabNavToUserInputMenu();
-				action.setOrdine(currentOrdine);
-				holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
-			} else {
+			if (!isConv) {
 				ListeTabPageDirections.ActionListPiattiFragmentToAggiungiOrdiniFragment action = ListeTabPageDirections.actionListPiattiFragmentToAggiungiOrdiniFragment();
 				action.setOrdine(currentOrdine);
 				holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));

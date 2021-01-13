@@ -52,8 +52,8 @@ public class ListaOrdiniGenericaPage extends Fragment {
 			recyclerView.setAdapter(storicoAdapter);
 			storicoViewModel.getTavoli().observe(getViewLifecycleOwner(), storicoAdapter::submitList);
 		} else {
-			OrdiniViewModel ordiniViewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+			OrdiniViewModel ordiniViewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 			OrdiniAdapter ordiniAdapter = new OrdiniAdapter(tipoLista, preferences.contains("codice_ristorante"));
 			recyclerView.setAdapter(ordiniAdapter);
 			ordiniViewModel.getOrdini(tipoLista).observe(getViewLifecycleOwner(), ordiniAdapter::submitList);

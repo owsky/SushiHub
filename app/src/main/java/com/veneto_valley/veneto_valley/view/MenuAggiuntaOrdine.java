@@ -43,8 +43,8 @@ public class MenuAggiuntaOrdine extends Fragment {
 		menuAdapter = new MenuAdapter();
 		menu.setAdapter(menuAdapter);
 		
-		MenuViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), MenuViewModel.class);
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		MenuViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), MenuViewModel.class, preferences.getString("codice_tavolo", null));
 		String idRistorante = preferences.getString("codice_ristorante", null);
 		
 		// inizializzazione spinner categorie

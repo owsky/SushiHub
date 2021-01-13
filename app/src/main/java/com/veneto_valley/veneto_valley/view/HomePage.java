@@ -31,12 +31,18 @@ public class HomePage extends Fragment {
 		// Se c'è una sessione non conclusa chiedi all'utente se vuole riprenderla
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 		if (sharedPreferences.contains("codice_tavolo")) {
-			ResumeDialog dialog = new ResumeDialog();
+			ResumeDialog dialog = new ResumeDialog(sharedPreferences.getString("codice_tavolo", null));
 			dialog.show(getParentFragmentManager(), null);
 		}
 	}
 	
 	public static class ResumeDialog extends DialogFragment {
+		private final String codiceTavolo;
+		
+		public ResumeDialog(String codiceTavolo) {
+			this.codiceTavolo = codiceTavolo;
+		}
+		
 		@NonNull
 		@Override
 		public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -44,7 +50,7 @@ public class HomePage extends Fragment {
 			builder.setTitle("Vuoi accedere al tavolo in sospeso?");
 			builder.setPositiveButton("Sì", (dialog, which) -> NavHostFragment.findNavController(requireParentFragment()).navigate(R.id.listeTabNav));
 			builder.setNegativeButton("No", (dialog, which) -> {
-				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class).checkout(requireActivity());
+				ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, codiceTavolo).checkout(requireActivity());
 				dismiss();
 			});
 			return builder.create();

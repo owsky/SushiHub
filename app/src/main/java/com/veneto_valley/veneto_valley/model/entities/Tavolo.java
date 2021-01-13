@@ -32,7 +32,6 @@ public class Tavolo implements Parcelable {
 	public final String idTavolo;
 	public String nome;
 	public Date dataCreazione;
-	public int maxPiatti;
 	public float costoMenu;
 	public String ristorante;
 	public boolean checkedOut;
@@ -42,9 +41,8 @@ public class Tavolo implements Parcelable {
 	}
 	
 	@Ignore
-	public Tavolo(@NonNull String idTavolo, int maxPiatti, float costoMenu) {
+	public Tavolo(@NonNull String idTavolo, float costoMenu) {
 		this.idTavolo = idTavolo;
-		this.maxPiatti = maxPiatti;
 		this.costoMenu = costoMenu;
 		this.dataCreazione = Calendar.getInstance().getTime();
 		checkedOut = false;
@@ -52,14 +50,14 @@ public class Tavolo implements Parcelable {
 	}
 	
 	@Ignore
-	public Tavolo(String idTavolo, String nomeTavolo, int maxPiatti, float costoMenu) {
-		this(idTavolo, maxPiatti, costoMenu);
+	public Tavolo(String idTavolo, String nomeTavolo, float costoMenu) {
+		this(idTavolo, costoMenu);
 		this.nome = nomeTavolo;
 	}
 	
 	@Ignore
-	public Tavolo(String idTavolo, int maxPiatti, float costoMenu, String ristorante) {
-		this(idTavolo, maxPiatti, costoMenu);
+	public Tavolo(String idTavolo, float costoMenu, String ristorante) {
+		this(idTavolo, costoMenu);
 		this.ristorante = ristorante;
 	}
 	
@@ -69,7 +67,6 @@ public class Tavolo implements Parcelable {
 		nome = in.readString();
 		long tmpDataCreazione = in.readLong();
 		dataCreazione = tmpDataCreazione != -1 ? new Date(tmpDataCreazione) : null;
-		maxPiatti = in.readInt();
 		costoMenu = in.readFloat();
 		ristorante = in.readString();
 	}
@@ -104,7 +101,6 @@ public class Tavolo implements Parcelable {
 		dest.writeString(idTavolo);
 		dest.writeString(nome);
 		dest.writeLong(dataCreazione != null ? dataCreazione.getTime() : -1L);
-		dest.writeInt(maxPiatti);
 		dest.writeFloat(costoMenu);
 		dest.writeString(ristorante);
 	}

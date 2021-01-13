@@ -23,6 +23,9 @@ import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserInputPage extends Fragment {
 	private EditText codice, desc, qta, prezzo;
 	private TextView prezzoTextView;
@@ -72,7 +75,7 @@ public class UserInputPage extends Fragment {
 			salvaEsci.setVisibility(View.GONE);
 			salvaNuovo.setText(R.string.salva);
 			salvaNuovo.setOnClickListener(v -> {
-				if (salvaOrdine())
+				if (salvaOrdine(ordine))
 					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
 			});
 			if (ordine.prezzo > 0) {
@@ -88,12 +91,12 @@ public class UserInputPage extends Fragment {
 				desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
 			
 			salvaEsci.setOnClickListener(v -> {
-				if (salvaOrdine())
+				if (salvaOrdine(null))
 					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
 			});
 			
 			salvaNuovo.setOnClickListener(v -> {
-				if (salvaOrdine()) {
+				if (salvaOrdine(null)) {
 					codice.setText(null);
 					desc.setText(null);
 					qta.setText(null);
@@ -104,8 +107,9 @@ public class UserInputPage extends Fragment {
 		}
 	}
 	
-	private boolean salvaOrdine() {
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class);
+	private boolean salvaOrdine(Ordine o) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 		String codiceTavolo = viewModel.getTavolo();
 		String codicePiatto = codice.getText().toString();
 		Ordine.StatusOrdine status = Ordine.StatusOrdine.pending;
@@ -115,26 +119,19 @@ public class UserInputPage extends Fragment {
 		// verifico che i parametri nonnull vengano inseriti
 		if (codicePiatto.trim().isEmpty())
 			Toast.makeText(requireContext(), "Inserisci il codice del piatto", Toast.LENGTH_SHORT).show();
-		else if (qta.getText().toString().isEmpty())
+		else if (o == null && qta.getText().toString().isEmpty())
 			Toast.makeText(requireContext(), "Inserisci la quantità", Toast.LENGTH_SHORT).show();
 		else {
 			// istanzio un nuovo ordine tramite lo user input e lo username dell'utente, recuperato
 			// attraverso le shared preferences e lo passo al viewmodel
-			int quantita = Integer.parseInt(qta.getText().toString());
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-			String username = preferences.getString("username", "username");
 			
-			for (int i = 0; i < quantita; ++i) {
-				// TODO: insert multiplo
-				Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, username, false);
-				if (!descrizione.trim().isEmpty())
-					ordine.desc = descrizione;
-				if (!prezzoExtra.isEmpty())
-					ordine.prezzo = Float.parseFloat(prezzoExtra);
-				if (!isExtra)
-					ordine.prezzo = 0;
-				viewModel.insert(ordine);
-			}
+			String username = preferences.getString("username", "username");
+			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, status, username, false);
+			if (!descrizione.trim().isEmpty())
+				ordine.desc = descrizione;
+			if (!prezzoExtra.trim().isEmpty())
+				ordine.prezzo = Float.parseFloat(prezzoExtra);
+			viewModel.insert(ordine, Integer.parseInt(qta.getText().toString()));
 			return true;
 		}
 		return false;

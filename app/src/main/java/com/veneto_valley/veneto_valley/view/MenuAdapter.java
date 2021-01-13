@@ -41,8 +41,7 @@ public class MenuAdapter extends ListAdapter<Piatto, MenuAdapter.MenuViewHolder>
 	public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
 		holder.nomePiatto.setText(getItem(position).nome);
 		MenuAggiuntaOrdineDirections.ActionAggiuntaOrdineNavToUserInputMenu action =
-				MenuAggiuntaOrdineDirections.actionAggiuntaOrdineNavToUserInputMenu();
-		action.setPiatto(getItem(position));
+				MenuAggiuntaOrdineDirections.actionAggiuntaOrdineNavToUserInputMenu(getItem(position));
 		holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 	}
 	

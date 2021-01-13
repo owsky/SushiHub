@@ -31,8 +31,6 @@ public class Ordine implements Parcelable {
 	public long idOrdine;
 	@Exclude
 	public StatusOrdine status;
-	// TODO rimuovere quantità
-	public int quantita;
 	public String desc;
 	@Exclude
 	public float prezzo;
@@ -51,10 +49,9 @@ public class Ordine implements Parcelable {
 	}
 	
 	//TODO: Implementare test
-	public Ordine(String tavolo, String piatto, int quantita, StatusOrdine status, String utente, boolean receivedFromSlave) {
+	public Ordine(String tavolo, String piatto, StatusOrdine status, String utente, boolean receivedFromSlave) {
 		this.tavolo = tavolo;
 		this.piatto = piatto;
-		this.quantita = quantita;
 		this.status = status;
 		this.utente = utente;
 		this.receivedFromSlave = receivedFromSlave;
@@ -62,7 +59,6 @@ public class Ordine implements Parcelable {
 	
 	protected Ordine(Parcel in) {
 		status = StatusOrdine.valueOf(in.readString());
-		quantita = in.readInt();
 		desc = in.readString();
 		tavolo = in.readString();
 		piatto = in.readString();
@@ -90,7 +86,6 @@ public class Ordine implements Parcelable {
 	@Exclude
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(status.toString());
-		dest.writeInt(quantita);
 		dest.writeString(desc);
 		dest.writeString(tavolo);
 		dest.writeString(piatto);
