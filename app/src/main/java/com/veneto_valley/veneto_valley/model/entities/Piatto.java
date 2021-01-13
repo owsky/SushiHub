@@ -4,44 +4,33 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-@Entity
 @IgnoreExtraProperties
 public class Piatto implements Parcelable {
 	@Exclude
 	public static final Parcelable.Creator<Piatto> CREATOR = new Parcelable.Creator<Piatto>() {
-		
+
 		@Override
 		public Piatto createFromParcel(Parcel source) {
 			return new Piatto(source);
 		}
-		
+
 		@Override
 		public Piatto[] newArray(int size) {
 			return new Piatto[size];
 		}
 	};
-	@PrimaryKey
-	@NonNull
+
 	@Exclude
 	public String idPiatto;
 	public String nome;
 	public float prezzo;
 	
-	public Piatto(@NonNull String idPiatto, String nome) {
-		this.idPiatto = idPiatto;
-		this.nome = nome;
-	}
-	
-	@Ignore
 	public Piatto() {
-		// Default constructor required for calls to DataSnapshot.getValue(User.class)
+		// Default constructor required for calls to DataSnapshot.getValue(Piatto.class)
 	}
 	
 	protected Piatto(Parcel in) {
