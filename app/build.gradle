@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.6"
 
@@ -46,6 +45,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     // Room components
     implementation "androidx.room:room-runtime:$room_version"

@@ -24,6 +24,7 @@ import com.veneto_valley.veneto_valley.view.ListaOrdiniGenericaPage;
 import com.veneto_valley.veneto_valley.view.OrdiniAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -44,8 +45,13 @@ public class RepositoryOrdini {
 		preferences = PreferenceManager.getDefaultSharedPreferences(application);
 	}
 	
-	public void insert(Ordine[] ordini) {
-		Executors.newSingleThreadExecutor().execute(() -> ordineDao.insertAll(ordini));
+	private long[] lastInserted = new long[99];
+	public void insert(Ordine ordine, int qta) {
+		Executors.newSingleThreadExecutor().execute(() -> {
+			Ordine[] ordini = new Ordine[qta];
+			Arrays.fill(ordini, ordine);
+			lastInserted = ordineDao.insertAll(ordini);
+		});
 	}
 	
 	public void update(Ordine ordine) {
@@ -56,8 +62,8 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadScheduledExecutor().execute(() -> ordineDao.delete(ordine));
 	}
 	
-	public void delete(Ordine[] ordini) {
-		Executors.newSingleThreadExecutor().execute(() -> ordineDao.deleteAll(ordini));
+	public void delete() {
+		Executors.newSingleThreadExecutor().execute(() -> ordineDao.deleteAllById(lastInserted));
 	}
 	
 	// lazy initialization dei livedata

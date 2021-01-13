@@ -62,7 +62,6 @@ public class UserInputPage extends Fragment {
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
 		
-		
 		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
 		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
 		Ordine ordine  = UserInputPageArgs.fromBundle(requireArguments()).getOrdine();
@@ -134,7 +133,9 @@ public class UserInputPage extends Fragment {
 			viewModel.insert(ordine, Integer.parseInt(qta.getText().toString()));
 			Snackbar.make(requireActivity().findViewById(android.R.id.content),
 					"Annullare l'operazione?", BaseTransientBottomBar.LENGTH_LONG)
-					.setAction("Undo", v -> viewModel.undoInsert()).show();
+					.setAction("Undo", v -> viewModel.undoInsert())
+					.setAnchorView(requireActivity().findViewById(R.id.salvaEsci))
+					.show();
 			return true;
 		}
 		return false;
