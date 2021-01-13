@@ -13,7 +13,7 @@ import com.veneto_valley.veneto_valley.model.entities.Ordine;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 
-@Database(entities = {Ordine.class, Tavolo.class,}, exportSchema = false, version = 2)
+@Database(entities = {Ordine.class, Tavolo.class,}, exportSchema = false, version = 1)
 @TypeConverters({TimestampConverter.class, StatusEnumConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 	private static AppDatabase dbInstance = null;

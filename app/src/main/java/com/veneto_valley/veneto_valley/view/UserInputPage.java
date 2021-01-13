@@ -46,7 +46,6 @@ public class UserInputPage extends Fragment {
 			}
 		});
 	}
-	// TODO refactor codice
 	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -63,9 +62,8 @@ public class UserInputPage extends Fragment {
 		
 		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
 		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
-		UserInputPageArgs args = UserInputPageArgs.fromBundle(requireArguments());
-		Ordine ordine;
-		if ((ordine = args.getOrdine()) != null) {
+		Ordine ordine  = UserInputPageArgs.fromBundle(requireArguments()).getOrdine();
+		if (ordine != null) {
 			codice.setText(ordine.piatto);
 			desc.setText(ordine.desc);
 			qta.setVisibility(View.GONE);
@@ -124,7 +122,6 @@ public class UserInputPage extends Fragment {
 		else {
 			// istanzio un nuovo ordine tramite lo user input e lo username dell'utente, recuperato
 			// attraverso le shared preferences e lo passo al viewmodel
-			
 			String username = preferences.getString("username", "username");
 			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, status, username, false);
 			if (!descrizione.trim().isEmpty())
