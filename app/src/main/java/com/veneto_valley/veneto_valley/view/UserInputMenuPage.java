@@ -65,6 +65,7 @@ public class UserInputMenuPage extends Fragment {
 				
 				Ordine ordine = new Ordine(tavolo, cod, Ordine.StatusOrdine.pending, utente, false);
 				ordine.desc = nomePiatto.getText().toString();
+				ordine.prezzo = piatto.prezzo;
 				viewModel.insert(ordine, quantita);
 				NavHostFragment.findNavController(this).navigate(R.id.action_userInputMenu_to_listeTabNav);
 			}

@@ -16,6 +16,8 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
 import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class CheckOutPage extends Fragment {
@@ -37,11 +39,13 @@ public class CheckOutPage extends Fragment {
 		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
 		final Locale locale = requireActivity().getResources().getConfiguration().locale;
 		float menu = viewModel.getCostoMenu();
-		costoMenu.setText(String.format(locale, "Costo Menu: %s €", menu));
+		DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance());
+		df.setMaximumFractionDigits(340);
+		costoMenu.setText(String.format(locale, "Costo Menu: %s €", df.format(menu)));
 		float extra = viewModel.getCostoExtra();
-		costoExtra.setText(String.format(locale, "Costo Extra: %s €", extra));
+		costoExtra.setText(String.format(locale, "Costo Extra: %s €", df.format(extra)));
 		float tot = menu + extra;
-		totale.setText(String.format(locale, "Costo totale: %s €", tot));
+		totale.setText(String.format(locale, "Costo totale: %s €", df.format(tot)));
 		finito.setOnClickListener(v -> {
 			// invoco il checkout tramite il viewmodel
 			viewModel.checkout(requireActivity());
