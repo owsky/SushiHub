@@ -126,7 +126,7 @@ public class UserInputPage extends Fragment {
 			
 			for (int i = 0; i < quantita; ++i) {
 				// TODO: insert multiplo
-				Ordine ordine = new Ordine(codiceTavolo, codicePiatto, quantita, status, username, false);
+				Ordine ordine = new Ordine(codiceTavolo, codicePiatto, status, username, false);
 				if (!descrizione.trim().isEmpty())
 					ordine.desc = descrizione;
 				if (!prezzoExtra.isEmpty())

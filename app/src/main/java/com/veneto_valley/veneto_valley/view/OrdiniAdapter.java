@@ -29,8 +29,7 @@ public class OrdiniAdapter extends ListAdapter<Ordine, OrdiniAdapter.PendingView
 			
 			@Override
 			public boolean areContentsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
-				return oldItem.piatto.equals(newItem.piatto) &&
-						oldItem.quantita == newItem.quantita;
+				return oldItem.piatto.equals(newItem.piatto);
 			}
 		});
 		this.tipoLista = tipoLista;

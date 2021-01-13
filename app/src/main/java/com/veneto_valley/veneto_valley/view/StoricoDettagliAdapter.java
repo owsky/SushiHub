@@ -25,8 +25,7 @@ public class StoricoDettagliAdapter extends ListAdapter<Ordine, StoricoDettagliA
 		@Override
 		public boolean areContentsTheSame(@NonNull Ordine oldItem, @NonNull Ordine newItem) {
 			return oldItem.piatto.equals(newItem.piatto) &&
-					oldItem.desc.equals(newItem.desc) &&
-					oldItem.quantita == newItem.quantita;
+					oldItem.desc.equals(newItem.desc);
 		}
 	};
 	

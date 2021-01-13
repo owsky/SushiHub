@@ -153,15 +153,14 @@ public class RepositoryOrdini {
 						if (fromSlave.status == Ordine.StatusOrdine.pending)
 							ordineDao.delete(ordine);
 						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
-							ordine.quantita += fromSlave.quantita;
 							ordineDao.insert(ordine);
 						} else
 							ordineDao.update(ordine);
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
 						// i vincoli di unicità del database e lo aggiunge
-						ordine = new Ordine(tavolo, fromSlave.piatto, fromSlave.quantita,
-								fromSlave.status, fromSlave.utente, true);
+						ordine = new Ordine(tavolo, fromSlave.piatto, fromSlave.status,
+								fromSlave.utente, true);
 						ordineDao.insert(ordine);
 					}
 				});

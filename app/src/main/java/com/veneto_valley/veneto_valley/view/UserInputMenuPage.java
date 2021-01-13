@@ -69,7 +69,7 @@ public class UserInputMenuPage extends Fragment {
 				
 				for (int i = 0; i < quantita; ++i) {
 					// TODO: spostare for giù di layer
-					Ordine ordine = new Ordine(tavolo, cod, quantita, Ordine.StatusOrdine.pending, utente, false);
+					Ordine ordine = new Ordine(tavolo, cod, Ordine.StatusOrdine.pending, utente, false);
 					ordine.desc = nomePiatto.getText().toString();
 					viewModel.insert(ordine);
 				}
