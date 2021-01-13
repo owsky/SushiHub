@@ -33,11 +33,6 @@ public class Ristorante implements Parcelable {
 	public float costoMenu;
 	public int maxPortate;
 	
-	//TODO: Si può eliminare?
-//    public Ristorante(String nome) {
-//        this.nome = nome;
-//    }
-	
 	public Ristorante() {
 		// Default constructor required for calls to DataSnapshot.getValue(User.class)
 	}

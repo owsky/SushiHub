@@ -160,8 +160,8 @@ public class RepositoryOrdini {
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
 						// i vincoli di unicità del database e lo aggiunge
-						ordine = new Ordine(tavolo, fromSlave.piatto,
-								fromSlave.status, fromSlave.utente, true);
+						ordine = new Ordine(tavolo, fromSlave.piatto, fromSlave.status,
+								fromSlave.utente, true);
 						ordineDao.insert(ordine);
 					}
 				});

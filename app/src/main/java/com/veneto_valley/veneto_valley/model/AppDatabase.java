@@ -8,14 +8,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.veneto_valley.veneto_valley.model.dao.OrdineDao;
-import com.veneto_valley.veneto_valley.model.dao.PiattoDao;
 import com.veneto_valley.veneto_valley.model.dao.TavoloDao;
 import com.veneto_valley.veneto_valley.model.entities.Ordine;
-import com.veneto_valley.veneto_valley.model.entities.Piatto;
 import com.veneto_valley.veneto_valley.model.entities.Tavolo;
 
 
-@Database(entities = {Ordine.class, Piatto.class, Tavolo.class,}, exportSchema = false, version = 2)
+@Database(entities = {Ordine.class, Tavolo.class,}, exportSchema = false, version = 2)
 @TypeConverters({TimestampConverter.class, StatusEnumConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 	private static AppDatabase dbInstance = null;
@@ -24,7 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
 		if (dbInstance == null) {
 			//TODO: Rimuovere fallback
 			dbInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "Veneto_Valley-Db")
-					.allowMainThreadQueries() //TODO: Provare a rimuovere
+					.allowMainThreadQueries() //Non si può fare a meno, le query relative agli ordini sono asincrone ma il checkout no
 					.fallbackToDestructiveMigration()  //TODO: Rimuovere
 					.build();
 		}
@@ -33,8 +31,6 @@ public abstract class AppDatabase extends RoomDatabase {
 	
 	//Entità
 	public abstract OrdineDao ordineDao();
-	
-	public abstract PiattoDao piattoDao();
 	
 	public abstract TavoloDao tavoloDao();
 	
