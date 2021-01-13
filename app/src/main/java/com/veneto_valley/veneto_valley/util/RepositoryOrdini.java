@@ -192,7 +192,7 @@ public class RepositoryOrdini {
 					integer -> annullaConfermaOrdine(adapter.getOrdineAt(integer), tavolo),
 					ContextCompat.getColor(context, R.color.colorPrimary),
 					ContextCompat.getColor(context, R.color.colorPrimary),
-					R.drawable.ic_send, R.drawable.ic_send);
+					R.drawable.ic_send, R.drawable.ic_send_rev);
 		} else
 			return makeCallback(context,
 					ItemTouchHelper.LEFT, null,
