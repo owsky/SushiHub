@@ -76,10 +76,6 @@ public class OrdiniViewModel extends AndroidViewModel {
 		repositoryOrdini.insert(ordini);
 	}
 	
-	public void delete(Ordine ordine) {
-		repositoryOrdini.delete(ordine);
-	}
-	
 	public String getTavolo() {
 		return tavolo;
 	}

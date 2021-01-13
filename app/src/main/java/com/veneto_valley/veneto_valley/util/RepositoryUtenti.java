@@ -15,8 +15,4 @@ public class RepositoryUtenti {
 	public void initUtente(String username) {
 		preferences.edit().putString("username", username).apply();
 	}
-	
-	public String getUsername() {
-		return preferences.getString("username", "username");
-	}
 }

@@ -61,7 +61,7 @@ public class MenuAggiuntaOrdine extends Fragment {
 			
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-			
+			// noop
 			}
 		});
 	}
