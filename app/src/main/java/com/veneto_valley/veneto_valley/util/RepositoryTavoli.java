@@ -92,8 +92,8 @@ public class RepositoryTavoli {
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString("codice_tavolo", codice).putBoolean("is_master", true);
 		if (idRistorante != null)
-			editor.putString("codice_ristorante", idRistorante).putString("nome_ristorante", nomeRistorante);
-		editor.apply();
+			editor.putString("codice_ristorante", idRistorante);
+		editor.putString("nome_ristorante", nomeRistorante).apply();
 		Tavolo tavolo = new Tavolo(codice, menu, idRistorante);
 		tavolo.nome = nomeRistorante;
 		tavoloDao.insert(tavolo);
