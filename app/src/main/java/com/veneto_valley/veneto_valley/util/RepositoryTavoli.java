@@ -79,7 +79,7 @@ public class RepositoryTavoli {
 			} else {
 				tavoloDao.insert(new Tavolo(codice, nomeRistorante, menu));
 			}
-			if (idRistorante != null)
+			if (idRistorante != null && !idRistorante.equals("null"))
 				editor.putString("codice_ristorante", idRistorante);
 			editor.putString("codice_tavolo", codice);
 			editor.apply();

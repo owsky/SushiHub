@@ -56,7 +56,7 @@ public class ListeTabPage extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
 		view.findViewById(R.id.fab).setOnClickListener(v -> {
-			if (preferences.contains("codice_ristorante"))
+			if (preferences.getString("codice_ristorante", null) != null)
 				Navigation.findNavController(v).navigate(R.id.action_listeTabNav_to_aggiuntaOrdineMenu);
 			else
 				Navigation.findNavController(v).navigate(R.id.action_listPiattiFragment_to_aggiungiOrdiniFragment);
