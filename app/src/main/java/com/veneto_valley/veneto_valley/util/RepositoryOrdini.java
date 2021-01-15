@@ -97,9 +97,11 @@ public class RepositoryOrdini {
 			ordine.status = Ordine.StatusOrdine.confirmed;
 			update(ordine);
 			
-			if (!preferences.contains("is_master"))
+			if (!preferences.contains("is_master")) {
+				Ordine ordineInvia = new Ordine(ordine.tavolo, ordine.piatto, Ordine.StatusOrdine.insertOrder, ordine.utente, ordine.receivedFromSlave);
 				Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
-						.invia(ordine.getBytes());
+						.invia(ordineInvia.getBytes());
+			}
 		});
 		
 	}
@@ -110,9 +112,11 @@ public class RepositoryOrdini {
 			ordine.status = Ordine.StatusOrdine.pending;
 			update(ordine);
 			
-			if (!preferences.contains("is_master"))
+			if (!preferences.contains("is_master")) {
+				Ordine ordineInvia = new Ordine(ordine.tavolo, ordine.piatto, Ordine.StatusOrdine.deleteOrder, ordine.utente, ordine.receivedFromSlave);
 				Connessione.getInstance(true, application, tavolo, getPayloadCallback(tavolo))
-						.invia(ordine.getBytes());
+						.invia(ordineInvia.getBytes());
+			}
 		});
 	}
 	
@@ -121,9 +125,11 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadScheduledExecutor().execute(() -> {
 			ordine.status = Ordine.StatusOrdine.delivered;
 			update(ordine);
-			if (!preferences.contains("is_master"))
+			if (!preferences.contains("is_master")) {
+				Ordine ordineInvia = new Ordine(ordine.tavolo, ordine.piatto, Ordine.StatusOrdine.deliverOrder, ordine.utente, ordine.receivedFromSlave);
 				Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
-						.invia(ordine.getBytes());
+						.invia(ordineInvia.getBytes());
+			}
 		});
 	}
 	
@@ -132,9 +138,11 @@ public class RepositoryOrdini {
 		Executors.newSingleThreadScheduledExecutor().execute(() -> {
 			ordine.status = Ordine.StatusOrdine.confirmed;
 			update(ordine);
-			if (!preferences.contains("is_master"))
+			if (!preferences.contains("is_master")) {
+				Ordine ordineInvia = new Ordine(ordine.tavolo, ordine.piatto, Ordine.StatusOrdine.undeliverOrder, ordine.utente, ordine.receivedFromSlave);
 				Connessione.getInstance(false, application, tavolo, getPayloadCallback(tavolo))
-						.invia(ordine.getBytes());
+						.invia(ordineInvia.getBytes());
+			}
 		});
 	}
 	
