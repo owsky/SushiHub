@@ -164,13 +164,17 @@ public class RepositoryOrdini {
 					// se l'ordine ricevuto dallo slave corrisponde ad un ordine già presente nel
 					// db del master, riconosce l'input dello slave tramite lo status
 					
-					if ((fromSlave.status == Ordine.StatusOrdine.deliverOrder || fromSlave.status == Ordine.StatusOrdine.undeliverOrder || fromSlave.status == Ordine.StatusOrdine.deleteOrder) && (ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente)) != null) {
-						if (fromSlave.status == Ordine.StatusOrdine.deleteOrder)
+					if (fromSlave.status == Ordine.StatusOrdine.deliverOrder || fromSlave.status == Ordine.StatusOrdine.undeliverOrder || fromSlave.status == Ordine.StatusOrdine.deleteOrder){
+						if (fromSlave.status == Ordine.StatusOrdine.deleteOrder) {
+							ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
 							ordineDao.delete(ordine);
+						}
 						else if (fromSlave.status == Ordine.StatusOrdine.deliverOrder) {
+							ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
 							ordine.status = Ordine.StatusOrdine.delivered;
 							ordineDao.update(ordine);
 						} else {
+							ordine = ordineDao.contains(Ordine.StatusOrdine.delivered, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
 							ordine.status = Ordine.StatusOrdine.confirmed;
 							ordineDao.update(ordine);
 						}
