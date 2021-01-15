@@ -163,11 +163,17 @@ public class RepositoryOrdini {
 					Ordine ordine;
 					// se l'ordine ricevuto dallo slave corrisponde ad un ordine già presente nel
 					// db del master, riconosce l'input dello slave tramite lo status
-					if ((ordine = ordineDao.contains(fromSlave.status, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente)) != null) {
+					
+					if ((ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente)) != null) {
 						if (fromSlave.status == Ordine.StatusOrdine.pending)
 							ordineDao.delete(ordine);
-						else
+						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
+							ordine.status = Ordine.StatusOrdine.confirmed;
 							ordineDao.update(ordine);
+						} else {
+							ordine.status = Ordine.StatusOrdine.delivered;
+							ordineDao.update(ordine);
+						}
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
 						// i vincoli di unicità del database e lo aggiunge
