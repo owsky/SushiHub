@@ -94,6 +94,10 @@ public class Ordine implements Parcelable {
 	public enum StatusOrdine {
 		pending,
 		confirmed,
-		delivered
+		delivered,
+		insertOrder,
+		deliverOrder,
+		undeliverOrder,
+		deleteOrder
 	}
 }
