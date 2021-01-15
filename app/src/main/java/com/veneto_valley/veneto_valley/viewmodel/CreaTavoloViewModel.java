@@ -18,13 +18,13 @@ public class CreaTavoloViewModel extends AndroidViewModel {
 	}
 	
 	// creazione tavolo master
-	public void creaTavolo(String idRistorante, float menu) {
-		repository.creaTavolo(idRistorante, menu);
+	public void creaTavolo(String idRistorante, String nomeRistorante, float menu) {
+		repository.creaTavolo(idRistorante, nomeRistorante, menu);
 	}
 	
 	// creazione tavolo slave
-	public void creaTavolo(String idRistorante, String codiceTavolo, float menu) {
-		repository.creaTavolo(idRistorante, codiceTavolo, menu);
+	public void creaTavolo(String idRistorante, String nomeRistorante, String codiceTavolo, float menu) {
+		repository.creaTavolo(idRistorante, nomeRistorante, codiceTavolo, menu);
 	}
 	
 	// getter parametri costruzione tavolo

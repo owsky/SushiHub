@@ -31,8 +31,9 @@ public class ScanQRPage extends Fragment {
 					String codiceTavolo = info[0];
 					float costoMenu = Float.parseFloat(info[1]);
 					String codiceRistorante = info[2];
+					String nomeRistorante = info[3];
 					ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class)
-							.creaTavolo(codiceRistorante, codiceTavolo, costoMenu);
+							.creaTavolo(codiceRistorante, nomeRistorante, codiceTavolo, costoMenu);
 					NavHostFragment.findNavController(ScanQRPage.this)
 							.navigate(R.id.action_scanQRNav_to_impostaUtentePage);
 				} else {

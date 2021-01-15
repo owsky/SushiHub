@@ -67,15 +67,17 @@ public class RepositoryTavoli {
 	}
 	
 	// creazione tavolo per gli slave
-	public void creaTavolo(String idRistorante, String codice, float menu) {
+	public void creaTavolo(String idRistorante, String nomeRistorante, String codice, float menu) {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			Tavolo tavolo;
 			SharedPreferences.Editor editor = preferences.edit();
 			if ((tavolo = tavoloDao.getTavolo(codice)) != null) {
 				tavolo.costoMenu = menu;
+				tavolo.ristorante = idRistorante;
+				tavolo.nome = nomeRistorante;
 				tavoloDao.update(tavolo);
 			} else {
-				tavolo = new Tavolo(codice, menu);
+				tavolo = new Tavolo(codice, nomeRistorante, menu);
 				
 				if (idRistorante != null)
 					editor.putString("codice_ristorante", idRistorante);
@@ -87,14 +89,15 @@ public class RepositoryTavoli {
 	}
 	
 	// creazione tavolo per il master
-	public void creaTavolo(String idRistorante, float menu) {
+	public void creaTavolo(String idRistorante, String nomeRistorante, float menu) {
 		String codice = UUID.randomUUID().toString();
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString("codice_tavolo", codice).putBoolean("is_master", true);
 		if (idRistorante != null)
-			editor.putString("codice_ristorante", idRistorante);
+			editor.putString("codice_ristorante", idRistorante).putString("nome_ristorante", nomeRistorante);
 		editor.apply();
 		Tavolo tavolo = new Tavolo(codice, menu, idRistorante);
+		tavolo.nome = nomeRistorante;
 		tavoloDao.insert(tavolo);
 	}
 	
@@ -102,11 +105,13 @@ public class RepositoryTavoli {
 	public List<String> getInfoTavolo() {
 		Tavolo current = tavoloDao.getTavolo(preferences.getString("codice_tavolo", null));
 		String idRistorante = preferences.getString("codice_ristorante", null);
+		String nomeRistorante = preferences.getString("nome_ristorante", null);
 		List<String> info = new ArrayList<>();
 		if (current != null) {
 			info.add(current.idTavolo);
 			info.add(Float.toString(current.costoMenu));
 			info.add(idRistorante);
+			info.add(nomeRistorante);
 		}
 		return info;
 	}

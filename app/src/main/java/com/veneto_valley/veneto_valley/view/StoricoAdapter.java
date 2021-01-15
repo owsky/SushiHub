@@ -45,8 +45,7 @@ public class StoricoAdapter extends ListAdapter<Tavolo, StoricoAdapter.TavoloVie
 	@Override
 	public void onBindViewHolder(@NonNull TavoloViewHolder holder, int position) {
 		Tavolo tavolo = getItem(position);
-//		holder.ristorante.setText(tavolo.nome);
-		holder.ristorante.setText(R.string.nome_ristorante);
+		holder.ristorante.setText(tavolo.nome);
 		holder.data.setText(tavolo.dataCreazione.toString());
 		
 		// crea un click listener che naviga verso la view con i dettagli delle ordinazioni, passando

@@ -36,9 +36,7 @@ public class ImpostaTavoloPage extends Fragment {
 			ImpostaTavoloPageArgs args = ImpostaTavoloPageArgs.fromBundle(getArguments());
 			Ristorante r;
 			if ((r = args.getRistorante()) != null) {
-				viewModel.creaTavolo(r.idRistorante, r.costoMenu);
-				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-				preferences.edit().putString("codice_ristorante", r.idRistorante).apply();
+				viewModel.creaTavolo(r.idRistorante, r.nome, r.costoMenu);
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
 		}
@@ -61,7 +59,8 @@ public class ImpostaTavoloPage extends Fragment {
 			else {
 				// creo un tavolo tramite lo user input attraverso il viewmodel
 				float costo = Float.parseFloat(costoMenu.getText().toString());
-				viewModel.creaTavolo(null, costo);
+				String nomeRistorante = nome.getText().toString();
+				viewModel.creaTavolo(null, nomeRistorante, costo);
 				Misc.hideKeyboard(requireActivity());
 				NavHostFragment.findNavController(this).navigate(R.id.action_impostaTavoloNav_to_generaQRNav);
 			}
