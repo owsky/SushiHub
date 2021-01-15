@@ -77,12 +77,10 @@ public class RepositoryTavoli {
 				tavolo.nome = nomeRistorante;
 				tavoloDao.update(tavolo);
 			} else {
-				tavolo = new Tavolo(codice, nomeRistorante, menu);
-				
-				if (idRistorante != null)
-					editor.putString("codice_ristorante", idRistorante);
-				tavoloDao.insert(tavolo);
+				tavoloDao.insert(new Tavolo(codice, nomeRistorante, menu));
 			}
+			if (idRistorante != null)
+				editor.putString("codice_ristorante", idRistorante);
 			editor.putString("codice_tavolo", codice);
 			editor.apply();
 		});

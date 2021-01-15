@@ -44,13 +44,11 @@ public class ListeTabPage extends Fragment {
 				dialog.show(getParentFragmentManager(), getTag());
 			}
 		});
-		// se l'utente è master estraggo il codice del tavolo e avvio il discovering
+
 		preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		if (preferences.getBoolean("is_master", false)) {
-			String codice_tavolo = preferences.getString("codice_tavolo", null);
-			OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, codice_tavolo);
-			Connessione.getInstance(false, requireActivity().getApplication(), codice_tavolo, viewModel.getCallback());
-		}
+		String codice_tavolo = preferences.getString("codice_tavolo", null);
+		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(), OrdiniViewModel.class, codice_tavolo);
+		Connessione.getInstance(!preferences.getBoolean("is_master", false), requireActivity().getApplication(), codice_tavolo, viewModel.getCallback());
 	}
 	
 	@Override

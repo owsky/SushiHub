@@ -137,6 +137,7 @@ public class Connessione {
 	
 	public void closeConnection() {
 		connesso = false;
+		connessione = null;
 		Nearby.getConnectionsClient(application).stopAllEndpoints();
 	}
 	

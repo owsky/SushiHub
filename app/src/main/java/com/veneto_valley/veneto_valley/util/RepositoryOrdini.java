@@ -148,7 +148,7 @@ public class RepositoryOrdini {
 		if (preferences.contains("is_master"))
 			cleanDatabase();
 		preferences.edit().clear().apply();
-		Connessione.getInstance(preferences.getBoolean("is_master", false),
+		Connessione.getInstance(!preferences.getBoolean("is_master", false),
 				application, tavolo, getPayloadCallback(tavolo)).closeConnection();
 	}
 	
@@ -166,9 +166,7 @@ public class RepositoryOrdini {
 					if ((ordine = ordineDao.contains(fromSlave.status, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente)) != null) {
 						if (fromSlave.status == Ordine.StatusOrdine.pending)
 							ordineDao.delete(ordine);
-						else if (fromSlave.status == Ordine.StatusOrdine.confirmed) {
-							ordineDao.insert(ordine);
-						} else
+						else
 							ordineDao.update(ordine);
 					} else {
 						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
