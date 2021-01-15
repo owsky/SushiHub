@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -171,27 +172,31 @@ public class RepositoryOrdini {
 					Ordine ordine;
 					// se l'ordine ricevuto dallo slave corrisponde ad un ordine già presente nel
 					// db del master, riconosce l'input dello slave tramite lo status
-					
-					if (fromSlave.status == Ordine.StatusOrdine.deliverOrder || fromSlave.status == Ordine.StatusOrdine.undeliverOrder || fromSlave.status == Ordine.StatusOrdine.deleteOrder){
-						if (fromSlave.status == Ordine.StatusOrdine.deleteOrder) {
-							ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
-							ordineDao.delete(ordine);
-						}
-						else if (fromSlave.status == Ordine.StatusOrdine.deliverOrder) {
+
+					switch (fromSlave.status){
+						case insertOrder:
+							//crea un nuovo ordine con i dati ricevuti così da rispettare
+							// i vincoli di unicità del database e lo aggiunge
+							ordine = new Ordine(tavolo, fromSlave.piatto, Ordine.StatusOrdine.confirmed,
+							fromSlave.utente, true);
+							ordineDao.insert(ordine);
+							break;
+						case deliverOrder:
 							ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
 							ordine.status = Ordine.StatusOrdine.delivered;
 							ordineDao.update(ordine);
-						} else {
+							break;
+						case undeliverOrder:
 							ordine = ordineDao.contains(Ordine.StatusOrdine.delivered, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
 							ordine.status = Ordine.StatusOrdine.confirmed;
 							ordineDao.update(ordine);
-						}
-					} else {
-						// altrimenti crea un nuovo ordine con i dati ricevuti così da rispettare
-						// i vincoli di unicità del database e lo aggiunge
-						ordine = new Ordine(tavolo, fromSlave.piatto, Ordine.StatusOrdine.confirmed,
-								fromSlave.utente, true);
-						ordineDao.insert(ordine);
+							break;
+						case deleteOrder:
+							ordine = ordineDao.contains(Ordine.StatusOrdine.confirmed, fromSlave.tavolo, fromSlave.piatto, fromSlave.utente);
+							ordineDao.delete(ordine);
+							break;
+						default:
+							Log.w("NearbyOrder","Status non valido");
 					}
 				});
 			}
