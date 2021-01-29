@@ -7,7 +7,6 @@ import android.view.inputmethod.InputMethodManager;
 
 public class Misc {
 	
-	// nasconde la tastiera quando non più richiesta
 	public static void hideKeyboard(Activity activity) {
 		InputMethodManager manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		View currentFocusedView = activity.getCurrentFocus();

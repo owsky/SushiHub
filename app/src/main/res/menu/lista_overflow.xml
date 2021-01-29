@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/mostraQR"
-        android:title="@string/mostra_qr"
+        android:id="@+id/showQR"
+        android:title="@string/show_qr"
         app:showAsAction="never" />
     <item
         android:id="@+id/toAllOrders"
-        android:title="@string/tutti_gli_ordini"
+        android:title="@string/all_orders"
         app:showAsAction="never" />
     <item
         android:id="@+id/toCheckout"

@@ -10,14 +10,13 @@ import com.veneto_valley.veneto_valley.viewmodel.MyViewModelFactory;
 
 public class ViewModelUtil {
 	
-	// metodi di costruzione dei viewmodel
-	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> classe) {
-		return new ViewModelProvider((ViewModelStoreOwner) activity).get(classe);
+	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> tClass) {
+		return new ViewModelProvider((ViewModelStoreOwner) activity).get(tClass);
 	}
 	
-	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> classe, String parameter) {
+	public static <T extends AndroidViewModel> T getViewModel(Activity activity, Class<T> tClass, String parameter) {
 		MyViewModelFactory factory = new MyViewModelFactory(activity.getApplication(), parameter);
-		return new ViewModelProvider((ViewModelStoreOwner) activity, factory).get(classe);
+		return new ViewModelProvider((ViewModelStoreOwner) activity, factory).get(tClass);
 	}
 	
 	public static void clearViewModels(ViewModelStoreOwner viewModelStoreOwner) {

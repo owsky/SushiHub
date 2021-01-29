@@ -22,16 +22,16 @@ public class AppModePage extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		TextView greeting = view.findViewById(R.id.greeting);
-		greeting.setText(R.string.conv_greeting);
+		greeting.setText(R.string.aff_greeting);
 		
-		Button conv = view.findViewById(R.id.btnCrea);
-		conv.setText("Ristorante\nConvenzionato");
-		conv.setOnClickListener(v -> NavHostFragment.findNavController(AppModePage.this)
-				.navigate(R.id.action_appModePage_to_listaRistorantiNav));
+		Button affiliated = view.findViewById(R.id.btnCreate);
+		affiliated.setText("Affiliated\nRestaurant");
+		affiliated.setOnClickListener(v -> NavHostFragment.findNavController(AppModePage.this)
+				.navigate(R.id.action_appModeNav_to_listRestaurantsNav));
 		
-		Button nonConv = view.findViewById(R.id.btnUnisciti);
-		nonConv.setText("Ristorante non\nConvenzionato");
-		nonConv.setOnClickListener(v -> NavHostFragment.findNavController(AppModePage.this)
-				.navigate(R.id.action_appModeNav_to_impostaTavoloNav));
+		Button nonAffiliated = view.findViewById(R.id.btnJoin);
+		nonAffiliated.setText("Non-affiliated\nRestaurant");
+		nonAffiliated.setOnClickListener(v -> NavHostFragment.findNavController(AppModePage.this)
+				.navigate(R.id.action_appModeNav_to_configureTableNav));
 	}
 }

@@ -7,20 +7,20 @@
     android:layout_marginTop="?attr/actionBarSize">
 
     <TextView
-        android:id="@+id/nomePiatto"
+        android:id="@+id/dishName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/nome"
+        android:text="@string/name"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nomePiattoDyn"
+        android:id="@+id/dishNameTextview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -29,31 +29,31 @@
         android:maxLines="1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/nomePiatto"
-        app:layout_constraintTop_toBottomOf="@+id/nomePiatto" />
+        app:layout_constraintStart_toStartOf="@+id/dishName"
+        app:layout_constraintTop_toBottomOf="@+id/dishName" />
 
     <TextView
-        android:id="@+id/codice"
+        android:id="@+id/code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLength="5"
         android:maxLines="1"
-        android:nextFocusDown="@id/addQuantita"
+        android:nextFocusDown="@id/addQuantity"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/addQuantita"
+        app:layout_constraintBottom_toBottomOf="@+id/addQuantity"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/salva"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/salva"
+        android:text="@string/save"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -65,35 +65,35 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/codice"
+        android:text="@string/code"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomePiattoDyn" />
+        app:layout_constraintTop_toBottomOf="@+id/dishNameTextview" />
 
     <TextView
-        android:id="@+id/quantita"
+        android:id="@+id/quantityTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="132dp"
         android:layout_marginLeft="132dp"
         android:layout_marginTop="32dp"
-        android:text="@string/quantit"
+        android:text="@string/quantity"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/nomePiattoDyn" />
+        app:layout_constraintTop_toBottomOf="@+id/dishNameTextview" />
 
     <EditText
-        android:id="@+id/addQuantita"
+        android:id="@+id/addQuantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:maxLength="2"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="@+id/quantita"
-        app:layout_constraintStart_toStartOf="@+id/quantita"
-        app:layout_constraintTop_toBottomOf="@+id/quantita"
+        app:layout_constraintEnd_toEndOf="@+id/quantityTextview"
+        app:layout_constraintStart_toStartOf="@+id/quantityTextview"
+        app:layout_constraintTop_toBottomOf="@+id/quantityTextview"
         tools:ignore="Autofill,LabelFor" />
 
     <TextView
@@ -103,14 +103,14 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/prezzo"
+        android:text="@string/price"
         android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/codice" />
+        app:layout_constraintTop_toBottomOf="@+id/code" />
 
     <TextView
-        android:id="@+id/prezzo"
+        android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"

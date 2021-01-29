@@ -20,14 +20,14 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.veneto_valley.veneto_valley.R;
-import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.model.entities.Order;
 import com.veneto_valley.veneto_valley.util.Misc;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdersViewModel;
 
 public class UserInputPage extends Fragment {
-	private EditText codice, desc, qta, prezzo;
-	private TextView prezzoTextView;
+	private EditText code, desc, quantity, price;
+	private TextView priceTextView;
 	private boolean isExtra;
 	
 	public UserInputPage() {
@@ -49,90 +49,63 @@ public class UserInputPage extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		codice = view.findViewById(R.id.addCodice);
+		code = view.findViewById(R.id.addCode);
 		desc = view.findViewById(R.id.addDesc);
-		qta = view.findViewById(R.id.addQuantita);
-		prezzo = view.findViewById(R.id.addPrezzo);
-		prezzoTextView = view.findViewById(R.id.prezzoTextView);
-		Button salvaEsci = view.findViewById(R.id.salvaEsci);
-		Button salvaNuovo = view.findViewById(R.id.salvaNuovo);
+		quantity = view.findViewById(R.id.addQuantity);
+		price = view.findViewById(R.id.addPrice);
+		priceTextView = view.findViewById(R.id.priceTextView);
+		Button saveAndQuit = view.findViewById(R.id.saveAndQuit);
+		Button saveAndNew = view.findViewById(R.id.saveAndNew);
 		SwitchMaterial switchMaterial = view.findViewById(R.id.switchExtra);
 		switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> flipExtra());
 		
-		// verifico se l'utente desidera aggiungere un nuovo ordine o modificarne uno esistente
-		// e costruisco la view di conseguenza; discrimino inoltre tra ordine normale o fuori menu
-		Ordine ordine = UserInputPageArgs.fromBundle(requireArguments()).getOrdine();
-		if (ordine != null) {
-			codice.setText(ordine.piatto);
-			desc.setText(ordine.desc);
-			qta.setVisibility(View.GONE);
-			TextView qtaText = view.findViewById(R.id.qta);
-			qtaText.setVisibility(View.GONE);
-			prezzo.setText(String.valueOf(ordine.prezzo));
-			salvaEsci.setVisibility(View.GONE);
-			salvaNuovo.setText(R.string.salva);
-			salvaNuovo.setOnClickListener(v -> {
-				if (salvaOrdine(ordine))
-					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
-			});
-			if (ordine.prezzo > 0) {
-				desc.setNextFocusDownId(prezzo.getId());
-				prezzo.setVisibility(View.VISIBLE);
-				prezzoTextView.setVisibility(View.VISIBLE);
-				switchMaterial.setChecked(true);
-			} else {
-				desc.setNextFocusDownId(salvaNuovo.getId());
+		// it checks whether the user wants to insert a new order or edit an existing one, then it builds a view accordingly
+		if (!isExtra)
+			desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
+		
+		saveAndQuit.setOnClickListener(v -> {
+			if (saveOrder())
+				NavHostFragment.findNavController(UserInputPage.this).navigateUp();
+		});
+		
+		saveAndNew.setOnClickListener(v -> {
+			if (saveOrder()) {
+				code.setText(null);
+				desc.setText(null);
+				quantity.setText(null);
+				price.setText(null);
+				code.requestFocus();
 			}
-		} else {
-			if (!isExtra)
-				desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
-			
-			salvaEsci.setOnClickListener(v -> {
-				if (salvaOrdine(null))
-					NavHostFragment.findNavController(UserInputPage.this).navigateUp();
-			});
-			
-			salvaNuovo.setOnClickListener(v -> {
-				if (salvaOrdine(null)) {
-					codice.setText(null);
-					desc.setText(null);
-					qta.setText(null);
-					prezzo.setText(null);
-					codice.requestFocus();
-				}
-			});
-		}
+		});
 	}
 	
-	private boolean salvaOrdine(Ordine o) {
+	private boolean saveOrder() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
-				OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
-		String codiceTavolo = viewModel.getTavolo();
-		String codicePiatto = codice.getText().toString();
-		Ordine.StatusOrdine status = Ordine.StatusOrdine.pending;
-		String descrizione = desc.getText().toString();
-		String prezzoExtra = prezzo.getText().toString();
+		OrdersViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
+				OrdersViewModel.class, preferences.getString("table_code", null));
+		String tableCode = viewModel.getTable();
+		String dishCode = code.getText().toString();
+		Order.OrderStatus status = Order.OrderStatus.pending;
+		String description = desc.getText().toString();
+		String extraPrice = price.getText().toString();
 		
-		// verifico che i parametri nonnull vengano inseriti
-		if (codicePiatto.trim().isEmpty())
-			Toast.makeText(requireContext(), "Inserisci il codice del piatto", Toast.LENGTH_SHORT).show();
-		else if (o == null && qta.getText().toString().isEmpty())
-			Toast.makeText(requireContext(), "Inserisci la quantità", Toast.LENGTH_SHORT).show();
+		if (dishCode.trim().isEmpty())
+			Toast.makeText(requireContext(), "Insert the dish code", Toast.LENGTH_SHORT).show();
+		else if (quantity.getText().toString().isEmpty())
+			Toast.makeText(requireContext(), "Insert the quantity", Toast.LENGTH_SHORT).show();
 		else {
-			// istanzio un nuovo ordine tramite lo user input e lo username dell'utente, recuperato
-			// attraverso le shared preferences e lo passo al viewmodel
+			// it uses the shared prefs to get the username and then it calls on the viewmodel to create a new order
 			String username = preferences.getString("username", "username");
-			Ordine ordine = new Ordine(codiceTavolo, codicePiatto, status, username, false);
-			if (!descrizione.trim().isEmpty())
-				ordine.desc = descrizione;
-			if (!prezzoExtra.trim().isEmpty())
-				ordine.prezzo = Float.parseFloat(prezzoExtra);
-			viewModel.insert(ordine, Integer.parseInt(qta.getText().toString()));
+			Order newOrder = new Order(tableCode, dishCode, status, username, false);
+			if (!description.trim().isEmpty())
+				newOrder.desc = description;
+			if (!extraPrice.trim().isEmpty())
+				newOrder.price = Float.parseFloat(extraPrice);
+			viewModel.insert(newOrder, Integer.parseInt(quantity.getText().toString()));
 			Snackbar.make(requireActivity().findViewById(android.R.id.content),
-					"Annullare l'operazione?", BaseTransientBottomBar.LENGTH_LONG)
+					"Undo?", BaseTransientBottomBar.LENGTH_LONG)
 					.setAction("Undo", v -> viewModel.undoInsert())
-					.setAnchorView(requireActivity().findViewById(R.id.salvaEsci))
+					.setAnchorView(requireActivity().findViewById(R.id.saveAndQuit))
 					.show();
 			return true;
 		}
@@ -142,15 +115,15 @@ public class UserInputPage extends Fragment {
 	private void flipExtra() {
 		Misc.hideKeyboard(requireActivity());
 		if (isExtra) {
-			prezzoTextView.setVisibility(View.INVISIBLE);
-			prezzo.setVisibility(View.INVISIBLE);
+			priceTextView.setVisibility(View.INVISIBLE);
+			price.setVisibility(View.INVISIBLE);
 			isExtra = false;
 			desc.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		} else {
-			prezzoTextView.setVisibility(View.VISIBLE);
-			prezzo.setVisibility(View.VISIBLE);
+			priceTextView.setVisibility(View.VISIBLE);
+			price.setVisibility(View.VISIBLE);
 			isExtra = true;
-			desc.setNextFocusDownId(prezzo.getId());
+			desc.setNextFocusDownId(price.getId());
 			desc.setImeOptions(EditorInfo.TYPE_NULL);
 		}
 	}

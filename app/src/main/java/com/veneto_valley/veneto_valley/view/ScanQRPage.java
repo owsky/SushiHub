@@ -13,7 +13,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.CreaTavoloViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.CreateTableViewModel;
 
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
@@ -24,18 +24,17 @@ public class ScanQRPage extends Fragment {
 				IntentResult res = IntentIntegrator.parseActivityResult(REQUEST_CODE,
 						result.getResultCode(), result.getData());
 				String contents = res.getContents();
-				// se la lettura è andata a buon fine splitta la stringa in array di stringhe per
-				// creare il tavolo tramite viewmodel
+				// if the scan ended without errors it creates an array of strings to create a table with
 				if (contents != null) {
 					String[] info = TextUtils.split(contents, ";");
 					String codiceTavolo = info[0];
 					float costoMenu = Float.parseFloat(info[1]);
 					String codiceRistorante = info[2];
 					String nomeRistorante = info[3];
-					ViewModelUtil.getViewModel(requireActivity(), CreaTavoloViewModel.class)
-							.creaTavolo(codiceRistorante, nomeRistorante, codiceTavolo, costoMenu);
+					ViewModelUtil.getViewModel(requireActivity(), CreateTableViewModel.class)
+							.createTable(codiceRistorante, nomeRistorante, codiceTavolo, costoMenu);
 					NavHostFragment.findNavController(ScanQRPage.this)
-							.navigate(R.id.action_scanQRNav_to_impostaUtentePage);
+							.navigate(R.id.action_scanQRNav_to_configureUserNav);
 				} else {
 					NavHostFragment.findNavController(ScanQRPage.this).navigateUp();
 				}
@@ -45,7 +44,6 @@ public class ScanQRPage extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// impostazioni zxing scanner e avvio
 		IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
 		integrator.setOrientationLocked(true);
 		integrator.setBeepEnabled(false);

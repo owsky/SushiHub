@@ -11,22 +11,21 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MyViewModelFactory extends ViewModelProvider.AndroidViewModelFactory {
 	private final Application application;
-	private final String tavolo;
+	private final String table;
 	
-	public MyViewModelFactory(@NonNull Application application, String tavolo) {
+	public MyViewModelFactory(@NonNull Application application, String table) {
 		super(application);
 		this.application = application;
-		this.tavolo = tavolo;
+		this.table = table;
 	}
 	
-	// costruisco il viewmodel con parametro tavolo
 	@NonNull
 	@Override
 	public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 		if (AndroidViewModel.class.isAssignableFrom(modelClass)) {
 			try {
 				return modelClass.getConstructor(application.getClass(), String.class)
-						.newInstance(application, tavolo);
+						.newInstance(application, table);
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {

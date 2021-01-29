@@ -2,27 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/aggiungiOrdini"
+    android:id="@+id/insertOrders"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/addCodice"
+        android:id="@+id/addCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:maxLength="5"
         android:maxLines="1"
-        android:nextFocusDown="@id/addQuantita"
+        android:nextFocusDown="@id/addQuantity"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="Autofill,LabelFor" />
 
     <EditText
-        android:id="@+id/addQuantita"
+        android:id="@+id/addQuantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -31,9 +31,9 @@
         android:maxLength="2"
         android:maxLines="1"
         android:nextFocusDown="@id/addDesc"
-        app:layout_constraintEnd_toEndOf="@+id/qta"
-        app:layout_constraintStart_toEndOf="@+id/addCodice"
-        app:layout_constraintTop_toBottomOf="@+id/qta"
+        app:layout_constraintEnd_toEndOf="@+id/quantity"
+        app:layout_constraintStart_toEndOf="@+id/addCode"
+        app:layout_constraintTop_toBottomOf="@+id/quantity"
         tools:ignore="Autofill,LabelFor" />
 
     <EditText
@@ -53,7 +53,7 @@
         tools:ignore="Autofill,LabelFor" />
 
     <EditText
-        android:id="@+id/addPrezzo"
+        android:id="@+id/addPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -62,13 +62,13 @@
         android:maxLength="6"
         android:maxLines="1"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/prezzoTextView"
+        app:layout_constraintEnd_toEndOf="@+id/priceTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prezzoTextView"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView"
         tools:ignore="Autofill,LabelFor" />
 
     <Button
-        android:id="@+id/salvaNuovo"
+        android:id="@+id/saveAndNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -76,21 +76,21 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/salva_e_nuovo"
+        android:text="@string/save_and_new"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/salvaEsci" />
+        app:layout_constraintStart_toEndOf="@+id/saveAndQuit" />
 
     <Button
-        android:id="@+id/salvaEsci"
+        android:id="@+id/saveAndQuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/salva_e_esci"
+        android:text="@string/save_and_quit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -102,21 +102,21 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/codice"
+        android:text="@string/code"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/qta"
+        android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="16dp"
-        android:text="@string/quantit"
+        android:text="@string/quantity"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/addCodice"
+        app:layout_constraintStart_toEndOf="@+id/addCode"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -126,19 +126,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="@string/descrizione"
+        android:text="@string/desc"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addCodice" />
+        app:layout_constraintTop_toBottomOf="@+id/addCode" />
 
     <TextView
-        android:id="@+id/prezzoTextView"
+        android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="@string/prezzo"
+        android:text="@string/price"
         android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +153,7 @@
         android:text="@string/extra"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/prezzoTextView"
+        app:layout_constraintTop_toTopOf="@+id/priceTextView"
         app:useMaterialThemeColors="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,9 +14,9 @@ public class CancelDialog extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-		builder.setTitle("Uscire senza salvare?");
+		builder.setTitle("Quit without saving?");
 		builder.setPositiveButton("OK", (dialog, which) -> NavHostFragment.findNavController(CancelDialog.this).navigateUp());
-		builder.setNegativeButton("Annulla", (dialog, which) -> dismiss());
+		builder.setNegativeButton("Cancel", (dialog, which) -> dismiss());
 		return builder.create();
 	}
 }

@@ -14,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.ViewModelUtil;
-import com.veneto_valley.veneto_valley.viewmodel.OrdiniViewModel;
+import com.veneto_valley.veneto_valley.viewmodel.OrdersViewModel;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -29,29 +29,29 @@ public class CheckOutPage extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		TextView costoMenu = view.findViewById(R.id.checkoutMenu);
-		TextView costoExtra = view.findViewById(R.id.checkoutExtra);
-		TextView totale = view.findViewById(R.id.checkoutTotale);
-		Button finito = view.findViewById(R.id.checkoutFinito);
+		TextView menuPrice = view.findViewById(R.id.checkoutMenu);
+		TextView extrasPrice = view.findViewById(R.id.checkoutExtra);
+		TextView sum = view.findViewById(R.id.checkoutTotal);
+		Button done = view.findViewById(R.id.checkoutDone);
 		
-		// calcolo il totale che l'utente dovrà pagare
+		// computes the single user's total price
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-		OrdiniViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
-				OrdiniViewModel.class, preferences.getString("codice_tavolo", null));
+		OrdersViewModel viewModel = ViewModelUtil.getViewModel(requireActivity(),
+				OrdersViewModel.class, preferences.getString("codice_tavolo", null));
 		final Locale locale = requireActivity().getResources().getConfiguration().locale;
-		float menu = viewModel.getCostoMenu();
-		// pretty printing dei numeri
+		float menu = viewModel.getMenuPrice();
+		
+		// numbers pretty printing
 		DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance());
 		df.setMaximumFractionDigits(340);
-		costoMenu.setText(String.format(locale, "Costo Menu: %s €", df.format(menu)));
-		float extra = viewModel.getCostoExtra();
-		costoExtra.setText(String.format(locale, "Costo Extra: %s €", df.format(extra)));
+		menuPrice.setText(String.format(locale, "Menu Price: %s €", df.format(menu)));
+		float extra = viewModel.getExtrasPrice();
+		extrasPrice.setText(String.format(locale, "Extras Price: %s €", df.format(extra)));
 		float tot = menu + extra;
-		totale.setText(String.format(locale, "Costo totale: %s €", df.format(tot)));
-		finito.setOnClickListener(v -> {
-			// invoco il checkout tramite il viewmodel
+		sum.setText(String.format(locale, "Total: %s €", df.format(tot)));
+		done.setOnClickListener(v -> {
 			viewModel.checkout(requireActivity());
-			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutPage_to_homepageFragment);
+			NavHostFragment.findNavController(CheckOutPage.this).navigate(R.id.action_checkOutNav_to_homepageNav);
 		});
 	}
 	

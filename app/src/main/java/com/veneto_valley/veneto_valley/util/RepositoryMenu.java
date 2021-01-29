@@ -9,8 +9,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.veneto_valley.veneto_valley.model.entities.Categoria;
-import com.veneto_valley.veneto_valley.model.entities.Piatto;
+import com.veneto_valley.veneto_valley.model.entities.Category;
+import com.veneto_valley.veneto_valley.model.entities.Dish;
 import com.veneto_valley.veneto_valley.view.MenuAdapter;
 
 import java.util.ArrayList;
@@ -18,32 +18,31 @@ import java.util.List;
 
 public class RepositoryMenu {
 	
-	private final List<Categoria> categoria;
+	private final List<Category> category;
 	
-	public RepositoryMenu(MenuAdapter adapter, String idRistorante) {
-		categoria = new ArrayList<>();
-		categoria.add(new Categoria("Nessun elemento selezionato"));
+	public RepositoryMenu(MenuAdapter adapter, String id) {
+		category = new ArrayList<>();
+		category.add(new Category("No category selected"));
 		
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
-		DatabaseReference reference = database.getReference("menu").child(idRistorante);
+		DatabaseReference reference = database.getReference("menu").child(id);
 		reference.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
 				for (DataSnapshot d : snapshot.getChildren()) {
 					String s = d.getKey();
-					Categoria tmpCat = new Categoria(s);
-					categoria.add(tmpCat);
+					Category tmpCat = new Category(s);
+					category.add(tmpCat);
 					
 					for (DataSnapshot p : d.getChildren()) {
-						Piatto tmpPiatto = p.getValue(Piatto.class);
-						if (tmpPiatto != null && p.getKey() != null) {
-							// Escludo l'id dalla sync quindi devo settarlo a mano
-							tmpPiatto.idPiatto = p.getKey();
-							int index = categoria.indexOf(tmpCat);
-							categoria.get(index).piatti.add(tmpPiatto);
+						Dish tmpDish = p.getValue(Dish.class);
+						if (tmpDish != null && p.getKey() != null) {
+							tmpDish.id = p.getKey();
+							int index = category.indexOf(tmpCat);
+							category.get(index).dishes.add(tmpDish);
 						}
 					}
-					adapter.notifyItemInserted(categoria.size());
+					adapter.notifyItemInserted(category.size());
 					
 				}
 			}
@@ -55,7 +54,7 @@ public class RepositoryMenu {
 		});
 	}
 	
-	public List<Categoria> getCategoria() {
-		return categoria;
+	public List<Category> getCategory() {
+		return category;
 	}
 }

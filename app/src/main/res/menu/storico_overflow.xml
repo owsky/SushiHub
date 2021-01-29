@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/eliminaTavolo"
-        android:title="@string/elimina_tavolo" />
+        android:id="@+id/deleteTable"
+        android:title="@string/delete_table" />
     <item
-        android:id="@+id/eliminaTuttiTavoli"
-        android:title="@string/pulisci_storico" />
+        android:id="@+id/deleteAllTables"
+        android:title="@string/clear_history" />
 </menu>

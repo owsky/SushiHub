@@ -2,16 +2,16 @@ package com.veneto_valley.veneto_valley.model;
 
 import androidx.room.TypeConverter;
 
-import com.veneto_valley.veneto_valley.model.entities.Ordine;
+import com.veneto_valley.veneto_valley.model.entities.Order;
 
 public class StatusEnumConverter {
 	@TypeConverter
-	public static String fromStatusEnum(Ordine.StatusOrdine value) {
+	public static String fromStatusEnum(Order.OrderStatus value) {
 		return value.toString();
 	}
 	
 	@TypeConverter
-	public static Ordine.StatusOrdine toStatusEnum(String value) {
-		return Ordine.StatusOrdine.valueOf(value);
+	public static Order.OrderStatus toStatusEnum(String value) {
+		return Order.OrderStatus.valueOf(value);
 	}
 }

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ParcelableUtil {
-	// compressione parcelable in array di byte
+
 	public static byte[] marshall(Parcelable parceable) {
 		Parcel parcel = Parcel.obtain();
 		parceable.writeToParcel(parcel, 0);
@@ -13,7 +13,6 @@ public class ParcelableUtil {
 		return bytes;
 	}
 	
-	// conversione array di byte in parcelable
 	public static Parcel unmarshall(byte[] bytes) {
 		Parcel parcel = Parcel.obtain();
 		parcel.unmarshall(bytes, 0, bytes.length);
