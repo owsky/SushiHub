@@ -10,15 +10,15 @@ import java.util.List;
 
 @Dao
 public interface TableDao extends BaseDao<Table> {
-	@Query("SELECT * FROM `Table` WHERE id = :tavolo")
-	Table getTable(String tavolo);
-	
-	@Query("SELECT * FROM `Table` WHERE checkedOut")
-	LiveData<List<Table>> getAllButCurrent();
-	
-	@Query("SELECT menuPrice FROM `Table` WHERE id = :tavolo")
-	float getMenuPrice(String tavolo);
-	
-	@Query("DELETE FROM `Table`")
-	void deleteAllTables();
+    @Query("SELECT * FROM `Table` WHERE id = :table")
+    Table getTable(String table);
+
+    @Query("SELECT * FROM `Table` WHERE checkedOut")
+    LiveData<List<Table>> getAllButCurrent();
+
+    @Query("SELECT menuPrice FROM `Table` WHERE id = :table")
+    float getMenuPrice(String table);
+
+    @Query("DELETE FROM `Table`")
+    void deleteAllTables();
 }

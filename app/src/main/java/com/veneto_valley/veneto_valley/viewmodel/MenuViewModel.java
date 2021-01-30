@@ -15,22 +15,22 @@ import com.veneto_valley.veneto_valley.view.MenuAdapter;
 import java.util.List;
 
 public class MenuViewModel extends AndroidViewModel {
-	private RepositoryRestaurants repositoryRestaurants = null;
-	private RepositoryMenu repositoryMenu = null;
-	
-	public MenuViewModel(@NonNull Application application) {
-		super(application);
-	}
-	
-	public List<Restaurant> getRestaurants(ListRestaurantsAdapter adapter) {
-		if (repositoryRestaurants == null)
-			repositoryRestaurants = new RepositoryRestaurants(adapter);
-		return repositoryRestaurants.restaurants;
-	}
-	
-	public List<Category> getCategories(MenuAdapter adapter, String id) {
-		if (repositoryMenu == null)
-			repositoryMenu = new RepositoryMenu(adapter, id);
-		return repositoryMenu.getCategory();
-	}
+    private RepositoryRestaurants repositoryRestaurants = null;
+    private RepositoryMenu repositoryMenu = null;
+
+    public MenuViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public List<Restaurant> getRestaurants(ListRestaurantsAdapter adapter) {
+        if (repositoryRestaurants == null)
+            repositoryRestaurants = new RepositoryRestaurants(adapter);
+        return repositoryRestaurants.restaurants;
+    }
+
+    public List<Category> getCategories(MenuAdapter adapter, String id) {
+        if (repositoryMenu == null)
+            repositoryMenu = new RepositoryMenu(adapter, id);
+        return repositoryMenu.getCategory();
+    }
 }

@@ -18,29 +18,29 @@ import com.veneto_valley.veneto_valley.R;
 import com.veneto_valley.veneto_valley.util.Misc;
 
 public class ConfigureUserPage extends Fragment {
-	
-	public ConfigureUserPage() {
-		super(R.layout.fragment_configure_user);
-	}
-	
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		EditText setUsername = view.findViewById(R.id.configureUserTextView);
-		Button button = view.findViewById(R.id.configureUserBtn);
-		
-		setUsername.setImeOptions(EditorInfo.IME_ACTION_DONE);
-		
-		button.setOnClickListener(v -> {
-			String username = setUsername.getText().toString();
-			if (username.trim().isEmpty())
-				Toast.makeText(requireContext(), "Insert a username", Toast.LENGTH_SHORT).show();
-			else {
-				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-				preferences.edit().putString("username", username).apply();
-				Misc.hideKeyboard(requireActivity());
-				NavHostFragment.findNavController(this).navigate(R.id.action_configureUserNav_to_tabLayoutNav);
-			}
-		});
-	}
+
+    public ConfigureUserPage() {
+        super(R.layout.fragment_configure_user);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EditText setUsername = view.findViewById(R.id.configureUserTextView);
+        Button button = view.findViewById(R.id.configureUserBtn);
+
+        setUsername.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        button.setOnClickListener(v -> {
+            String username = setUsername.getText().toString();
+            if (username.trim().isEmpty())
+                Toast.makeText(requireContext(), "Insert a username", Toast.LENGTH_SHORT).show();
+            else {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                preferences.edit().putString("username", username).apply();
+                Misc.hideKeyboard(requireActivity());
+                NavHostFragment.findNavController(this).navigate(R.id.action_configureUserNav_to_tabLayoutNav);
+            }
+        });
+    }
 }
